@@ -70,5 +70,6 @@ The components are controlled by the systems and may only contain public data.
 ```cs
 public class MovementComponent : ECS.Component<MovementComponent, MovementSystem> {
   public Vector3 speed;
+  [ECS.Protected] public bool dontTouchMe;
 }
 ```
