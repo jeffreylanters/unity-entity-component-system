@@ -124,5 +124,17 @@ namespace UnityPackages.EntityComponentSystem {
 			}
 		}
 #endif
+
+		public class Reference : UnityEngine.PropertyAttribute { }
+#if UNITY_EDITOR
+		[CustomPropertyDrawer (typeof (Reference))]
+		public class ReferencePropertyDrawer : PropertyDrawer {
+			public override void OnGUI (UnityEngine.Rect position, SerializedProperty serializedProperty, UnityEngine.GUIContent label) {
+				EditorGUI.BeginDisabledGroup (true);
+				EditorGUI.PropertyField (position, serializedProperty, label, true);
+				EditorGUI.EndDisabledGroup ();
+			}
+		}
+#endif
 	}
 }
