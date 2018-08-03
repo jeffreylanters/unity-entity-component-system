@@ -23,7 +23,8 @@ public class MainController : ECS.Controller {
     this.RegisterSystems (
     
       // Initialize the systems you want to use...
-      new MovementSystem ()
+      new MovementSystem (),
+      new AttackSystem ()
     );
   }
 }
@@ -38,9 +39,11 @@ public class MovementSystem : ECS.System<MovementSystem, MovementComponent> {
 
   // Event trigger when a new entity is intialized.
   public override void OnEntityInitialize (MovementComponent entity) {
+    
+    // Modify all the properties on the component entity.
     entity.dontTouchMe = true;
     
-    // Get access no anyother component on an entity.
+    // Get access no another component on an entity.
     this.GetComponentOnEntity<AttackComponent> (entity, attackComponent => {
       attackComponent.strenght = 10;
     });
