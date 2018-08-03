@@ -72,3 +72,4 @@ public class MovementComponent : ECS.Component<MovementComponent, MovementSystem
   [ECS.Protected] public bool dontTouchMe;
 }
 ```
+ 
