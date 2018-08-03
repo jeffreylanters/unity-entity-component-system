@@ -36,12 +36,24 @@ The systems are controlled by the controller and will controll the component ent
 // Movement System inherets the ECS System and uses itself and its component as generics.
 public class MovementSystem : ECS.System<MovementSystem, MovementComponent> {
 
+  // Event trigger when a new entity is intialized.
+  public override void OnEntityInitialize (MovementComponent entity) {
+    entity.dontTouchMe = true;
+    
+    // Get access no anyother component on an entity.
+    this.GetComponentOnEntity<AttackComponent> (entity, attackComponent => {
+      attackComponent.strenght = 10;
+    });
+  }
+
   // Event is triggered every frame.
   public override void OnUpdate () {
     var _translation = new Vector3(1, 0, 0) * Time.deltaTime;
     
     // Loop all the entities to do something with them...
     foreach (var _entity in this.entities) {
+    
+      // Modify all the properties on the component entity.
       _entity.transform.position += _translation * _entity.speed;
     }
   }
