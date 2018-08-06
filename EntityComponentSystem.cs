@@ -68,6 +68,7 @@ namespace UnityPackages.EntityComponentSystem {
 			public virtual void OnUpdate () { }
 			public virtual void OnDrawGizmos () { }
 			public virtual void OnEntityInitialize (C component) { }
+			public virtual void OnEntityWillDestroy (C component) { }
 
 			/// The list of instanced entities of this system.
 			public List<C> entities;
@@ -88,6 +89,7 @@ namespace UnityPackages.EntityComponentSystem {
 
 			/// Removes an entity component from the system.
 			public void RemoveEntry (C component) {
+				this.OnEntityWillDestroy (component);
 				this.entities.Remove (component);
 			}
 
