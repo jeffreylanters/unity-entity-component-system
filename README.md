@@ -18,10 +18,10 @@ Controllers are the main part of our ECS, there should only be one per project. 
 ```cs
 public class MainController : ECS.Controller {
 
-  // Event is triggered when the ECS is initialized.
+  // This event is triggered when the ECS is initialized.
   public override void OnInitialize () {
   
-    // Registers all the systems.
+    // Start by registering all the systems.
     this.RegisterSystems (
     
       // Initialize the systems you want to use...
@@ -39,19 +39,29 @@ The systems are controlled by the controller and will controll the component ent
 // Movement System inherets the ECS System and uses itself and its component as generics.
 public class MovementSystem : ECS.System<MovementSystem, MovementComponent> {
 
-  // Event trigger when a new entity is intialized.
+  // This event is triggered when the system is initialized.
+  public override void OnInitialize () {
+    // Do something when the system
+  }
+      
+  // This event is triggered when a new entity is intialized.
   public override void OnEntityInitialize (MovementComponent entity) {
     
     // Modify all the properties on the component entity.
     entity.dontTouchMe = true;
     
-    // Get access no another component on an entity.
+    // Get access to another component on an entity.
     this.GetComponentOnEntity<AttackComponent> (entity, attackComponent => {
       attackComponent.strenght = 10;
     });
   }
+  
+  // This event is triggered when an entity will be destroyed.
+  public override void OnEntityWillDestroy (MovementComponent entity) {
+    // Do something when the entity
+  }
 
-  // Event is triggered every frame.
+  // This event is triggered every frame.
   public override void OnUpdate () {
     var _translation = new Vector3(1, 0, 0) * Time.deltaTime;
     
@@ -71,6 +81,8 @@ The components are controlled by the systems and may only contain public data.
 ```cs
 // Movement component inherets the ECS Component and uses its system and itself as generics.
 public class MovementComponent : ECS.Component<MovementComponent, MovementSystem> {
+
+  // Only add public variables to your component.
   public Vector3 speed;
   
   // Use Protected to lock variables in the editor.
