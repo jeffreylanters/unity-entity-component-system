@@ -9,25 +9,44 @@ namespace UnityPackages.EntityComponentSystem {
 	public static class ECS {
 
 		/// <summary>
+		/// Log.
+		/// </summary>
+		public static void Log (object title, object message) {
+			if (Controller.Instance.debugging == true)
+				UnityEngine.Debug.Log ("<b>ECS</b> " +
+					title.ToString ().ToUpper () + "\n" +
+					message.ToString ());
+		}
+
+		/// <summary>
 		/// Controller.
 		/// </summary>
 		public class Controller : UnityEngine.MonoBehaviour {
 
 			public virtual void OnInitialize () { }
+			public virtual void OnInitialized () { }
 
 			public static Controller Instance;
 
+			public bool debugging;
+
 			private List<ISystem> systems;
+			private bool isInitialized;
 
 			private void Awake () {
 				Instance = this;
 				this.systems = new List<ISystem> ();
 				this.OnInitialize ();
+				Log ("Initialized controller", "");
 			}
 
 			private void Update () {
 				for (var _i = 0; _i < this.systems.Count; _i++)
 					this.systems[_i].OnUpdate ();
+				if (this.isInitialized == false) {
+					this.isInitialized = true;
+					this.OnInitialized ();
+				}
 			}
 
 #if UNITY_EDITOR
@@ -42,6 +61,7 @@ namespace UnityPackages.EntityComponentSystem {
 				for (var _i = 0; _i < systems.Length; _i++) {
 					systems[_i].OnInitialize ();
 					this.systems.Add (systems[_i]);
+					Log ("Initialized system", systems[_i].GetType ());
 				}
 			}
 
@@ -83,12 +103,16 @@ namespace UnityPackages.EntityComponentSystem {
 
 			/// Adds an entity component to the system.
 			public void AddEntity (C component) {
+				Log ("Added Entity",
+					component.transform.name + " to " + this.ToString ());
 				this.entities.Add (component);
 				this.OnEntityInitialize (component);
 			}
 
 			/// Removes an entity component from the system.
 			public void RemoveEntry (C component) {
+				Log ("Removed Entity",
+					component.transform.name + " from " + this.ToString ());
 				this.OnEntityWillDestroy (component);
 				this.entities.Remove (component);
 			}
