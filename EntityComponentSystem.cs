@@ -9,22 +9,13 @@ namespace UnityPackages.EntityComponentSystem {
 	public static class ECS {
 
 		/// <summary>
-		/// Log.
-		/// </summary>
-		public static void Log (object title, object message) {
-			if (Controller.Instance.debugging == true)
-				UnityEngine.Debug.Log ("<b>ECS</b> " +
-					title.ToString ().ToUpper () + "\n" +
-					message.ToString ());
-		}
-
-		/// <summary>
 		/// Controller.
 		/// </summary>
 		public class Controller : UnityEngine.MonoBehaviour {
 
 			public virtual void OnInitialize () { }
 			public virtual void OnInitialized () { }
+			public virtual void OnUpdate () { }
 
 			public static Controller Instance;
 
@@ -47,6 +38,7 @@ namespace UnityPackages.EntityComponentSystem {
 					this.isInitialized = true;
 					this.OnInitialized ();
 				}
+				this.OnUpdate ();
 			}
 
 #if UNITY_EDITOR
@@ -87,8 +79,8 @@ namespace UnityPackages.EntityComponentSystem {
 			public virtual void OnInitialize () { }
 			public virtual void OnUpdate () { }
 			public virtual void OnDrawGizmos () { }
-			public virtual void OnEntityInitialize (C component) { }
-			public virtual void OnEntityWillDestroy (C component) { }
+			public virtual void OnEntityInitialize (C entity) { }
+			public virtual void OnEntityWillDestroy (C entity) { }
 
 			/// The list of instanced entities of this system.
 			public List<C> entities;
@@ -131,11 +123,11 @@ namespace UnityPackages.EntityComponentSystem {
 		public class Component<C, S> : UnityEngine.MonoBehaviour where C : Component<C, S>, new () where S : System<S, C>, new () {
 
 			private void Start () {
-				Controller.Instance.GetSystem<S> ().AddEntity ((C) this);
+				GetSystem<S> ().AddEntity ((C) this);
 			}
 
 			private void OnDestroy () {
-				Controller.Instance.GetSystem<S> ().RemoveEntry ((C) this);
+				GetSystem<S> ().RemoveEntry ((C) this);
 			}
 		}
 
@@ -162,5 +154,22 @@ namespace UnityPackages.EntityComponentSystem {
 			}
 		}
 #endif
+
+		/// <summary>
+		/// Gets a system.
+		/// </summary>
+		public static S GetSystem<S> () where S : ISystem, new () {
+			return Controller.Instance.GetSystem<S> ();
+		}
+
+		/// <summary>
+		/// Log.
+		/// </summary>
+		public static void Log (object title, object message) {
+			if (Controller.Instance.debugging == true)
+				UnityEngine.Debug.Log ("<b>ECS</b> " +
+					title.ToString ().ToUpper () + "\n" +
+					message.ToString ());
+		}
 	}
 }
