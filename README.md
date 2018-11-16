@@ -1,9 +1,6 @@
-# Entity Component System
+# Entity Component System ![](https://img.shields.io/badge/dependencies-unity--packages-%233bc6d8.svg) ![](https://img.shields.io/badge/license-MIT-%23ecc531.svg)
 
 This simple ECS offers a better approach to game design that allows you to concentrate on the actual problems you are solving: the data and behavior that make up your game. By moving from object-oriented to data-oriented design it will be easier for you to reuse the code and easier for others to understand and work on it.
-
-![](https://img.shields.io/badge/dependencies-unity--packages-%233bc6d8.svg)
-![](https://img.shields.io/badge/license-MIT-%23ecc531.svg)
 
 > NOTE When using this Unity Package, make sure to **Star** this repository. When using any of the packages please make sure to give credits to **Jeffrey Lanters** somewhere in your app or game. **These packages are not allowed to be sold anywhere!**
 
