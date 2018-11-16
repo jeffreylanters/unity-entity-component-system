@@ -18,17 +18,22 @@ Controllers are the main part of our ECS, there should only be one per project. 
 ```cs
 public class MainController : ECS.Controller {
 
-  // This event is triggered when the ECS is initialized.
+  // EVENT is triggered when the ECS is initialized.
   public override void OnInitialize () {
   
     // Start by registering all the systems.
-    this.RegisterSystems (
-    
-      // Initialize the systems you want to use...
+    // Initialize the systems you want to use...
+    this.RegisterSystems (    
       new MovementSystem (),
       new AttackSystem ()
     );
   }
+  
+  // EVENT is triggered when all the ECS are intialized.
+  public override void OnInitialized () { }
+  
+  // EVENT is triggered every frame.
+  public override void OnUpdate () { }
 }
 ```
 
@@ -39,12 +44,10 @@ The systems are controlled by the controller and will controll the component ent
 // Movement System inherets the ECS System and uses itself and its component as generics.
 public class MovementSystem : ECS.System<MovementSystem, MovementComponent> {
 
-  // This event is triggered when the system is initialized.
-  public override void OnInitialize () {
-    // Do something when the system
-  }
+  // EVENT is triggered when the system is initialized.
+  public override void OnInitialize () { }
       
-  // This event is triggered when a new entity is intialized.
+  // EVENT is triggered when a new entity is intialized.
   public override void OnEntityInitialize (MovementComponent entity) {
     
     // Modify all the properties on the component entity.
@@ -56,12 +59,10 @@ public class MovementSystem : ECS.System<MovementSystem, MovementComponent> {
     });
   }
   
-  // This event is triggered when an entity will be destroyed.
-  public override void OnEntityWillDestroy (MovementComponent entity) {
-    // Do something when the entity
-  }
+  // EVENT is triggered when an entity will be destroyed.
+  public override void OnEntityWillDestroy (MovementComponent entity) { }
 
-  // This event is triggered every frame.
+  // EVENT is triggered every frame.
   public override void OnUpdate () {
     var _translation = new Vector3(1, 0, 0) * Time.deltaTime;
     
@@ -72,6 +73,9 @@ public class MovementSystem : ECS.System<MovementSystem, MovementComponent> {
       _entity.transform.position += _translation * _entity.speed;
     }
   }
+  
+  // EVENT is triggered every gizmos draw call.
+  public override void OnDrawGizmos () { }
 }
 ```
 
@@ -87,6 +91,9 @@ public class MovementComponent : ECS.Component<MovementComponent, MovementSystem
   
   // Use Protected to lock variables in the editor.
   [ECS.Protected] public bool dontTouchMe;
+  
+  // Use Reference to mark variables as refereces.
+  [ECS.Reference] public Rigidbody rigidbody;
 }
 ```
  
