@@ -51,8 +51,11 @@ namespace UnityPackages.EntityComponentSystem {
 
 			public void RegisterSystems (params ISystem[] systems) {
 				for (var _i = 0; _i < systems.Length; _i++) {
-					systems[_i].OnInitialize ();
 					this.systems.Add (systems[_i]);
+					Log ("Added system", systems[_i].GetType ());
+				}
+				for (var _i = 0; _i < systems.Length; _i++) {
+					systems[_i].OnInitialize ();
 					Log ("Initialized system", systems[_i].GetType ());
 				}
 			}
