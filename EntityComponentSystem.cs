@@ -83,6 +83,9 @@ namespace UnityPackages.EntityComponentSystem {
 			public virtual void OnUpdate () { }
 			public virtual void OnDrawGizmos () { }
 			public virtual void OnEntityInitialize (C entity) { }
+			public virtual void OnEntityStart (C entity) { }
+			public virtual void OnEntityEnabled (C entity) { }
+			public virtual void OnEntityDisabled (C entity) { }
 			public virtual void OnEntityWillDestroy (C entity) { }
 
 			/// The list of instanced entities of this system.
@@ -125,8 +128,27 @@ namespace UnityPackages.EntityComponentSystem {
 		/// </summary>
 		public class Component<C, S> : UnityEngine.MonoBehaviour where C : Component<C, S>, new () where S : System<S, C>, new () {
 
+			private bool isEntityEnabled = false;
+
 			private void Start () {
-				GetSystem<S> ().AddEntity ((C) this);
+				var _system = GetSystem<S> ();
+				_system.AddEntity ((C) this);
+				_system.OnEntityStart ((C) this);
+			}
+
+			private void Update () {
+				if (this.isEntityEnabled == false) {
+					this.isEntityEnabled = true;
+					var _system = GetSystem<S> ();
+					_system.OnEntityEnabled ((C) this);
+				}
+			}
+
+			private void OnDisable () {
+				this.isEntityEnabled = false;
+				var _system = GetSystem<S> ();
+				if (_system != null)
+					_system.OnEntityDisabled ((C) this);
 			}
 
 			private void OnDestroy () {
