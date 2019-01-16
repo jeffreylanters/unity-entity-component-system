@@ -59,6 +59,9 @@ public class MovementSystem : ECS.System<MovementSystem, MovementComponent> {
     this.GetComponentOnEntity<AttackComponent> (entity, attackComponent => {
       attackComponent.strenght = 10;
     });
+    
+    // Checks wether a component has another entity.
+    if (this.HasComponentEntity<AttackComponent>(entity)) { }
   }
   
   // EVENT is triggered when an entity will be destroyed.
