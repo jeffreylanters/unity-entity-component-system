@@ -49,6 +49,11 @@ namespace UnityPackages.EntityComponentSystem {
 			}
 #endif
 
+			private void OnGUI () {
+				for (var _i = 0; _i < this.systems.Count; _i++)
+					this.systems[_i].OnGUI ();
+			}
+
 			public void RegisterSystems (params ISystem[] systems) {
 				for (var _i = 0; _i < systems.Length; _i++) {
 					this.systems.Add (systems[_i]);
@@ -75,6 +80,7 @@ namespace UnityPackages.EntityComponentSystem {
 			void OnInitialize ();
 			void OnUpdate ();
 			void OnDrawGizmos ();
+			void OnGUI ();
 		}
 
 		public class System<S, C> : ISystem where S : System<S, C>, new () where C : Component<C, S>, new () {
@@ -82,6 +88,7 @@ namespace UnityPackages.EntityComponentSystem {
 			public virtual void OnInitialize () { }
 			public virtual void OnUpdate () { }
 			public virtual void OnDrawGizmos () { }
+			public virtual void OnGUI () { }
 			public virtual void OnEntityInitialize (C entity) { }
 			public virtual void OnEntityStart (C entity) { }
 			public virtual void OnEntityEnabled (C entity) { }
