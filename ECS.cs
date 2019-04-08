@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 
 #if UNITY_EDITOR
+using System.Linq;
 using UnityEditor;
 #endif
 
@@ -168,29 +169,15 @@ namespace UnityPackages.EntityComponentSystem {
 			}
 		}
 
+		/// <summary>
+		/// Describes a protected property within a component.
+		/// </summary>
 		public class Protected : UnityEngine.PropertyAttribute { }
-#if UNITY_EDITOR
-		[CustomPropertyDrawer (typeof (Protected))]
-		public class ProtectedPropertyDrawer : PropertyDrawer {
-			public override void OnGUI (UnityEngine.Rect position, SerializedProperty serializedProperty, UnityEngine.GUIContent label) {
-				EditorGUI.BeginDisabledGroup (true);
-				EditorGUI.PropertyField (position, serializedProperty, label, true);
-				EditorGUI.EndDisabledGroup ();
-			}
-		}
-#endif
 
+		/// <summary>
+		/// Describes a reference property within a component.
+		/// </summary>
 		public class Reference : UnityEngine.PropertyAttribute { }
-#if UNITY_EDITOR
-		[CustomPropertyDrawer (typeof (Reference))]
-		public class ReferencePropertyDrawer : PropertyDrawer {
-			public override void OnGUI (UnityEngine.Rect position, SerializedProperty serializedProperty, UnityEngine.GUIContent label) {
-				EditorGUI.BeginDisabledGroup (true);
-				EditorGUI.PropertyField (position, serializedProperty, label, true);
-				EditorGUI.EndDisabledGroup ();
-			}
-		}
-#endif
 
 		/// <summary>
 		/// Gets a system.
