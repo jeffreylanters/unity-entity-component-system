@@ -8,13 +8,13 @@ namespace UnityPackages.EntityComponentSystem {
 
   public static class Menus {
 
-    [MenuItem ("EntityComponentSystem/Open repository", false, 100)]
+    [MenuItem ("UnityPackages/EntityComponentSystem/Open repository", false, 100)]
     private static void OpenRepository () {
       UnityEngine.Application.OpenURL ("https://github.com/unity-packages/entity-component-system");
     }
 
-    [MenuItem ("EntityComponentSystem/Create Controller", false, 300)]
-    private static void CreateController () {
+    [MenuItem ("UnityPackages/EntityComponentSystem/Create new Controller", false, 300)]
+    private static void CreateNewController () {
       Utils.CreateFile (
         "Save new Controller",
         "Main",
@@ -36,8 +36,8 @@ namespace UnityPackages.EntityComponentSystem {
       );
     }
 
-    [MenuItem ("EntityComponentSystem/Create System", false, 301)]
-    private static void CreateSystem () {
+    [MenuItem ("UnityPackages/EntityComponentSystem/Create new System", false, 301)]
+    private static void CreateNewSystem () {
       Utils.CreateFile (
         "Save new System",
         "Item",
@@ -71,8 +71,8 @@ namespace UnityPackages.EntityComponentSystem {
       );
     }
 
-    [MenuItem ("EntityComponentSystem/Create Component", false, 302)]
-    private static void CreateComponent () {
+    [MenuItem ("UnityPackages/EntityComponentSystem/Create new Component", false, 302)]
+    private static void CreateNewComponent () {
       Utils.CreateFile (
         "Save new Component",
         "Item",
