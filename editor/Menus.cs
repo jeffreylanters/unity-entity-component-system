@@ -36,7 +36,24 @@ namespace UnityPackages.EntityComponentSystem {
       );
     }
 
-    [MenuItem ("UnityPackages/EntityComponentSystem/Create new System", false, 301)]
+    [MenuItem ("UnityPackages/EntityComponentSystem/Create new Component", false, 301)]
+    private static void CreateNewComponent () {
+      Utils.CreateFile (
+        "Save new Component",
+        "Item",
+        "Component",
+        "cs",
+        "using UnityPackages.EntityComponentSystem;",
+        "using UnityEngine;",
+        "",
+        "public class {{name}}Component : ECS.Component<{{name}}Component, {{name}}System> {",
+        "\t// [ECS.Protected] public bool myProtectedBool;",
+        "\t// [ECS.Reference] public Transform myReferencesTransform;",
+        "}"
+      );
+    }
+
+    [MenuItem ("UnityPackages/EntityComponentSystem/Create new System", false, 302)]
     private static void CreateNewSystem () {
       Utils.CreateFile (
         "Save new System",
@@ -67,23 +84,6 @@ namespace UnityPackages.EntityComponentSystem {
         "\tpublic override void OnEntityDisabled ({{name}}Component entity) { }",
         "",
         "\tpublic override void OnEntityWillDestroy ({{name}}Component entity) { }",
-        "}"
-      );
-    }
-
-    [MenuItem ("UnityPackages/EntityComponentSystem/Create new Component", false, 302)]
-    private static void CreateNewComponent () {
-      Utils.CreateFile (
-        "Save new Component",
-        "Item",
-        "Component",
-        "cs",
-        "using UnityPackages.EntityComponentSystem;",
-        "using UnityEngine;",
-        "",
-        "public class {{name}}Component : ECS.Component<{{name}}Component, {{name}}System> {",
-        "\t// [ECS.Protected] public bool myProtectedBool;",
-        "\t// [ECS.Reference] public Transform myReferencesTransform;",
         "}"
       );
     }
