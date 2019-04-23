@@ -9,7 +9,7 @@ This simple ECS offers a better approach to game design that allows you to conce
 ## Install
 
 ```
-"com.unity-packages.entity-component-system": "https://github.com/unity-packages/entity-component-system"
+"com.unity-packages.entity-component-system": "git+https://github.com/unity-packages/entity-component-system"
 ```
 
 [Click here to read the Unity Packages installation guide](https://github.com/unity-packages/installation)
