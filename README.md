@@ -42,27 +42,27 @@ The systems are controlled by the controller and will controll the component ent
 ```cs
 public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 
-	public override void OnInitialize () { }
+  public override void OnInitialize () { }
 
-	public override void OnUpdate () {
-		foreach (var _entity in this.entities) {
-			// use the entity...
-		}
-	}
+  public override void OnUpdate () {
+    foreach (var _entity in this.entities) {
+      // use the entity...
+    }
+  }
 
-	public override void OnDrawGizmos () { }
+  public override void OnDrawGizmos () { }
 
-	public override void OnGUI () { }
+  public override void OnGUI () { }
 
-	public override void OnEntityInitialize (ItemComponent entity) { }
+  public override void OnEntityInitialize (ItemComponent entity) { }
 
-	public override void OnEntityStart (ItemComponent entity) { }
+  public override void OnEntityStart (ItemComponent entity) { }
 
-	public override void OnEntityEnabled (ItemComponent entity) { }
+  public override void OnEntityEnabled (ItemComponent entity) { }
 
-	public override void OnEntityDisabled (ItemComponent entity) { }
+  public override void OnEntityDisabled (ItemComponent entity) { }
 
-	public override void OnEntityWillDestroy (ItemComponent entity) { }
+  public override void OnEntityWillDestroy (ItemComponent entity) { }
 }
 ```
 
