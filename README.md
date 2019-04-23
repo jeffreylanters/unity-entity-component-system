@@ -23,21 +23,14 @@ Controllers are the main part of our ECS, there should only be one per project. 
 ```cs
 public class MainController : ECS.Controller {
 
-  // EVENT is triggered when the ECS is initialized.
   public override void OnInitialize () {
-
-    // Start by registering all the systems.
-    // Initialize the systems you want to use...
     this.RegisterSystems (
-      new MovementSystem (),
-      new AttackSystem ()
+      // new Systems...
     );
   }
 
-  // EVENT is triggered when all the ECS are intialized.
   public override void OnInitialized () { }
 
-  // EVENT is triggered every frame.
   public override void OnUpdate () { }
 }
 ```
@@ -47,44 +40,29 @@ public class MainController : ECS.Controller {
 The systems are controlled by the controller and will controll the component entities it owns.
 
 ```cs
-// Movement System inherets the ECS System and uses itself and its component as generics.
-public class MovementSystem : ECS.System<MovementSystem, MovementComponent> {
+public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 
-  // EVENT is triggered when the system is initialized.
-  public override void OnInitialize () { }
+	public override void OnInitialize () { }
 
-  // EVENT is triggered when a new entity is intialized.
-  public override void OnEntityInitialize (MovementComponent entity) {
+	public override void OnUpdate () {
+		foreach (var _entity in this.entities) {
+			// use the entity...
+		}
+	}
 
-    // Modify all the properties on the component entity.
-    entity.dontTouchMe = true;
+	public override void OnDrawGizmos () { }
 
-    // Get access to another component on an entity.
-    this.GetComponentOnEntity<AttackComponent> (entity, attackComponent => {
-      attackComponent.strenght = 10;
-    });
+	public override void OnGUI () { }
 
-    // Checks wether a component has another entity.
-    if (this.HasComponentEntity<AttackComponent>(entity)) { }
-  }
+	public override void OnEntityInitialize (ItemComponent entity) { }
 
-  // EVENT is triggered when an entity will be destroyed.
-  public override void OnEntityWillDestroy (MovementComponent entity) { }
+	public override void OnEntityStart (ItemComponent entity) { }
 
-  // EVENT is triggered every frame.
-  public override void OnUpdate () {
-    var _translation = new Vector3(1, 0, 0) * Time.deltaTime;
+	public override void OnEntityEnabled (ItemComponent entity) { }
 
-    // Loop all the entities to do something with them...
-    foreach (var _entity in this.entities) {
+	public override void OnEntityDisabled (ItemComponent entity) { }
 
-      // Modify all the properties on the component entity.
-      _entity.transform.position += _translation * _entity.speed;
-    }
-  }
-
-  // EVENT is triggered every gizmos draw call.
-  public override void OnDrawGizmos () { }
+	public override void OnEntityWillDestroy (ItemComponent entity) { }
 }
 ```
 
@@ -93,16 +71,9 @@ public class MovementSystem : ECS.System<MovementSystem, MovementComponent> {
 The components are controlled by the systems and may only contain public data.
 
 ```cs
-// Movement component inherets the ECS Component and uses its system and itself as generics.
-public class MovementComponent : ECS.Component<MovementComponent, MovementSystem> {
+public class ItemComponent : ECS.Component<ItemComponent, ItemSystem> {
 
-  // Only add public variables to your component.
-  public Vector3 speed;
-
-  // Use Protected to lock variables in the editor.
-  [ECS.Protected] public bool dontTouchMe;
-
-  // Use Reference to mark variables as refereces.
-  [ECS.Reference] public Rigidbody rigidbody;
-}
+  [ECS.Protected] public bool myProtectedBool;
+  [ECS.Reference] public Transform myReferencesTransform;
+} 
 ```
