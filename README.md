@@ -6,8 +6,6 @@ This simple ECS offers a better approach to game design that allows you to conce
 
 > NOTE When using this Unity Package, make sure to **Star** this repository. When using any of the packages please make sure to give credits to **Jeffrey Lanters** somewhere in your app or game. **These packages are not allowed to be sold anywhere!**
 
-<br/><br/>
-
 ## Install
 
 ```
@@ -15,8 +13,6 @@ This simple ECS offers a better approach to game design that allows you to conce
 ```
 
 [Click here to read the Unity Packages installation guide](https://github.com/unity-packages/installation)
-
-<br/><br/>
 
 ## Usage
 
