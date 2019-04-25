@@ -131,7 +131,7 @@ namespace UnityPackages.EntityComponentSystem {
 			}
 
 			/// Check wether a component has an entity.
-			public bool HasComponentEntity<GEC> (C entity) {
+			public bool HasComponentOnEntity<GEC> (C entity) {
 				return entity.GetComponent<GEC> () != null;
 			}
 		}
