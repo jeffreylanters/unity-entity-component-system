@@ -45,9 +45,10 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
   public override void OnInitialize () { }
 
   public override void OnUpdate () {
-    this.firstEntity;
-    this.GetComponentOnEntity<OtherComponent> (this.firstEntity, entity => { /* ... */ });
+    this.GetComponentOnEntity<OtherComponent> (this.firstEntity, component => { /* ... */ });
     this.HasComponentOnEntity<OtherComponent> (this.firstEntity);
+    
+    this.firstEntity;
     
     foreach (var _entity in this.entities) {
       // use the entity...
