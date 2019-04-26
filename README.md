@@ -4,7 +4,7 @@
 
 This simple ECS offers a better approach to game design that allows you to concentrate on the actual problems you are solving: the data and behavior that make up your game. By moving from object-oriented to data-oriented design it will be easier for you to reuse the code and easier for others to understand and work on it.
 
-> NOTE When using this Unity Package, make sure to **Star** this repository. When using any of the packages please make sure to give credits to **Jeffrey Lanters** somewhere in your app or game. **These packages are not allowed to be sold anywhere!**
+> NOTE When using this Unity Package, make sure to **Star** this repository. When using any of the packages please make sure to give credits to **Jeffrey Lanters** somewhere in your app or game. **THESE PACKAGES ARE NOT ALLOWED TO BE SOLD ANYWHERE!**
 
 ## Install
 
@@ -47,9 +47,9 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
   public override void OnUpdate () {
     this.GetComponentOnEntity<OtherComponent> (this.firstEntity, component => { /* ... */ });
     this.HasComponentOnEntity<OtherComponent> (this.firstEntity);
-    
+
     this.firstEntity;
-    
+
     foreach (var _entity in this.entities) {
       // use the entity...
     }
@@ -80,5 +80,5 @@ public class ItemComponent : ECS.Component<ItemComponent, ItemSystem> {
 
   [ECS.Protected] public bool myProtectedBool;
   [ECS.Reference] public Transform myReferencesTransform;
-} 
+}
 ```
