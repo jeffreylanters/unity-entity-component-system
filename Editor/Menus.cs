@@ -22,7 +22,7 @@ namespace UnityPackages.EntityComponentSystem {
         "cs",
         "using UnityPackages.EntityComponentSystem;",
         "",
-        "public class {{name}} : ECS.Controller {",
+        "public class {{name}}Controller : ECS.Controller {",
         "\tpublic override void OnInitialize () {",
         "\t\tthis.RegisterSystems (",
         "\t\t\t// new Systems...",
