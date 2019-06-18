@@ -18,7 +18,7 @@ This simple ECS offers a better approach to game design that allows you to conce
 
 ### Controllers
 
-Controllers are the main part of our ECS, there should only be one per project. The controller initialized the systems you want to be active.
+Controllers are the main part of our ECS, there should only be one per at a time. The controller initialized the systems you want to be active.
 
 ```cs
 public class MainController : ECS.Controller {
