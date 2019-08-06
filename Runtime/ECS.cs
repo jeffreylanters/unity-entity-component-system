@@ -17,6 +17,7 @@ namespace UnityPackages.EntityComponentSystem {
 			public virtual void OnInitialize () { }
 			public virtual void OnInitialized () { }
 			public virtual void OnUpdate () { }
+			public virtual void OnGUI () { }
 
 			public static Controller Instance;
 
@@ -51,6 +52,7 @@ namespace UnityPackages.EntityComponentSystem {
 #endif
 
 			private void OnGUI () {
+				this.OnGUI ();
 				for (var _i = 0; _i < this.systems.Count; _i++)
 					this.systems[_i].OnGUI ();
 			}
