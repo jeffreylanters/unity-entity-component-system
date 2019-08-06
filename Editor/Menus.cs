@@ -32,8 +32,6 @@ namespace UnityPackages.EntityComponentSystem {
         "\tpublic override void OnInitialized () { }",
         "",
         "\tpublic override void OnUpdate () { }",
-        "",
-        "\tpublic override void OnGUI () { }",
         "}"
       );
     }

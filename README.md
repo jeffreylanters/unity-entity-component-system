@@ -32,8 +32,6 @@ public class MainController : ECS.Controller {
   public override void OnInitialized () { }
 
   public override void OnUpdate () { }
-
-  public override void OnGUI () { }
 }
 ```
 
