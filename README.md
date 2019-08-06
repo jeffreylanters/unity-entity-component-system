@@ -32,6 +32,8 @@ public class MainController : ECS.Controller {
   public override void OnInitialized () { }
 
   public override void OnUpdate () { }
+
+  public override void OnGUI () { }
 }
 ```
 
@@ -78,6 +80,7 @@ The components are controlled by the systems and may only contain public data.
 ```cs
 public class ItemComponent : ECS.Component<ItemComponent, ItemSystem> {
 
+  // Example values
   [ECS.Protected] public bool myProtectedBool;
   [ECS.Reference] public Transform myReferencesTransform;
 }
