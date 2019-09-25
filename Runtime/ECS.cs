@@ -91,6 +91,7 @@ namespace UnityPackages.EntityComponentSystem {
 			public virtual void OnDrawGizmos () { }
 			public virtual void OnGUI () { }
 			public virtual void OnEntityInitialize (C entity) { }
+			public virtual void OnEntityInitialized (C entity) { }
 			public virtual void OnEntityStart (C entity) { }
 			public virtual void OnEntityEnabled (C entity) { }
 			public virtual void OnEntityDisabled (C entity) { }
@@ -142,6 +143,7 @@ namespace UnityPackages.EntityComponentSystem {
 		public class Component<C, S> : UnityEngine.MonoBehaviour where C : Component<C, S>, new () where S : System<S, C>, new () {
 
 			private bool isEntityEnabled = false;
+			private bool isEntityInitialized = false;
 
 			private void Start () {
 				var _system = GetSystem<S> ();
@@ -154,6 +156,11 @@ namespace UnityPackages.EntityComponentSystem {
 					this.isEntityEnabled = true;
 					var _system = GetSystem<S> ();
 					_system.OnEntityEnabled ((C) this);
+				}
+				if (this.isEntityInitialized == false) {
+					this.isEntityInitialized = true;
+					var _system = GetSystem<S> ();
+					_system.OnEntityInitialized ((C) this);
 				}
 			}
 
