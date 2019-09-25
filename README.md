@@ -61,6 +61,8 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 
   public override void OnEntityInitialize (ItemComponent entity) { }
 
+  public override void OnEntityInitialized (ItemComponent entity) { }
+
   public override void OnEntityStart (ItemComponent entity) { }
 
   public override void OnEntityEnabled (ItemComponent entity) { }
