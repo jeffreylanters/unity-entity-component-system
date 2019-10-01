@@ -77,6 +77,8 @@ namespace UnityPackages.EntityComponentSystem {
         "",
         "\tpublic override void OnEntityInitialize ({{name}}Component entity) { }",
         "",
+        "\tpublic override void OnEntityInitialized ({{name}}Component entity) { }",
+        "",
         "\tpublic override void OnEntityStart ({{name}}Component entity) { }",
         "",
         "\tpublic override void OnEntityEnabled ({{name}}Component entity) { }",
