@@ -7,23 +7,23 @@ using UnityEditor;
 
 namespace UnityPackages.EntityComponentSystem {
 
-	public static class ECS {
+	public class ECS {
 
 		/// <summary>
 		/// Controller.
 		/// </summary>
-		public class Controller : UnityEngine.MonoBehaviour {
+		public abstract class Controller : UnityEngine.MonoBehaviour {
+
+			private List<ISystem> systems;
+			private bool isInitialized;
+
+			public static Controller Instance;
 
 			public virtual void OnInitialize () { }
 			public virtual void OnInitialized () { }
 			public virtual void OnUpdate () { }
 
-			public static Controller Instance;
-
 			public bool debugging;
-
-			private List<ISystem> systems;
-			private bool isInitialized;
 
 			private void Awake () {
 				Instance = this;
@@ -67,8 +67,9 @@ namespace UnityPackages.EntityComponentSystem {
 			}
 
 			public S GetSystem<S> () where S : ISystem, new () {
+				var _typeOfS = typeof (S);
 				for (var _i = 0; _i < this.systems.Count; _i++)
-					if (this.systems[_i].GetType () == typeof (S))
+					if (this.systems[_i].GetType () == _typeOfS)
 						return (S) this.systems[_i];
 				return new S ();
 			}
@@ -84,7 +85,7 @@ namespace UnityPackages.EntityComponentSystem {
 			void OnGUI ();
 		}
 
-		public class System<S, C> : ISystem where S : System<S, C>, new () where C : Component<C, S>, new () {
+		public abstract class System<S, C> : ISystem where S : System<S, C>, new () where C : Component<C, S>, new () {
 
 			public virtual void OnInitialize () { }
 			public virtual void OnUpdate () { }
@@ -187,7 +188,7 @@ namespace UnityPackages.EntityComponentSystem {
 		}
 
 		/// <summary>
-		/// Log.
+		/// Logs to the console.
 		/// </summary>
 		public static void Log (object title, object message) {
 			if (Controller.Instance.debugging == true)
