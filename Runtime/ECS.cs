@@ -1,10 +1,5 @@
 using System.Collections.Generic;
 
-#if UNITY_EDITOR
-using System.Linq;
-using UnityEditor;
-#endif
-
 namespace UnityPackages.EntityComponentSystem {
 
 	public class ECS {
