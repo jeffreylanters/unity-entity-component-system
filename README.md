@@ -57,14 +57,14 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 	public override void OnEntityInitialized (AnotherEcsTestComponent entity) { }
 
 	public override void OnUpdate () {
-    this.GetComponentOnEntity<OtherComponent> (this.firstEntity, component => { /* ... */ });
-    this.HasComponentOnEntity<OtherComponent> (this.firstEntity);
+		this.GetComponentOnEntity<OtherComponent> (this.firstEntity, component => { /* ... */ });
+		this.HasComponentOnEntity<OtherComponent> (this.firstEntity);
 
-    this.firstEntity; // ...
-    foreach (var _entity in this.entities) {
-      // use the entity...
-    }
-  }
+		this.firstEntity; // ...
+		foreach (var _entity in this.entities) {
+			// use the entity...
+		}
+	}
 
 	public override void OnEntityDisabled (AnotherEcsTestComponent entity) { }
 
