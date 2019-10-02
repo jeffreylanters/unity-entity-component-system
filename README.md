@@ -20,6 +20,8 @@ This simple ECS offers a better approach to game design that allows you to conce
 
 Controllers are the main part of our ECS, there should only be one per at a time. The controller initialized the systems you want to be active.
 
+> The functions as shown below are on order of execution.
+
 ```cs
 public class MainController : ECS.Controller {
 
@@ -39,37 +41,38 @@ public class MainController : ECS.Controller {
 
 The systems are controlled by the controller and will controll the component entities it owns.
 
+> The functions as shown below are on order of execution.
+
 ```cs
 public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 
-  public override void OnInitialize () { }
+	public override void OnInitialize () { }
 
-  public override void OnUpdate () {
+	public override void OnEntityInitialize (AnotherEcsTestComponent entity) { }
+
+	public override void OnEntityStart (AnotherEcsTestComponent entity) { }
+
+	public override void OnEntityEnabled (AnotherEcsTestComponent entity) { }
+
+	public override void OnEntityInitialized (AnotherEcsTestComponent entity) { }
+
+	public override void OnUpdate () {
     this.GetComponentOnEntity<OtherComponent> (this.firstEntity, component => { /* ... */ });
     this.HasComponentOnEntity<OtherComponent> (this.firstEntity);
 
-    this.firstEntity;
-
+    this.firstEntity; // ...
     foreach (var _entity in this.entities) {
       // use the entity...
     }
   }
 
-  public override void OnDrawGizmos () { }
+	public override void OnEntityDisabled (AnotherEcsTestComponent entity) { }
 
-  public override void OnGUI () { }
+	public override void OnEntityWillDestroy (AnotherEcsTestComponent entity) { }
 
-  public override void OnEntityInitialize (ItemComponent entity) { }
+	public override void OnDrawGizmos () { }
 
-  public override void OnEntityInitialized (ItemComponent entity) { }
-
-  public override void OnEntityStart (ItemComponent entity) { }
-
-  public override void OnEntityEnabled (ItemComponent entity) { }
-
-  public override void OnEntityDisabled (ItemComponent entity) { }
-
-  public override void OnEntityWillDestroy (ItemComponent entity) { }
+	public override void OnGUI () { }
 }
 ```
 
