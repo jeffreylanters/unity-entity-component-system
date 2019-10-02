@@ -183,13 +183,6 @@ namespace UnityPackages.EntityComponentSystem {
 		public class Reference : UnityEngine.PropertyAttribute { }
 
 		/// <summary>
-		/// Gets a system.
-		/// </summary>
-		public static S GetSystem<S> () where S : ISystem, new () {
-			return Controller.Instance.GetSystem<S> ();
-		}
-
-		/// <summary>
 		/// Logs to the console.
 		/// </summary>
 		public static void Log (object title, object message) {
