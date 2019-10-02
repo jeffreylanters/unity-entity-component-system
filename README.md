@@ -57,11 +57,8 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
   public override void OnEntityInitialized (AnotherEcsTestComponent entity) { }
 
   public override void OnUpdate () {
-    // the the first entity
     this.firstEntity; 
-    foreach (var _entity in this.entities) {
-      // use the entity...
-    }
+    foreach (var _entity in this.entities) { }
   }
 
   public override void OnEntityDisabled (AnotherEcsTestComponent entity) { }
