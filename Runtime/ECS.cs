@@ -136,39 +136,39 @@ namespace UnityPackages.EntityComponentSystem {
 		/// <summary>
 		/// Component.
 		/// </summary>
-		public class Component<C, S> : UnityEngine.MonoBehaviour where C : Component<C, S>, new () where S : System<S, C>, new () {
+		public abstract class Component<C, S> : UnityEngine.MonoBehaviour
+		where C : Component<C, S>, new ()
+		where S : System<S, C>, new () {
 
 			private bool isEntityEnabled = false;
 			private bool isEntityInitialized = false;
+			private S system;
 
 			private void Start () {
-				var _system = GetSystem<S> ();
-				_system.AddEntity ((C) this);
-				_system.OnEntityStart ((C) this);
+				this.system = Controller.Instance.GetSystem<S> ();
+				this.system.AddEntity ((C) this);
+				this.system.OnEntityStart ((C) this);
 			}
 
 			private void Update () {
 				if (this.isEntityEnabled == false) {
 					this.isEntityEnabled = true;
-					var _system = GetSystem<S> ();
-					_system.OnEntityEnabled ((C) this);
+					this.system.OnEntityEnabled ((C) this);
 				}
 				if (this.isEntityInitialized == false) {
 					this.isEntityInitialized = true;
-					var _system = GetSystem<S> ();
-					_system.OnEntityInitialized ((C) this);
+					this.system.OnEntityInitialized ((C) this);
 				}
 			}
 
 			private void OnDisable () {
 				this.isEntityEnabled = false;
-				var _system = GetSystem<S> ();
-				if (_system != null)
-					_system.OnEntityDisabled ((C) this);
+				// if (this.system != null)
+				this.system.OnEntityDisabled ((C) this);
 			}
 
 			private void OnDestroy () {
-				GetSystem<S> ().RemoveEntry ((C) this);
+				this.system.RemoveEntry ((C) this);
 			}
 		}
 
