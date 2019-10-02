@@ -80,7 +80,11 @@ namespace UnityPackages.EntityComponentSystem {
 			void OnGUI ();
 		}
 
-		public abstract class System<S, C> : ISystem where S : System<S, C>, new () where C : Component<C, S>, new () {
+		public abstract class System<S, C> : ISystem
+		where S : System<S, C>, new ()
+		where C : Component<C, S>, new () {
+
+			public static S Instance;
 
 			public virtual void OnInitialize () { }
 			public virtual void OnUpdate () { }
