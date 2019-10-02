@@ -46,33 +46,33 @@ The systems are controlled by the controller and will controll the component ent
 ```cs
 public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 
-	public override void OnInitialize () { }
+  public override void OnInitialize () { }
 
-	public override void OnEntityInitialize (AnotherEcsTestComponent entity) { }
+  public override void OnEntityInitialize (AnotherEcsTestComponent entity) { }
 
-	public override void OnEntityStart (AnotherEcsTestComponent entity) { }
+  public override void OnEntityStart (AnotherEcsTestComponent entity) { }
 
-	public override void OnEntityEnabled (AnotherEcsTestComponent entity) { }
+  public override void OnEntityEnabled (AnotherEcsTestComponent entity) { }
 
-	public override void OnEntityInitialized (AnotherEcsTestComponent entity) { }
+  public override void OnEntityInitialized (AnotherEcsTestComponent entity) { }
 
-	public override void OnUpdate () {
-		this.GetComponentOnEntity<OtherComponent> (this.firstEntity, component => { /* ... */ });
-		this.HasComponentOnEntity<OtherComponent> (this.firstEntity);
+  public override void OnUpdate () {
+    this.GetComponentOnEntity<OtherComponent> (this.firstEntity, component => { /* ... */ });
+    this.HasComponentOnEntity<OtherComponent> (this.firstEntity);
 
-		this.firstEntity; // ...
-		foreach (var _entity in this.entities) {
-			// use the entity...
-		}
-	}
+    this.firstEntity; // ...
+    foreach (var _entity in this.entities) {
+      // use the entity...
+    }
+  }
 
-	public override void OnEntityDisabled (AnotherEcsTestComponent entity) { }
+  public override void OnEntityDisabled (AnotherEcsTestComponent entity) { }
 
-	public override void OnEntityWillDestroy (AnotherEcsTestComponent entity) { }
+  public override void OnEntityWillDestroy (AnotherEcsTestComponent entity) { }
 
-	public override void OnDrawGizmos () { }
+  public override void OnDrawGizmos () { }
 
-	public override void OnGUI () { }
+  public override void OnGUI () { }
 }
 ```
 
