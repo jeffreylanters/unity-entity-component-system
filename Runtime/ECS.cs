@@ -4,9 +4,6 @@ namespace UnityPackages.EntityComponentSystem {
 
 	public class ECS {
 
-		/// <summary>
-		/// Controller.
-		/// </summary>
 		public abstract class Controller : UnityEngine.MonoBehaviour {
 
 			private List<ISystem> systems;
@@ -69,11 +66,16 @@ namespace UnityPackages.EntityComponentSystem {
 						return (S) this.systems[_i];
 				return new S ();
 			}
+
+			public bool HasSystem<S> () where S : ISystem, new () {
+				var _typeOfS = typeof (S);
+				for (var _i = 0; _i < this.systems.Count; _i++)
+					if (this.systems[_i].GetType () == _typeOfS)
+						return true;
+				return false;
+			}
 		}
 
-		/// <summary>
-		/// System.
-		/// </summary>
 		public interface ISystem {
 			void OnInitialize ();
 			void OnUpdate ();
@@ -86,6 +88,9 @@ namespace UnityPackages.EntityComponentSystem {
 		where S : System<S, C>, new ()
 		where C : Component<C, S>, new () {
 
+			// An instance reference to the controller. This reference will be set during the
+			//  'OnInitializeInternal' method inside this class. This method will be called
+			//  after the controller and system initialization.
 			public static S Instance;
 
 			public virtual void OnInitialize () { }
@@ -146,8 +151,20 @@ namespace UnityPackages.EntityComponentSystem {
 			private bool isEntityInitialized = false;
 			private S system;
 
+			private S GetSystem () {
+				if (this.system == null) {
+					if (Controller.Instance.HasSystem<S> () == false) {
+						Error (
+							typeof (C) + " on " + this.gameObject.name,
+							"Tried to access the system before it was registered!");
+						return null;
+					}
+					this.system = Controller.Instance.GetSystem<S> ();
+				}
+				return this.system;
+			}
+
 			private void Start () {
-				this.system = Controller.Instance.GetSystem<S> ();
 				this.system.AddEntity ((C) this);
 				this.system.OnEntityStart ((C) this);
 			}
