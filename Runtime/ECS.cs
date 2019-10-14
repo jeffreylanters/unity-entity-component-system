@@ -68,7 +68,6 @@ namespace UnityPackages.EntityComponentSystem {
 			}
 
 			public bool HasSystem<S> () where S : ISystem, new () {
-				Log ("TESt", this.systems.Count);
 				var _typeOfS = typeof (S);
 				for (var _i = 0; _i < this.systems.Count; _i++)
 					if (this.systems[_i].GetType () == _typeOfS)
@@ -160,6 +159,7 @@ namespace UnityPackages.EntityComponentSystem {
 							"Tried to access the system before it was registered!");
 						return null;
 					}
+					Log ("Requested Reference", typeof (C) + " of " + typeof (S));
 					this.system = Controller.Instance.GetSystem<S> ();
 				}
 				return this.system;
