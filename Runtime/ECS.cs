@@ -57,7 +57,7 @@ namespace UnityPackages.EntityComponentSystem {
 				}
 				for (var _i = 0; _i < systems.Length; _i++) {
 					systems[_i].OnInitialize ();
-					systems[_i].OnInitializedInternal ();
+					systems[_i].OnInitializeInternal ();
 					Log ("Initialized system", systems[_i].GetType ());
 				}
 			}
@@ -79,7 +79,7 @@ namespace UnityPackages.EntityComponentSystem {
 			void OnUpdate ();
 			void OnDrawGizmos ();
 			void OnGUI ();
-			void OnInitializedInternal ();
+			void OnInitializeInternal ();
 		}
 
 		public abstract class System<S, C> : ISystem
@@ -109,7 +109,7 @@ namespace UnityPackages.EntityComponentSystem {
 
 			// This is an interal function that triggers when the system is
 			// initialized. It sets the ref to the system.
-			public void OnInitializedInternal () {
+			public void OnInitializeInternal () {
 				Instance = Controller.Instance.GetSystem<S> ();
 			}
 
