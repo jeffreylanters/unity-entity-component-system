@@ -163,14 +163,18 @@ namespace UnityPackages.EntityComponentSystem {
 			}
 
 			private void Update () {
-				if (this.isEntityEnabled == false) {
-					this.isEntityEnabled = true;
-					this.system.OnEntityEnabled ((C) this);
-				}
-				if (this.isEntityInitialized == false) {
-					this.isEntityInitialized = true;
-					this.system.OnEntityInitialized ((C) this);
-				}
+				if (this.system != null) {
+					if (this.isEntityEnabled == false) {
+						this.isEntityEnabled = true;
+						this.system.OnEntityEnabled ((C) this);
+					}
+					if (this.isEntityInitialized == false) {
+						this.isEntityInitialized = true;
+						this.system.OnEntityInitialized ((C) this);
+					}
+				} else Error (
+					"Component on " + this.gameObject.name,
+					"Update tried to access the system before it was initialized");
 			}
 
 			private void OnDisable () {
@@ -178,12 +182,16 @@ namespace UnityPackages.EntityComponentSystem {
 				if (this.system != null)
 					this.system.OnEntityDisabled ((C) this);
 				else Error (
-					"Component on " + this.gameObject.name, 
+					"Component on " + this.gameObject.name,
 					"OnDisable tried to access the system before it was initialized");
 			}
 
 			private void OnDestroy () {
-				this.system.RemoveEntry ((C) this);
+				if (this.system != null)
+					this.system.RemoveEntry ((C) this);
+				else Error (
+					"Component on " + this.gameObject.name,
+					"OnDestroy tried to access the system before it was initialized");
 			}
 		}
 
@@ -211,7 +219,7 @@ namespace UnityPackages.EntityComponentSystem {
 		/// Logs an error to the console.
 		/// </summary>
 		public static void Error (object title, object message) {
-			UnityEngine.Debug.Error ("<b>ECS</b> " +
+			UnityEngine.Debug.LogError ("<b>ECS</b> " +
 				title.ToString ().ToUpper () + "\n" +
 				message.ToString ());
 		}
