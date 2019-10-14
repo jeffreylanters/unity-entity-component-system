@@ -165,40 +165,28 @@ namespace UnityPackages.EntityComponentSystem {
 			}
 
 			private void Start () {
-				this.system.AddEntity ((C) this);
-				this.system.OnEntityStart ((C) this);
+				this.GetSystem ().AddEntity ((C) this);
+				this.GetSystem ().OnEntityStart ((C) this);
 			}
 
 			private void Update () {
-				if (this.system != null) {
-					if (this.isEntityEnabled == false) {
-						this.isEntityEnabled = true;
-						this.system.OnEntityEnabled ((C) this);
-					}
-					if (this.isEntityInitialized == false) {
-						this.isEntityInitialized = true;
-						this.system.OnEntityInitialized ((C) this);
-					}
-				} else Error (
-					typeof (C) + " on " + this.gameObject.name,
-					"Update tried to access the system before it was initialized");
+				if (this.isEntityEnabled == false) {
+					this.isEntityEnabled = true;
+					this.GetSystem ().OnEntityEnabled ((C) this);
+				}
+				if (this.isEntityInitialized == false) {
+					this.isEntityInitialized = true;
+					this.GetSystem ().OnEntityInitialized ((C) this);
+				}
 			}
 
 			private void OnDisable () {
 				this.isEntityEnabled = false;
-				if (this.system != null)
-					this.system.OnEntityDisabled ((C) this);
-				else Error (
-					typeof (C) + " on " + this.gameObject.name,
-					"OnDisable tried to access the system before it was initialized");
+				this.GetSystem ().OnEntityDisabled ((C) this);
 			}
 
 			private void OnDestroy () {
-				if (this.system != null)
-					this.system.RemoveEntry ((C) this);
-				else Error (
-					typeof (C) + " on " + this.gameObject.name,
-					"OnDestroy tried to access the system before it was initialized");
+				this.GetSystem ().RemoveEntry ((C) this);
 			}
 		}
 
