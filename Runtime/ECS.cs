@@ -173,7 +173,7 @@ namespace UnityPackages.EntityComponentSystem {
 						this.system.OnEntityInitialized ((C) this);
 					}
 				} else Error (
-					"Component on " + this.gameObject.name,
+					typeof (C) + " on " + this.gameObject.name,
 					"Update tried to access the system before it was initialized");
 			}
 
@@ -182,7 +182,7 @@ namespace UnityPackages.EntityComponentSystem {
 				if (this.system != null)
 					this.system.OnEntityDisabled ((C) this);
 				else Error (
-					"Component on " + this.gameObject.name,
+					typeof (C) + " on " + this.gameObject.name,
 					"OnDisable tried to access the system before it was initialized");
 			}
 
@@ -190,7 +190,7 @@ namespace UnityPackages.EntityComponentSystem {
 				if (this.system != null)
 					this.system.RemoveEntry ((C) this);
 				else Error (
-					"Component on " + this.gameObject.name,
+					typeof (C) + " on " + this.gameObject.name,
 					"OnDestroy tried to access the system before it was initialized");
 			}
 		}
