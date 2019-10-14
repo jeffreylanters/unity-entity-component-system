@@ -175,8 +175,11 @@ namespace UnityPackages.EntityComponentSystem {
 
 			private void OnDisable () {
 				this.isEntityEnabled = false;
-				// if (this.system != null)
-				this.system.OnEntityDisabled ((C) this);
+				if (this.system != null)
+					this.system.OnEntityDisabled ((C) this);
+				else Error (
+					"Component on " + this.gameObject.name, 
+					"OnDisable tried to access the system before it was initialized");
 			}
 
 			private void OnDestroy () {
@@ -195,13 +198,22 @@ namespace UnityPackages.EntityComponentSystem {
 		public class Reference : UnityEngine.PropertyAttribute { }
 
 		/// <summary>
-		/// Logs to the console.
+		/// Logs a message to the console.
 		/// </summary>
 		public static void Log (object title, object message) {
 			if (Controller.Instance.debugging == true)
 				UnityEngine.Debug.Log ("<b>ECS</b> " +
 					title.ToString ().ToUpper () + "\n" +
 					message.ToString ());
+		}
+
+		/// <summary>
+		/// Logs an error to the console.
+		/// </summary>
+		public static void Error (object title, object message) {
+			UnityEngine.Debug.Error ("<b>ECS</b> " +
+				title.ToString ().ToUpper () + "\n" +
+				message.ToString ());
 		}
 	}
 }
