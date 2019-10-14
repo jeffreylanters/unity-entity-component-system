@@ -99,13 +99,10 @@ namespace UnityPackages.EntityComponentSystem {
 			public virtual void OnEntityDisabled (C entity) { }
 			public virtual void OnEntityWillDestroy (C entity) { }
 
-			/// The list of instanced entities of this system.
 			public List<C> entities;
 
-			/// Gets the first entity instances by this system.
 			public C firstEntity { get { return this.entities[0]; } }
 
-			/// Creates a new system.
 			public System () {
 				this.entities = new List<C> ();
 			}
@@ -116,7 +113,6 @@ namespace UnityPackages.EntityComponentSystem {
 				Instance = Controller.Instance.GetSystem<S> ();
 			}
 
-			/// Adds an entity component to the system.
 			public void AddEntity (C component) {
 				Log ("Added Entity",
 					component.transform.name + " to " + this.ToString ());
@@ -124,7 +120,6 @@ namespace UnityPackages.EntityComponentSystem {
 				this.OnEntityInitialize (component);
 			}
 
-			/// Removes an entity component from the system.
 			public void RemoveEntry (C component) {
 				Log ("Removed Entity",
 					component.transform.name + " from " + this.ToString ());
@@ -132,22 +127,17 @@ namespace UnityPackages.EntityComponentSystem {
 				this.entities.Remove (component);
 			}
 
-			/// Gets a component from an entity.
 			public void GetComponentOnEntity<GEC> (C entity, System.Action<GEC> action) {
 				var _entity = entity.GetComponent<GEC> ();
 				if (_entity != null)
 					action (_entity);
 			}
 
-			/// Check wether a component has an entity.
 			public bool HasComponentOnEntity<GEC> (C entity) {
 				return entity.GetComponent<GEC> () != null;
 			}
 		}
 
-		/// <summary>
-		/// Component.
-		/// </summary>
 		public abstract class Component<C, S> : UnityEngine.MonoBehaviour
 		where C : Component<C, S>, new ()
 		where S : System<S, C>, new () {
@@ -195,19 +185,12 @@ namespace UnityPackages.EntityComponentSystem {
 			}
 		}
 
-		/// <summary>
 		/// Describes a protected property within a component.
-		/// </summary>
 		public class Protected : UnityEngine.PropertyAttribute { }
 
-		/// <summary>
 		/// Describes a reference property within a component.
-		/// </summary>
 		public class Reference : UnityEngine.PropertyAttribute { }
 
-		/// <summary>
-		/// Logs a message to the console.
-		/// </summary>
 		public static void Log (object title, object message) {
 			if (Controller.Instance.debugging == true)
 				UnityEngine.Debug.Log ("<b>ECS</b> " +
@@ -215,9 +198,6 @@ namespace UnityPackages.EntityComponentSystem {
 					message.ToString ());
 		}
 
-		/// <summary>
-		/// Logs an error to the console.
-		/// </summary>
 		public static void Error (object title, object message) {
 			UnityEngine.Debug.LogError ("<b>ECS</b> " +
 				title.ToString ().ToUpper () + "\n" +
