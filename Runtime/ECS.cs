@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace UnityPackages.EntityComponentSystem {
@@ -26,10 +27,15 @@ namespace UnityPackages.EntityComponentSystem {
 
 			private void Update () {
 				for (var _i = 0; _i < this.systems.Count; _i++)
-					this.systems[_i].OnUpdate ();
+					if (this.systems[_i].isEnabled == true)
+						this.systems[_i].OnUpdate ();
 				if (this.isInitialized == false) {
-					this.isInitialized = true;
+					for (var _i = 0; _i < this.systems.Count; _i++) {
+						this.systems[_i].OnEnabled ();
+						this.systems[_i].OnInitialized ();
+					}
 					this.OnInitialized ();
+					this.isInitialized = true;
 				}
 				this.OnUpdate ();
 			}
@@ -44,32 +50,41 @@ namespace UnityPackages.EntityComponentSystem {
 
 			private void OnGUI () {
 				for (var _i = 0; _i < this.systems.Count; _i++)
-					this.systems[_i].OnGUI ();
+					if (this.systems[_i].isEnabled == true)
+						this.systems[_i].OnGUI ();
 			}
 
-			public void RegisterSystems (params ISystem[] systems) {
-				for (var _i = 0; _i < systems.Length; _i++) {
-					if (this.systems.Contains (systems[_i]) == false) {
-						this.systems.Add (systems[_i]);
-						systems[_i].OnInitialize ();
-						systems[_i].OnInitializeInternal ();
-						Log ("Registeed system", systems[_i].GetType ());
-					} else Error (
-						"Unable to registered system",
-						systems[_i].GetType () + " is already registered");
-				}
+			public void RegisterSystems (params Type[] typesOf) {
+				if (this.isInitialized == false) {
+					for (var _i = 0; _i < typesOf.Length; _i++) {
+						var _system = (ISystem) Activator.CreateInstance (typesOf[_i]);
+						this.systems.Add (_system);
+						_system.OnInitialize ();
+						_system.OnInitializeInternal ();
+						_system.isEnabled = true;
+						Log ("Registered system", _system.GetType ());
+					}
+				} else Error (
+					"Unable to registered system",
+					"Only register during the OnInitialize!");
 			}
 
-			public void DeregisterSystems (params ISystem[] systems) {
-				for (var _i = 0; _i < systems.Length; _i++) {
-					if (this.systems.Contains (systems[_i]) == true) {
-						systems[_i].OnWillDestroy ();
-						this.systems.Remove (systems[_i]);
-						Log ("Deregistered system", systems[_i].GetType ());
-					} else Error (
-						"Unable to deregistered system",
-						systems[_i].GetType () + " is not registered");
-				}
+			public void EnableSystems (params Type[] typesOf) {
+				for (var _t = 0; _t < typesOf.Length; _t++)
+					for (var _i = 0; _i < this.systems.Count; _i++)
+						if (this.systems[_i].GetType () == typesOf[_t]) {
+							this.systems[_i].isEnabled = true;
+							this.systems[_i].OnEnabled ();
+						}
+			}
+
+			public void DisableSystems (params Type[] typesOf) {
+				for (var _t = 0; _t < typesOf.Length; _t++)
+					for (var _i = 0; _i < this.systems.Count; _i++)
+						if (this.systems[_i].GetType () == typesOf[_t]) {
+							this.systems[_i].isEnabled = false;
+							this.systems[_i].OnDisabled ();
+						}
 			}
 
 			public S GetSystem<S> () where S : ISystem, new () {
@@ -91,11 +106,14 @@ namespace UnityPackages.EntityComponentSystem {
 
 		public interface ISystem {
 			void OnInitialize ();
-			void OnWillDestroy ();
+			void OnInitialized ();
+			void OnInitializeInternal ();
+			void OnEnabled ();
+			void OnDisabled ();
 			void OnUpdate ();
 			void OnDrawGizmos ();
 			void OnGUI ();
-			void OnInitializeInternal ();
+			bool isEnabled { get; set; }
 		}
 
 		public abstract class System<S, C> : ISystem
@@ -108,10 +126,12 @@ namespace UnityPackages.EntityComponentSystem {
 			public static S Instance;
 
 			public virtual void OnInitialize () { }
+			public virtual void OnInitialized () { }
 			public virtual void OnUpdate () { }
 			public virtual void OnDrawGizmos () { }
 			public virtual void OnGUI () { }
-			public virtual void OnWillDestroy () { }
+			public virtual void OnEnabled () { }
+			public virtual void OnDisabled () { }
 			public virtual void OnEntityInitialize (C entity) { }
 			public virtual void OnEntityInitialized (C entity) { }
 			public virtual void OnEntityStart (C entity) { }
@@ -119,19 +139,21 @@ namespace UnityPackages.EntityComponentSystem {
 			public virtual void OnEntityDisabled (C entity) { }
 			public virtual void OnEntityWillDestroy (C entity) { }
 
-			public List<C> entities;
+			private bool _isEnabled;
 
+			public List<C> entities;
 			public C firstEntity { get { return this.entities[0]; } }
 
-			public System () {
-				this.entities = new List<C> ();
+			public bool isEnabled {
+				get => this._isEnabled;
+				set => this._isEnabled = value;
 			}
 
-			// This is an interal function that triggers when the system is
-			// initialized. It sets the ref to the system.
-			public void OnInitializeInternal () {
+			public System () =>
+				this.entities = new List<C> ();
+
+			public void OnInitializeInternal () =>
 				Instance = Controller.Instance.GetSystem<S> ();
-			}
 
 			public void AddEntity (C component) {
 				Log ("Added Entity",
@@ -147,15 +169,14 @@ namespace UnityPackages.EntityComponentSystem {
 				this.entities.Remove (component);
 			}
 
-			public void GetComponentOnEntity<GEC> (C entity, System.Action<GEC> action) {
+			public void GetComponentOnEntity<GEC> (C entity, Action<GEC> action) {
 				var _entity = entity.GetComponent<GEC> ();
 				if (_entity != null)
 					action (_entity);
 			}
 
-			public bool HasComponentOnEntity<GEC> (C entity) {
-				return entity.GetComponent<GEC> () != null;
-			}
+			public bool HasComponentOnEntity<GEC> (C entity) =>
+				entity.GetComponent<GEC> () != null;
 		}
 
 		public abstract class Component<C, S> : UnityEngine.MonoBehaviour
@@ -167,16 +188,14 @@ namespace UnityPackages.EntityComponentSystem {
 			private S system;
 
 			private S GetSystem () {
-				if (this.system == null) {
-					if (Controller.Instance.HasSystem<S> () == false) {
+				if (this.system == null)
+					if (Controller.Instance.HasSystem<S> () == true) {
+						Log ("Requested Reference", typeof (C) + " of " + typeof (S));
+						this.system = Controller.Instance.GetSystem<S> ();
+					} else
 						Error (
 							typeof (C) + " on " + this.gameObject.name,
 							"Tried to access the system before it was registered!");
-						return null;
-					}
-					Log ("Requested Reference", typeof (C) + " of " + typeof (S));
-					this.system = Controller.Instance.GetSystem<S> ();
-				}
 				return this.system;
 			}
 
@@ -201,9 +220,8 @@ namespace UnityPackages.EntityComponentSystem {
 				this.GetSystem ().OnEntityDisabled ((C) this);
 			}
 
-			private void OnDestroy () {
+			private void OnDestroy () =>
 				this.GetSystem ().RemoveEntry ((C) this);
-			}
 		}
 
 		/// Describes a protected property within a component.
@@ -212,6 +230,7 @@ namespace UnityPackages.EntityComponentSystem {
 		/// Describes a reference property within a component.
 		public class Reference : UnityEngine.PropertyAttribute { }
 
+		/// Logs an object into the console
 		public static void Log (object title, object message) {
 			if (Controller.Instance.debugging == true)
 				UnityEngine.Debug.Log ("<b>ECS</b> " +
@@ -219,6 +238,7 @@ namespace UnityPackages.EntityComponentSystem {
 					message.ToString ());
 		}
 
+		/// Logs an error into the console
 		public static void Error (object title, object message) {
 			UnityEngine.Debug.LogError ("<b>ECS</b> " +
 				title.ToString ().ToUpper () + "\n" +
