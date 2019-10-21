@@ -24,9 +24,8 @@ namespace UnityPackages.EntityComponentSystem {
         "",
         "public class {{name}}Controller : ECS.Controller {",
         "\tpublic override void OnInitialize () {",
-        "\t\tthis.RegisterSystems (",
-        "\t\t\t// new Systems...",
-        "\t\t);",
+        "\t\tthis.RegisterSystems (/* Systems ... */);",
+        "\t\tthis.DeregisterSystems(/* Systems ... */);",
         "\t}",
         "",
         "\tpublic override void OnInitialized () { }",
@@ -84,6 +83,8 @@ namespace UnityPackages.EntityComponentSystem {
         "\tpublic override void OnDrawGizmos () { }",
         "",
         "\tpublic override void OnGUI () { }",
+        "",
+        "\tpublic override void OnWillDestory () { }",
         "}"
       );
     }

@@ -26,9 +26,8 @@ Controllers are the main part of our ECS, there should only be one per at a time
 public class MainController : ECS.Controller {
 
   public override void OnInitialize () {
-    this.RegisterSystems (
-      // new ItemSystem()
-    );
+    this.RegisterSystems (new ItemSystem());
+    this.DeregisterSystems (/* ... */);
   }
 
   public override void OnInitialized () { }
@@ -57,7 +56,7 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
   public override void OnEntityInitialized (AnotherEcsTestComponent entity) { }
 
   public override void OnUpdate () {
-    this.firstEntity; 
+    this.firstEntity;
     foreach (var _entity in this.entities) { }
   }
 
@@ -68,6 +67,8 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
   public override void OnDrawGizmos () { }
 
   public override void OnGUI () { }
+
+  public override void OnWillDestory () { }
 }
 ```
 
