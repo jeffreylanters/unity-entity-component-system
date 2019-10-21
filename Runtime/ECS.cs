@@ -49,13 +49,26 @@ namespace UnityPackages.EntityComponentSystem {
 
 			public void RegisterSystems (params ISystem[] systems) {
 				for (var _i = 0; _i < systems.Length; _i++) {
-					this.systems.Add (systems[_i]);
-					Log ("Added system", systems[_i].GetType ());
+					if (this.systems.Contains (systems[_i]) == false) {
+						this.systems.Add (systems[_i]);
+						systems[_i].OnInitialize ();
+						systems[_i].OnInitializeInternal ();
+						Log ("Registeed system", systems[_i].GetType ());
+					} else Error (
+						"Unable to registered system",
+						systems[_i].GetType () + " is already registered");
 				}
+			}
+
+			public void DeregisterSystems (params ISystem[] systems) {
 				for (var _i = 0; _i < systems.Length; _i++) {
-					systems[_i].OnInitialize ();
-					systems[_i].OnInitializeInternal ();
-					Log ("Initialized system", systems[_i].GetType ());
+					if (this.systems.Contains (systems[_i]) == true) {
+						systems[_i].OnWillDestroy ();
+						this.systems.Remove (systems[_i]);
+						Log ("Deregistered system", systems[_i].GetType ());
+					} else Error (
+						"Unable to deregistered system",
+						systems[_i].GetType () + " is not registered");
 				}
 			}
 
@@ -78,6 +91,7 @@ namespace UnityPackages.EntityComponentSystem {
 
 		public interface ISystem {
 			void OnInitialize ();
+			void OnWillDestroy ();
 			void OnUpdate ();
 			void OnDrawGizmos ();
 			void OnGUI ();
@@ -97,6 +111,7 @@ namespace UnityPackages.EntityComponentSystem {
 			public virtual void OnUpdate () { }
 			public virtual void OnDrawGizmos () { }
 			public virtual void OnGUI () { }
+			public virtual void OnWillDestroy () { }
 			public virtual void OnEntityInitialize (C entity) { }
 			public virtual void OnEntityInitialized (C entity) { }
 			public virtual void OnEntityStart (C entity) { }
