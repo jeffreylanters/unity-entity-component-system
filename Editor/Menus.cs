@@ -84,7 +84,7 @@ namespace UnityPackages.EntityComponentSystem {
         "",
         "\tpublic override void OnGUI () { }",
         "",
-        "\tpublic override void OnWillDestory () { }",
+        "\tpublic override void OnWillDestroy () { }",
         "}"
       );
     }

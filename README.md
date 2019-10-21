@@ -68,7 +68,7 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 
   public override void OnGUI () { }
 
-  public override void OnWillDestory () { }
+  public override void OnWillDestroy () { }
 }
 ```
 
