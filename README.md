@@ -23,16 +23,18 @@ Controllers are the main part of our ECS, there should only be one per at a time
 > The functions as shown below are on order of execution.
 
 ```cs
+using UnityPackages.EntityComponentSystem;
+
 public class MainController : ECS.Controller {
+	public override void OnInitialize () {
+		this.RegisterSystems (/* typeof(MyItemSystem), ... */);
+		this.EnableSystems(/* typeof(MyItemSystem), ... */);
+		this.DisableSystems(/* typeof(MyItemSystem), ... */);
+	}
 
-  public override void OnInitialize () {
-    this.RegisterSystems (new ItemSystem());
-    this.DeregisterSystems (/* ... */);
-  }
+	public override void OnInitialized () { }
 
-  public override void OnInitialized () { }
-
-  public override void OnUpdate () { }
+	public override void OnUpdate () { }
 }
 ```
 
@@ -43,32 +45,37 @@ The systems are controlled by the controller and will controll the component ent
 > The functions as shown below are on order of execution.
 
 ```cs
+using UnityPackages.EntityComponentSystem;
+
 public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
+	public override void OnInitialize () { }
 
-  public override void OnInitialize () { }
+	public override void OnEntityInitialize (ItemComponent entity) { }
 
-  public override void OnEntityInitialize (AnotherEcsTestComponent entity) { }
+	public override void OnEntityStart (ItemComponent entity) { }
 
-  public override void OnEntityStart (AnotherEcsTestComponent entity) { }
+	public override void OnEntityEnabled (ItemComponent entity) { }
 
-  public override void OnEntityEnabled (AnotherEcsTestComponent entity) { }
+	public override void OnEntityInitialized (ItemComponent entity) { }
 
-  public override void OnEntityInitialized (AnotherEcsTestComponent entity) { }
+	public override void OnUpdate () {
+		// this.firstEntity;
+		foreach (var _entity in this.entities) { }
+	}
 
-  public override void OnUpdate () {
-    this.firstEntity;
-    foreach (var _entity in this.entities) { }
-  }
+	public override void OnEnabled () { }
 
-  public override void OnEntityDisabled (AnotherEcsTestComponent entity) { }
+	public override void OnInitialized () { }
 
-  public override void OnEntityWillDestroy (AnotherEcsTestComponent entity) { }
+	public override void OnEntityDisabled (ItemComponent entity) { }
 
-  public override void OnDrawGizmos () { }
+	public override void OnEntityWillDestroy (ItemComponent entity) { }
 
-  public override void OnGUI () { }
+	public override void OnDrawGizmos () { }
 
-  public override void OnWillDestroy () { }
+	public override void OnGUI () { }
+
+	public override void OnDisabled () { }
 }
 ```
 
@@ -84,10 +91,10 @@ AnotherSystem.Instance; // ...
 The components are controlled by the systems and may only contain public data.
 
 ```cs
-public class ItemComponent : ECS.Component<ItemComponent, ItemSystem> {
+using UnityPackages.EntityComponentSystem;
 
-  // Example values
-  [ECS.Protected] public bool myProtectedBool;
-  [ECS.Reference] public Transform myReferencesTransform;
+public class ItemComponent : ECS.Component<ItemComponent, ItemSystem> {
+	// [ECS.Protected] public bool myProtectedBool;
+	// [ECS.Reference] public Transform myReferencesTransform;
 }
 ```
