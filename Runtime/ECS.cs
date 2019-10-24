@@ -22,6 +22,7 @@ namespace UnityPackages.EntityComponentSystem {
 				Instance = this;
 				this.systems = new List<ISystem> ();
 				this.OnInitialize ();
+				GameObject.DontDestroyOnLoad(this.gameObject);
 				Log ("Initialized controller", "");
 			}
 
