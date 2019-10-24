@@ -14,87 +14,110 @@ This simple ECS offers a better approach to game design that allows you to conce
 
 [Click here to read the Unity Packages installation guide](https://github.com/unity-packages/installation)
 
-## Usage
+## Example Usage and Events
 
 ### Controllers
 
-Controllers are the main part of our ECS, there should only be one per at a time. The controller initialized the systems you want to be active.
-
-> The functions as shown below are on order of execution.
-
 ```cs
-using UnityPackages.EntityComponentSystem;
-
+// Create one controller per project as your core
 public class MainController : ECS.Controller {
-	public override void OnInitialize () {
-		this.RegisterSystems (/* typeof(MyItemSystem), ... */);
-		this.EnableSystems(/* typeof(MyItemSystem), ... */);
-		this.DisableSystems(/* typeof(MyItemSystem), ... */);
-	}
 
-	public override void OnInitialized () { }
+	// Event triggered when the controller is initializing
+  public override void OnInitialize () {
 
-	public override void OnUpdate () { }
+		// Use the Register Systems method to register your systems to the controller
+		//  This can only be done during the initialization
+    this.RegisterSystems (typeof(MyItemSystem));
+
+		// Use the Enable Systems method to enable any of your registered systems
+    this.EnableSystems(typeof(MyItemSystem));
+
+		// Use the Enable Systems method to disable any of your registered systems
+    this.DisableSystems(typeof(MyItemSystem));
+  }
+
+	// Event triggered when the controller is initialized
+  public override void OnInitialized () { }
+
+	// Event triggered when the system is updating
+	//  This event is called every frame
+  public override void OnUpdate () { }
 }
 ```
 
 ### Systems
 
-The systems are controlled by the controller and will controll the component entities it owns.
-
-> The functions as shown below are on order of execution.
-
 ```cs
-using UnityPackages.EntityComponentSystem;
-
+// Create a system to take control of your entity's component
 public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
-	public override void OnInitialize () { }
 
-	public override void OnEntityInitialize (ItemComponent entity) { }
+	// Event triggered when the system is initializing
+  public override void OnInitialize () { }
 
-	public override void OnEntityStart (ItemComponent entity) { }
+	// Event triggered when the system is updating
+	//  This event is called every frame
+  public override void OnUpdate () {
 
-	public override void OnEntityEnabled (ItemComponent entity) { }
+		// Access the first entity's component
+    this.firstEntity;
 
-	public override void OnEntityInitialized (ItemComponent entity) { }
+		// Access all the entities components
+    foreach (var _entity in this.entities) { }
+  }
 
-	public override void OnUpdate () {
-		// this.firstEntity;
-		foreach (var _entity in this.entities) { }
-	}
-
+	// Event triggered when the system is enabled
 	public override void OnEnabled () { }
 
+	// Event triggered when the system is initialized
 	public override void OnInitialized () { }
 
-	public override void OnEntityDisabled (ItemComponent entity) { }
-
-	public override void OnEntityWillDestroy (ItemComponent entity) { }
-
+	// Event triggered when the system is drawing the gizmos
+	//  This event is called every gizmos draw call
 	public override void OnDrawGizmos () { }
 
+	// Event triggered when the system is listing for GUI events
+	//  This event is called every GUI draw call
 	public override void OnGUI () { }
 
+	// Event triggered when the system is disabled
 	public override void OnDisabled () { }
+
+	// Event triggered when an entity of this system is initializing
+	public override void OnEntityInitialize (ItemComponent entity) { }
+
+	// Event triggered when an entity of this system is started
+	public override void OnEntityStart (ItemComponent entity) { }
+
+	// Event triggered when an entity of this system is enabled
+	public override void OnEntityEnabled (ItemComponent entity) { }
+
+	// Event triggered when an entity of this system is initialized
+	public override void OnEntityInitialized (ItemComponent entity) { }
+
+	// Event triggered when an entity of this system is disabled
+	public override void OnEntityDisabled (ItemComponent entity) { }
+
+	// Event triggered when an entity of this system will destroy
+	public override void OnEntityWillDestroy (ItemComponent entity) { }
 }
 ```
 
-```cs
-// Other methods and properties of a system...
+<!-- ```cs
 this.GetComponentOnEntity<OtherComponent> (this.firstEntity, component => { /* ... */ });
 this.HasComponentOnEntity<OtherComponent> (this.firstEntity);
-AnotherSystem.Instance; // ...
-```
+AnotherSystem.Instance;
+``` -->
 
 ### Components
 
-The components are controlled by the systems and may only contain public data.
-
 ```cs
-using UnityPackages.EntityComponentSystem;
-
+// Create a component to provide properties to your entity
 public class ItemComponent : ECS.Component<ItemComponent, ItemSystem> {
-	// [ECS.Protected] public bool myProtectedBool;
-	// [ECS.Reference] public Transform myReferencesTransform;
+
+	// EXAMPLE: Use the 'Protected' attribute to mark properties as inaccessable
+  [ECS.Protected] public bool myProtectedBool;
+
+	// EXAMPLE: Use the 'Reference' attribute to mark properties as reference containers
+  [ECS.Reference] public Transform myTransformReference;
 }
 ```
