@@ -23,25 +23,25 @@ This simple ECS offers a better approach to game design that allows you to conce
 public class MainController : ECS.Controller {
 
 	// Event triggered when the controller is initializing
-  public override void OnInitialize () {
+	public override void OnInitialize () {
 
 		// Use the Register Systems method to register your systems to the controller
-		//  This can only be done during the initialization
-    this.RegisterSystems (typeof(MyItemSystem));
+		//	This can only be done during the initialization
+		this.RegisterSystems (typeof(MyItemSystem));
 
 		// Use the Enable Systems method to enable any of your registered systems
-    this.EnableSystems(typeof(MyItemSystem));
+		this.EnableSystems(typeof(MyItemSystem));
 
 		// Use the Enable Systems method to disable any of your registered systems
-    this.DisableSystems(typeof(MyItemSystem));
-  }
+		this.DisableSystems(typeof(MyItemSystem));
+	}
 
 	// Event triggered when the controller is initialized
-  public override void OnInitialized () { }
+	public override void OnInitialized () { }
 
 	// Event triggered when the system is updating
-	//  This event is called every frame
-  public override void OnUpdate () { }
+	//	This event is called every frame
+	public override void OnUpdate () { }
 }
 ```
 
@@ -52,18 +52,18 @@ public class MainController : ECS.Controller {
 public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 
 	// Event triggered when the system is initializing
-  public override void OnInitialize () { }
+	public override void OnInitialize () { }
 
 	// Event triggered when the system is updating
-	//  This event is called every frame
-  public override void OnUpdate () {
+	//	This event is called every frame
+	public override void OnUpdate () {
 
 		// Access the first entity's component
-    this.firstEntity;
+		this.firstEntity;
 
 		// Access all the entities components
-    foreach (var _entity in this.entities) { }
-  }
+		foreach (var _entity in this.entities) { }
+	}
 
 	// Event triggered when the system is enabled
 	public override void OnEnabled () { }
@@ -72,11 +72,11 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 	public override void OnInitialized () { }
 
 	// Event triggered when the system is drawing the gizmos
-	//  This event is called every gizmos draw call
+	//	This event is called every gizmos draw call
 	public override void OnDrawGizmos () { }
 
 	// Event triggered when the system is listing for GUI events
-	//  This event is called every GUI draw call
+	//	This event is called every GUI draw call
 	public override void OnGUI () { }
 
 	// Event triggered when the system is disabled
@@ -115,9 +115,9 @@ AnotherSystem.Instance;
 public class ItemComponent : ECS.Component<ItemComponent, ItemSystem> {
 
 	// EXAMPLE: Use the 'Protected' attribute to mark properties as inaccessable
-  [ECS.Protected] public bool myProtectedBool;
+	[ECS.Protected] public bool myProtectedBool;
 
 	// EXAMPLE: Use the 'Reference' attribute to mark properties as reference containers
-  [ECS.Reference] public Transform myTransformReference;
+	[ECS.Reference] public Transform myTransformReference;
 }
 ```
