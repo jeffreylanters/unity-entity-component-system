@@ -26,13 +26,13 @@ public class MainController : ECS.Controller {
 	public override void OnInitialize () {
 
 		// Use the Register Systems method to register your systems to the controller
-		//	This can only be done during the initialization
+		//  This can only be done during the initialization
 		this.RegisterSystems (typeof(MyItemSystem));
 
-		// Use the Enable Systems method to enable any of your registered systems
+		// EXAMPLE: Use the Enable Systems method to enable any of your registered systems
 		this.EnableSystems(typeof(MyItemSystem));
 
-		// Use the Enable Systems method to disable any of your registered systems
+		// EXAMPLE: Use the Enable Systems method to disable any of your registered systems
 		this.DisableSystems(typeof(MyItemSystem));
 	}
 
@@ -55,14 +55,22 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 	public override void OnInitialize () { }
 
 	// Event triggered when the system is updating
-	//	This event is called every frame
+	//   This event is called every frame
 	public override void OnUpdate () {
 
-		// Access the first entity's component
+		// EXAMPLE: Access the first entity's component
 		this.firstEntity;
 
-		// Access all the entities components
+		// EXAMPLE: Access all the entities components
 		foreach (var _entity in this.entities) { }
+
+		// EXAMPLE: Use the static 'Instance' to access other systems
+		InventorySystem.Instance;
+
+		// EXAMPLE: Use the 'GetComponentOnEntity' and 'HasComponentOnEntity' methods to
+		// access other components on entities
+		this.GetComponentOnEntity<OtherComponent> (this.firstEntity, component => { });
+		this.HasComponentOnEntity<OtherComponent> (this.firstEntity);
 	}
 
 	// Event triggered when the system is enabled
@@ -72,11 +80,11 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 	public override void OnInitialized () { }
 
 	// Event triggered when the system is drawing the gizmos
-	//	This event is called every gizmos draw call
+	//   This event is called every gizmos draw call
 	public override void OnDrawGizmos () { }
 
 	// Event triggered when the system is listing for GUI events
-	//	This event is called every GUI draw call
+	//   This event is called every GUI draw call
 	public override void OnGUI () { }
 
 	// Event triggered when the system is disabled
