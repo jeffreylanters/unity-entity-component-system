@@ -67,8 +67,8 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 		// EXAMPLE: Use the static 'Instance' to access other systems
 		InventorySystem.Instance;
 
-		// EXAMPLE: Use the 'GetComponentOnEntity' and 'HasComponentOnEntity' methods to
-		//   access other components on entities
+		// EXAMPLE: Use the 'GetComponentOnEntity' and 'HasComponentOnEntity'
+		//    methods to access other components on entities
 		this.GetComponentOnEntity<OtherComponent> (this.firstEntity, component => { });
 		this.HasComponentOnEntity<OtherComponent> (this.firstEntity);
 	}
