@@ -32,7 +32,7 @@ public class MainController : ECS.Controller {
 		// EXAMPLE: Use the Enable Systems method to enable any of your registered systems
 		this.EnableSystems(typeof(MyItemSystem));
 
-		// EXAMPLE: Use the Enable Systems method to disable any of your registered systems
+		// EXAMPLE: Use the Disable Systems method to disable any of your registered systems
 		this.DisableSystems(typeof(MyItemSystem));
 	}
 
@@ -40,7 +40,7 @@ public class MainController : ECS.Controller {
 	public override void OnInitialized () { }
 
 	// Event triggered when the system is updating
-	//	This event is called every frame
+	//   This event is called every frame
 	public override void OnUpdate () { }
 }
 ```
@@ -68,7 +68,7 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 		InventorySystem.Instance;
 
 		// EXAMPLE: Use the 'GetComponentOnEntity' and 'HasComponentOnEntity' methods to
-		// access other components on entities
+		//   access other components on entities
 		this.GetComponentOnEntity<OtherComponent> (this.firstEntity, component => { });
 		this.HasComponentOnEntity<OtherComponent> (this.firstEntity);
 	}
