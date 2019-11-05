@@ -69,7 +69,7 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 
 		// EXAMPLE: Use the 'GetComponentOnEntity' and 'HasComponentOnEntity'
 		//    methods to access other components on entities
-		this.GetComponentOnEntity<OtherComponent> (this.firstEntity, component => { });
+		this.GetComponentOnEntity<OtherComponent> (this.firstEntity, entity => { });
 		this.HasComponentOnEntity<OtherComponent> (this.firstEntity);
 	}
 
