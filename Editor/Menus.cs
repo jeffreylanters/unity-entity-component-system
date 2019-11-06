@@ -16,18 +16,7 @@ namespace UnityPackages.EntityComponentSystem {
         "Controller",
         "cs",
         "using UnityPackages.EntityComponentSystem;",
-        "",
-        "public class {{name}}Controller : ECS.Controller {",
-        "\tpublic override void OnInitialize () {",
-        "\t\tthis.RegisterSystems (/* typeof(MyItemSystem), ... */);",
-        "\t\tthis.EnableSystems(/* typeof(MyItemSystem), ... */);",
-        "\t\tthis.DisableSystems(/* typeof(MyItemSystem), ... */);",
-        "\t}",
-        "",
-        "\tpublic override void OnInitialized () { }",
-        "",
-        "\tpublic override void OnUpdate () { }",
-        "}"
+        "public class {{name}}Controller : ECS.Controller { }"
       );
     }
 
@@ -38,13 +27,9 @@ namespace UnityPackages.EntityComponentSystem {
         "Item",
         "Component",
         "cs",
-        "using UnityPackages.EntityComponentSystem;",
         "using UnityEngine;",
-        "",
-        "public class {{name}}Component : ECS.Component<{{name}}Component, {{name}}System> {",
-        "\t// [ECS.Protected] public bool myProtectedBool;",
-        "\t// [ECS.Reference] public Transform myReferencesTransform;",
-        "}"
+        "using UnityPackages.EntityComponentSystem;",
+        "public class {{name}}Component : ECS.Component<{{name}}Component, {{name}}System> { }"
       );
     }
 
@@ -56,37 +41,7 @@ namespace UnityPackages.EntityComponentSystem {
         "System",
         "cs",
         "using UnityPackages.EntityComponentSystem;",
-        "",
-        "public class {{name}}System : ECS.System<{{name}}System, {{name}}Component> {",
-        "\tpublic override void OnInitialize () { }",
-        "",
-        "\tpublic override void OnEntityInitialize ({{name}}Component entity) { }",
-        "",
-        "\tpublic override void OnEntityStart ({{name}}Component entity) { }",
-        "",
-        "\tpublic override void OnEntityEnabled ({{name}}Component entity) { }",
-        "",
-        "\tpublic override void OnEntityInitialized ({{name}}Component entity) { }",
-        "",
-        "\tpublic override void OnUpdate () {",
-        "\t\t// this.firstEntity;",
-        "\t\tforeach (var _entity in this.entities) { }",
-        "\t}",
-        "",
-        "\tpublic override void OnEnabled () { }",
-        "",
-        "\tpublic override void OnInitialized () { }",
-        "",
-        "\tpublic override void OnEntityDisabled ({{name}}Component entity) { }",
-        "",
-        "\tpublic override void OnEntityWillDestroy ({{name}}Component entity) { }",
-        "",
-        "\tpublic override void OnDrawGizmos () { }",
-        "",
-        "\tpublic override void OnGUI () { }",
-        "",
-        "\tpublic override void OnDisabled () { }",
-        "}"
+        "public class {{name}}System : ECS.System<{{name}}System, {{name}}Component> { }"
       );
     }
   }
