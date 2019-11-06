@@ -14,7 +14,7 @@ This simple ECS offers a better approach to game design that allows you to conce
 
 [Click here to read the Unity Packages installation guide](https://github.com/unity-packages/installation)
 
-## Example Usage and Events
+## Example Usage, and Methods
 
 ### Controllers
 
@@ -115,22 +115,16 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 }
 ```
 
-<!-- ```cs
-this.GetComponentOnEntity<OtherComponent> (this.firstEntity, component => { /* ... */ });
-this.HasComponentOnEntity<OtherComponent> (this.firstEntity);
-AnotherSystem.Instance;
-``` -->
-
 ### Components
 
 ```cs
 // Create a component to provide properties to your entity
 public class ItemComponent : ECS.Component<ItemComponent, ItemSystem> {
 
-	// EXAMPLE: Use the 'Protected' attribute to mark properties as inaccessable
-	[ECS.Protected] public bool myProtectedBool;
+	// EXAMPLE: Use the 'Protected' attribute to mark properties as inaccessable in the editor
+	[ECS.Protected] public bool isLegendary;
 
-	// EXAMPLE: Use the 'Reference' attribute to mark properties as reference containers
-	[ECS.Reference] public Transform myTransformReference;
+	// EXAMPLE: Use the 'Reference' attribute to let the editor automatically assign the property
+	[ECS.Reference] public Image itemSprite;
 }
 ```
