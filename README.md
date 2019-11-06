@@ -68,9 +68,14 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 		InventorySystem.Instance;
 
 		// EXAMPLE: Use the 'GetComponentOnEntity' and 'HasComponentOnEntity'
-		//    methods to access other components on entities
+		//   methods to access other components on entities
 		this.GetComponentOnEntity<OtherComponent> (this.firstEntity, entity => { });
 		this.HasComponentOnEntity<OtherComponent> (this.firstEntity);
+
+		// EXAMPLE: Use the 'StartCoroutine' and 'StopCoroutine' on IEnumerators
+		//   Even though a System is no MonoBehaviour, it still can manage coroutines
+		this.StartCoroutine ();
+		this.StopCoroutine ();
 	}
 
 	// Event triggered when the system is enabled

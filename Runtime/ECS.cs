@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace UnityPackages.EntityComponentSystem {
@@ -20,9 +21,9 @@ namespace UnityPackages.EntityComponentSystem {
 
 			private void Awake () {
 				Instance = this;
+				UnityEngine.GameObject.DontDestroyOnLoad (this.gameObject);
 				this.systems = new List<ISystem> ();
 				this.OnInitialize ();
-				GameObject.DontDestroyOnLoad(this.gameObject);
 				Log ("Initialized controller", "");
 			}
 
@@ -178,6 +179,12 @@ namespace UnityPackages.EntityComponentSystem {
 
 			public bool HasComponentOnEntity<GEC> (C entity) =>
 				entity.GetComponent<GEC> () != null;
+
+			public UnityEngine.Coroutine StartCoroutine (IEnumerator routine) =>
+				Controller.Instance.StartCoroutine (routine);
+
+			public void StopCoroutine (IEnumerator routine) =>
+				Controller.Instance.StopCoroutine (routine);
 		}
 
 		public abstract class Component<C, S> : UnityEngine.MonoBehaviour
