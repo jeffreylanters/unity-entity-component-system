@@ -20,7 +20,7 @@ namespace UnityPackages.EntityComponentSystem {
           "only a system should modify this public property's value.";
 
         EditorGUI.BeginDisabledGroup (true);
-        EditorGUI.PropertyField (position, serializedProperty, label, true);
+        EditorGUI.PropertyField (position, serializedProperty, label, false);
         EditorGUI.EndDisabledGroup ();
       }
     }
@@ -28,7 +28,7 @@ namespace UnityPackages.EntityComponentSystem {
     [CustomPropertyDrawer (typeof (ECS.Reference))]
     public class ReferencePropertyDrawer : PropertyDrawer {
       public override void OnGUI (UnityEngine.Rect position, SerializedProperty serializedProperty, UnityEngine.GUIContent label) {
-        label.text = "@" + serializedProperty.name;
+        label.text = "@ " + serializedProperty.displayName;
         label.tooltip =
           "This is a managed reference to '" + serializedProperty.type + " " + serializedProperty.name + "', " +
           "make sure a gameObject with a name like this is a child of this gameObject.";
