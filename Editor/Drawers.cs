@@ -40,27 +40,34 @@ namespace UnityPackages.EntityComponentSystem {
         if (Application.isPlaying == true)
           return;
 
+        var _selfReference = (ECS.Reference) attribute;
         var _selfTransform = ((MonoBehaviour) serializedProperty.serializedObject.targetObject).transform;
         var _childTransforms = _selfTransform.GetComponentsInChildren<Transform> ();
         var _targetGameObjectName = flattenObjectNameRegex.Replace (serializedProperty.name, "").ToLower ().Trim ();
         var _targetTypeName = matchComponentNameRegex.Match (serializedProperty.type).Groups[1].Value;
 
+        // Clear the object reference
+        serializedProperty.objectReferenceValue = null;
+
+        // Loop all the children
         foreach (var _childTransform in _childTransforms) {
           var _childGameObjectName = flattenObjectNameRegex.Replace (_childTransform.gameObject.name, "").ToLower ().Trim ();
-          if (_childGameObjectName == _targetGameObjectName)
-            switch (_targetTypeName) {
-              case "GameObject":
-                serializedProperty.objectReferenceValue = _childTransform.gameObject;
-                return;
-              case "Transform":
-                serializedProperty.objectReferenceValue = _childTransform;
-                return;
-              default:
-                serializedProperty.objectReferenceValue = _childTransform.GetComponent (_targetTypeName);
-                return;
-            }
+
+          // Match if we're looking at the right object
+          if (_childGameObjectName != _targetGameObjectName)
+            continue;
+
+          // Get the object reference
+          if (_targetTypeName == "GameObject")
+            serializedProperty.objectReferenceValue = _childTransform.gameObject;
+          else if (_targetTypeName == "Transform")
+            serializedProperty.objectReferenceValue = _childTransform;
+          else // Just try to get the component
+            serializedProperty.objectReferenceValue = _childTransform.GetComponent (_targetTypeName);
+
+          // Our job is done :)
+          return;
         }
-        serializedProperty.objectReferenceValue = null;
       }
     }
   }
