@@ -121,10 +121,12 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 // Create a component to provide properties to your entity
 public class ItemComponent : ECS.Component<ItemComponent, ItemSystem> {
 
-	// EXAMPLE: Use the 'Protected' attribute to mark properties as inaccessable in the editor
+	// EXAMPLE: Use the 'Protected' attribute to mark properties as inaccessable
+	//   The property cannot be changed in the editor inspector
 	[ECS.Protected] public bool isLegendary;
 
-	// EXAMPLE: Use the 'Reference' attribute to let the editor automatically assign the property
+	// EXAMPLE: Use the 'Reference' attribute to mark this property as a reference
+	//   This makes the editor automatically assign the property
 	[ECS.Reference] public Image itemSprite;
 }
 ```
