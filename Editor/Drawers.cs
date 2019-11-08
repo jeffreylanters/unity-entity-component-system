@@ -47,7 +47,14 @@ namespace UnityPackages.EntityComponentSystem {
         var _targetTypeName = matchComponentNameRegex.Match (serializedProperty.type).Groups[1].Value;
 
         // Clear the object reference
-        serializedProperty.objectReferenceValue = null;
+        if (serializedProperty.isArray == true) {
+          serializedProperty.ClearArray ();
+          //! PROBLEM: it seems like we don't get a reference to the 
+          //!   array it self, but only to it's children...
+          //!   therefore we can't munipulate the array
+        } else if (serializedProperty.isArray == false) {
+          serializedProperty.objectReferenceValue = null;
+        }
 
         // Loop all the children
         foreach (var _childTransform in _childTransforms) {
