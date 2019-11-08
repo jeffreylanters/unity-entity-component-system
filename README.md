@@ -22,26 +22,26 @@ This simple ECS offers a better approach to game design that allows you to conce
 // Create one controller per project as your core
 public class MainController : ECS.Controller {
 
-	// Event triggered when the controller is initializing
-	public override void OnInitialize () {
+  // Event triggered when the controller is initializing
+  public override void OnInitialize () {
 
-		// Use the Register Systems method to register your systems to the controller
-		//  This can only be done during the initialization
-		this.RegisterSystems (typeof(MyItemSystem));
+    // Use the Register Systems method to register your systems to the controller
+    //  This can only be done during the initialization
+    this.RegisterSystems (typeof(MyItemSystem));
 
-		// EXAMPLE: Use the Enable Systems method to enable any of your registered systems
-		this.EnableSystems(typeof(MyItemSystem));
+    // EXAMPLE: Use the Enable Systems method to enable any of your registered systems
+    this.EnableSystems(typeof(MyItemSystem));
 
-		// EXAMPLE: Use the Disable Systems method to disable any of your registered systems
-		this.DisableSystems(typeof(MyItemSystem));
-	}
+    // EXAMPLE: Use the Disable Systems method to disable any of your registered systems
+    this.DisableSystems(typeof(MyItemSystem));
+  }
 
-	// Event triggered when the controller is initialized
-	public override void OnInitialized () { }
+  // Event triggered when the controller is initialized
+  public override void OnInitialized () { }
 
-	// Event triggered when the system is updating
-	//   This event is called every frame
-	public override void OnUpdate () { }
+  // Event triggered when the system is updating
+  //   This event is called every frame
+  public override void OnUpdate () { }
 }
 ```
 
@@ -51,67 +51,67 @@ public class MainController : ECS.Controller {
 // Create a system to take control of your entity's component
 public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 
-	// Event triggered when the system is initializing
-	public override void OnInitialize () { }
+  // Event triggered when the system is initializing
+  public override void OnInitialize () { }
 
-	// Event triggered when the system is updating
-	//   This event is called every frame
-	public override void OnUpdate () {
+  // Event triggered when the system is updating
+  //   This event is called every frame
+  public override void OnUpdate () {
 
-		// EXAMPLE: Access the first entity's component
-		this.firstEntity;
+    // EXAMPLE: Access the first entity's component
+    this.firstEntity;
 
-		// EXAMPLE: Access all the entities components
-		foreach (var _entity in this.entities) { }
+    // EXAMPLE: Access all the entities components
+    foreach (var _entity in this.entities) { }
 
-		// EXAMPLE: Use the static 'Instance' to access other systems
-		InventorySystem.Instance;
+    // EXAMPLE: Use the static 'Instance' to access other systems
+    InventorySystem.Instance;
 
-		// EXAMPLE: Use the 'GetComponentOnEntity' and 'HasComponentOnEntity'
-		//   methods to access other components on entities
-		this.GetComponentOnEntity<OtherComponent> (this.firstEntity, entity => { });
-		this.HasComponentOnEntity<OtherComponent> (this.firstEntity);
+    // EXAMPLE: Use the 'GetComponentOnEntity' and 'HasComponentOnEntity'
+    //   methods to access other components on entities
+    this.GetComponentOnEntity<OtherComponent> (this.firstEntity, entity => { });
+    this.HasComponentOnEntity<OtherComponent> (this.firstEntity);
 
-		// EXAMPLE: Use the 'StartCoroutine' and 'StopCoroutine' on IEnumerators
-		//   Even though a System is no MonoBehaviour, it still can manage coroutines
-		this.StartCoroutine ();
-		this.StopCoroutine ();
-	}
+    // EXAMPLE: Use the 'StartCoroutine' and 'StopCoroutine' on IEnumerators
+    //   Even though a System is no MonoBehaviour, it still can manage coroutines
+    this.StartCoroutine ();
+    this.StopCoroutine ();
+  }
 
-	// Event triggered when the system is enabled
-	public override void OnEnabled () { }
+  // Event triggered when the system is enabled
+  public override void OnEnabled () { }
 
-	// Event triggered when the system is initialized
-	public override void OnInitialized () { }
+  // Event triggered when the system is initialized
+  public override void OnInitialized () { }
 
-	// Event triggered when the system is drawing the gizmos
-	//   This event is called every gizmos draw call
-	public override void OnDrawGizmos () { }
+  // Event triggered when the system is drawing the gizmos
+  //   This event is called every gizmos draw call
+  public override void OnDrawGizmos () { }
 
-	// Event triggered when the system is listing for GUI events
-	//   This event is called every GUI draw call
-	public override void OnGUI () { }
+  // Event triggered when the system is listing for GUI events
+  //   This event is called every GUI draw call
+  public override void OnGUI () { }
 
-	// Event triggered when the system is disabled
-	public override void OnDisabled () { }
+  // Event triggered when the system is disabled
+  public override void OnDisabled () { }
 
-	// Event triggered when an entity of this system is initializing
-	public override void OnEntityInitialize (ItemComponent entity) { }
+  // Event triggered when an entity of this system is initializing
+  public override void OnEntityInitialize (ItemComponent entity) { }
 
-	// Event triggered when an entity of this system is started
-	public override void OnEntityStart (ItemComponent entity) { }
+  // Event triggered when an entity of this system is started
+  public override void OnEntityStart (ItemComponent entity) { }
 
-	// Event triggered when an entity of this system is enabled
-	public override void OnEntityEnabled (ItemComponent entity) { }
+  // Event triggered when an entity of this system is enabled
+  public override void OnEntityEnabled (ItemComponent entity) { }
 
-	// Event triggered when an entity of this system is initialized
-	public override void OnEntityInitialized (ItemComponent entity) { }
+  // Event triggered when an entity of this system is initialized
+  public override void OnEntityInitialized (ItemComponent entity) { }
 
-	// Event triggered when an entity of this system is disabled
-	public override void OnEntityDisabled (ItemComponent entity) { }
+  // Event triggered when an entity of this system is disabled
+  public override void OnEntityDisabled (ItemComponent entity) { }
 
-	// Event triggered when an entity of this system will destroy
-	public override void OnEntityWillDestroy (ItemComponent entity) { }
+  // Event triggered when an entity of this system will destroy
+  public override void OnEntityWillDestroy (ItemComponent entity) { }
 }
 ```
 
@@ -121,12 +121,12 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 // Create a component to provide properties to your entity
 public class ItemComponent : ECS.Component<ItemComponent, ItemSystem> {
 
-	// EXAMPLE: Use the 'Protected' attribute to mark properties as inaccessable
-	//   The property cannot be changed in the editor inspector
-	[ECS.Protected] public bool isLegendary;
+  // EXAMPLE: Use the 'Protected' attribute to mark properties as inaccessable
+  //   The property cannot be changed in the editor inspector
+  [ECS.Protected] public bool isLegendary;
 
-	// EXAMPLE: Use the 'Reference' attribute to mark this property as a reference
-	//   This makes the editor automatically assign the property
-	[ECS.Reference] public Image itemSprite;
+  // EXAMPLE: Use the 'Reference' attribute to mark this property as a reference
+  //   This makes the editor automatically assign the property
+  [ECS.Reference] public Image itemSprite;
 }
 ```
