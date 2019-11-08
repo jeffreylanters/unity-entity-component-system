@@ -30,10 +30,10 @@ public class MainController : ECS.Controller {
     this.RegisterSystems (typeof(MyItemSystem));
 
     // EXAMPLE: Use the Enable Systems method to enable any of your registered systems
-    this.EnableSystems(typeof(MyItemSystem));
+    this.EnableSystems (typeof(MyItemSystem));
 
     // EXAMPLE: Use the Disable Systems method to disable any of your registered systems
-    this.DisableSystems(typeof(MyItemSystem));
+    this.DisableSystems (typeof(MyItemSystem));
   }
 
   // Event triggered when the controller is initialized
