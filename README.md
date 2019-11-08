@@ -126,7 +126,8 @@ public class ItemComponent : ECS.Component<ItemComponent, ItemSystem> {
   [ECS.Protected] public bool isLegendary;
 
   // EXAMPLE: Use the 'Reference' attribute to mark this property as a reference
-  //   This makes the editor automatically assign the property
+  //   This makes the editor automatically assign the property 
+  //   based on the name property
   [ECS.Reference] public Image itemSprite;
 }
 ```
