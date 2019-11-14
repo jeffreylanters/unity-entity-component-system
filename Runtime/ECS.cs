@@ -145,6 +145,7 @@ namespace UnityPackages.EntityComponentSystem {
 
 			public List<C> entities;
 			public C firstEntity { get { return this.entities[0]; } }
+			public int entityCount;
 
 			public bool isEnabled {
 				get => this._isEnabled;
@@ -160,6 +161,7 @@ namespace UnityPackages.EntityComponentSystem {
 			public void AddEntity (C component) {
 				Log ("Added Entity",
 					component.transform.name + " to " + this.ToString ());
+				this.entityCount += 1;
 				this.entities.Add (component);
 				this.OnEntityInitialize (component);
 			}
@@ -167,6 +169,7 @@ namespace UnityPackages.EntityComponentSystem {
 			public void RemoveEntry (C component) {
 				Log ("Removed Entity",
 					component.transform.name + " from " + this.ToString ());
+				this.entityCount -= 1;
 				this.OnEntityWillDestroy (component);
 				this.entities.Remove (component);
 			}
