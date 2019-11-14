@@ -63,6 +63,9 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 
     // EXAMPLE: Access all the entities components
     foreach (var _entity in this.entities) { }
+    
+    // EXAMPLE: Use the cached entity count to improve performance
+    this.entityCount;
 
     // EXAMPLE: Use the static 'Instance' to access other systems
     InventorySystem.Instance;
