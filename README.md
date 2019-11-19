@@ -27,13 +27,13 @@ public class MainController : ECS.Controller {
 
     // Use the Register Systems method to register your systems to the controller
     //  This can only be done during the initialization
-    this.RegisterSystems (typeof(MyItemSystem));
+    this.RegisterSystems (typeof(ItemSystem));
 
     // EXAMPLE: Use the Enable Systems method to enable any of your registered systems
-    this.EnableSystems (typeof(MyItemSystem));
+    this.EnableSystems (typeof(ItemSystem));
 
     // EXAMPLE: Use the Disable Systems method to disable any of your registered systems
-    this.DisableSystems (typeof(MyItemSystem));
+    this.DisableSystems (typeof(ItemSystem));
   }
 
   // Event triggered when the controller is initialized
@@ -129,8 +129,9 @@ public class ItemComponent : ECS.Component<ItemComponent, ItemSystem> {
   [ECS.Protected] public bool isLegendary;
 
   // EXAMPLE: Use the 'Reference' attribute to mark this property as a reference
-  //   This makes the editor automatically assign the property 
-  //   based on the name property
+  //   This makes the editor automatically assign the property based on 
+  //   the property's name in the transforms children in Editor time.
+  //   Casing, spaces and dashes will be ignored while searching.
   [ECS.Reference] public Image itemSprite;
 }
 ```
