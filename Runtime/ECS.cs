@@ -9,6 +9,7 @@ namespace UnityPackages.EntityComponentSystem {
 		public abstract class Controller : UnityEngine.MonoBehaviour {
 
 			private List<ISystem> systems;
+			private int systemCount;
 			private bool isInitialized;
 
 			public static Controller Instance;
@@ -23,16 +24,17 @@ namespace UnityPackages.EntityComponentSystem {
 				Instance = this;
 				UnityEngine.GameObject.DontDestroyOnLoad (this.gameObject);
 				this.systems = new List<ISystem> ();
+				this.systemCount = 0;
 				this.OnInitialize ();
 				Log ("Initialized controller", "");
 			}
 
 			private void Update () {
-				for (var _i = 0; _i < this.systems.Count; _i++)
+				for (var _i = 0; _i < this.systemCount; _i++)
 					if (this.systems[_i].isEnabled == true)
 						this.systems[_i].OnUpdate ();
 				if (this.isInitialized == false) {
-					for (var _i = 0; _i < this.systems.Count; _i++) {
+					for (var _i = 0; _i < this.systemCount; _i++) {
 						this.systems[_i].OnEnabled ();
 						this.systems[_i].OnInitialized ();
 					}
@@ -45,13 +47,13 @@ namespace UnityPackages.EntityComponentSystem {
 #if UNITY_EDITOR
 			private void OnDrawGizmos () {
 				if (UnityEngine.Application.isPlaying == true)
-					for (var _i = 0; _i < this.systems.Count; _i++)
+					for (var _i = 0; _i < this.systemCount; _i++)
 						this.systems[_i].OnDrawGizmos ();
 			}
 #endif
 
 			private void OnGUI () {
-				for (var _i = 0; _i < this.systems.Count; _i++)
+				for (var _i = 0; _i < this.systemCount; _i++)
 					if (this.systems[_i].isEnabled == true)
 						this.systems[_i].OnGUI ();
 			}
@@ -61,6 +63,7 @@ namespace UnityPackages.EntityComponentSystem {
 					for (var _i = 0; _i < typesOf.Length; _i++) {
 						var _system = (ISystem) Activator.CreateInstance (typesOf[_i]);
 						this.systems.Add (_system);
+						this.systemCount++;
 						_system.OnInitialize ();
 						_system.OnInitializeInternal ();
 						_system.isEnabled = true;
@@ -73,7 +76,7 @@ namespace UnityPackages.EntityComponentSystem {
 
 			public void EnableSystems (params Type[] typesOf) {
 				for (var _t = 0; _t < typesOf.Length; _t++)
-					for (var _i = 0; _i < this.systems.Count; _i++)
+					for (var _i = 0; _i < this.systemCount; _i++)
 						if (this.systems[_i].GetType () == typesOf[_t]) {
 							this.systems[_i].isEnabled = true;
 							this.systems[_i].OnEnabled ();
@@ -82,7 +85,7 @@ namespace UnityPackages.EntityComponentSystem {
 
 			public void DisableSystems (params Type[] typesOf) {
 				for (var _t = 0; _t < typesOf.Length; _t++)
-					for (var _i = 0; _i < this.systems.Count; _i++)
+					for (var _i = 0; _i < this.systemCount; _i++)
 						if (this.systems[_i].GetType () == typesOf[_t]) {
 							this.systems[_i].isEnabled = false;
 							this.systems[_i].OnDisabled ();
@@ -91,7 +94,7 @@ namespace UnityPackages.EntityComponentSystem {
 
 			public S GetSystem<S> () where S : ISystem, new () {
 				var _typeOfS = typeof (S);
-				for (var _i = 0; _i < this.systems.Count; _i++)
+				for (var _i = 0; _i < this.systemCount; _i++)
 					if (this.systems[_i].GetType () == _typeOfS)
 						return (S) this.systems[_i];
 				return new S ();
@@ -99,7 +102,7 @@ namespace UnityPackages.EntityComponentSystem {
 
 			public bool HasSystem<S> () where S : ISystem, new () {
 				var _typeOfS = typeof (S);
-				for (var _i = 0; _i < this.systems.Count; _i++)
+				for (var _i = 0; _i < this.systemCount; _i++)
 					if (this.systems[_i].GetType () == _typeOfS)
 						return true;
 				return false;
