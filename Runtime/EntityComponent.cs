@@ -1,5 +1,4 @@
 namespace UnityPackages.EntityComponentSystem {
-
   public abstract class EntityComponent<C, S> : UnityEngine.MonoBehaviour where C : EntityComponent<C, S>, new () where S : EntitySystem<S, C>, new () {
 
     private bool isEntityEnabled = false;

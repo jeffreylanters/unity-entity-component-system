@@ -1,12 +1,11 @@
 namespace UnityPackages.EntityComponentSystem {
-
   // TODO move this into a normal attribute and find the references to runtime!?
   /// Describes a reference property within a component.
   public class EditorReference : UnityEngine.PropertyAttribute { }
 
 #if UNITY_EDITOR
   [UnityEditor.CustomPropertyDrawer (typeof (EditorReference))]
-  public class ReferencePropertyDrawer : UnityEditor.PropertyDrawer {
+  public class EditorReferenceDrawer : UnityEditor.PropertyDrawer {
     public override void OnGUI (UnityEngine.Rect position, UnityEditor.SerializedProperty serializedProperty, UnityEngine.GUIContent label) {
       label.text = "@ " + serializedProperty.displayName;
       label.tooltip =

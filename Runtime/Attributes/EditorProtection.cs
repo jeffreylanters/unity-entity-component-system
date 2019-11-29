@@ -5,7 +5,7 @@ namespace UnityPackages.EntityComponentSystem {
 
 #if UNITY_EDITOR
   [UnityEditor.CustomPropertyDrawer (typeof (EditorProtection))]
-  public class ProtectedPropertyDrawer : UnityEditor.PropertyDrawer {
+  public class EditorProtectionDrawer : UnityEditor.PropertyDrawer {
     public override void OnGUI (UnityEngine.Rect position, UnityEditor.SerializedProperty serializedProperty, UnityEngine.GUIContent label) {
       label.tooltip =
         "This is a managed protection to '" + serializedProperty.type + " " + serializedProperty.name + "', " +

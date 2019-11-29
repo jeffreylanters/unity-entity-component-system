@@ -1,6 +1,6 @@
 namespace UnityPackages.EntityComponentSystem {
 
-  /// Describes a injectedable property within a sys.
+  /// Describes a injectedable property within a system.
   public class Inject : System.Attribute {
 
     /// Sets the field values on a system.
