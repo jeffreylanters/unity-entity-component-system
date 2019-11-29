@@ -1,8 +1,9 @@
 namespace UnityPackages.EntityComponentSystem {
+
   public abstract class EntitySystem<S, C> : ISystem where S : EntitySystem<S, C>, new () where C : EntityComponent<C, S>, new () {
 
     /// An instance reference to the controller. This reference will be set during the
-    ///  'OnInitializeInternal' method inside this class. This method will be called
+    ///  'InternalOnInitialize' method inside this class. This method will be called
     ///  after the controller and system initialization.
     public static S Instance;
 
@@ -22,44 +23,55 @@ namespace UnityPackages.EntityComponentSystem {
 
     private bool isEnabled;
 
-    public System.Collections.Generic.List<C> entities;
+    public System.Collections.Generic.List<C> entities = new System.Collections.Generic.List<C> ();
     public C firstEntity { get { return this.entities[0]; } }
 
-    public EntitySystem () =>
-      this.entities = new System.Collections.Generic.List<C> ();
-
-    public void AddEntity (C component) {
-      this.entities.Add (component);
-      this.OnEntityInitialize (component);
-    }
-
-    public void RemoveEntry (C component) {
-      this.OnEntityWillDestroy (component);
-      this.entities.Remove (component);
-    }
-
+    /// Gets a component on a given system.
     public void GetComponentOnEntity<GEC> (C entity, System.Action<GEC> action) {
       var _entity = entity.GetComponent<GEC> ();
       if (_entity != null)
         action (_entity);
     }
 
+    /// Gets a component on a given system.
+    public GEC GetComponentOnEntity<GEC> (C entity) =>
+      entity.GetComponent<GEC> ();
+
+    /// Checks if a given entity has a component.
     public bool HasComponentOnEntity<GEC> (C entity) =>
       entity.GetComponent<GEC> () != null;
 
+    /// Starts a coroutine on this system.
     public UnityEngine.Coroutine StartCoroutine (System.Collections.IEnumerator routine) =>
       Controller.Instance.StartCoroutine (routine);
 
+    /// Stops a given coroutine.
     public void StopCoroutine (System.Collections.IEnumerator routine) =>
       Controller.Instance.StopCoroutine (routine);
 
+    /// Enables or disables this system.
+    public void SetEnabled (bool isEnabled) =>
+      Instance.isEnabled = isEnabled;
+
+    /// Gets the enabled status of this system
+    public bool GetEnabled () =>
+      Instance.isEnabled;
+
+    /// Internal method to set the instance reference. This method will
+    /// be called after the controller and system initialization.
     public void InternalOnInitialize () =>
       Instance = Controller.Instance.GetSystem<S> ();
 
-    public void InternalSetEnabled (bool isEnabled) =>
-      Instance.isEnabled = isEnabled;
+    /// Internal method to add an entity to this system.
+    public void InternalAddEntity (C component) {
+      this.entities.Add (component);
+      this.OnEntityInitialize (component);
+    }
 
-    public bool InternalGetEnabled () =>
-      Instance.isEnabled;
+    /// Internal method to remove an entity from this system.
+    public void InternalRemoveEntry (C component) {
+      this.OnEntityWillDestroy (component);
+      this.entities.Remove (component);
+    }
   }
 }

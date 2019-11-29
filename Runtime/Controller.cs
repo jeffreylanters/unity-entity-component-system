@@ -18,15 +18,23 @@ namespace UnityPackages.EntityComponentSystem {
       this.OnInitialize ();
     }
 
+    /// The update is invoked every frame
     private void Update () {
+
+      /// Invoking 'OnUpdate' on each enabled system
       for (var _i = 0; _i < this.systems.Count; _i++)
-        if (this.systems[_i].isEnabled == true)
+        if (this.systems[_i].GetEnabled () == true)
           this.systems[_i].OnUpdate ();
+
+      /// While the controller is not initialized, Invoke
+      /// 'OnEnabled' and 'OnInitialized' on the systems.
       if (this.isInitialized == false) {
         for (var _i = 0; _i < this.systems.Count; _i++) {
+          Inject.SetFieldValuesOnSystem (this.systems[_i]);
           this.systems[_i].OnEnabled ();
           this.systems[_i].OnInitialized ();
         }
+
         this.OnInitialized ();
         this.isInitialized = true;
       }
@@ -43,7 +51,7 @@ namespace UnityPackages.EntityComponentSystem {
 
     private void OnGUI () {
       for (var _i = 0; _i < this.systems.Count; _i++)
-        if (this.systems[_i].isEnabled == true)
+        if (this.systems[_i].GetEnabled () == true)
           this.systems[_i].OnGUI ();
     }
 
@@ -53,8 +61,8 @@ namespace UnityPackages.EntityComponentSystem {
           var _system = (ISystem) System.Activator.CreateInstance (typesOf[_i]);
           this.systems.Add (_system);
           _system.OnInitialize ();
-          _system.OnInitializeInternal ();
-          _system.isEnabled = true;
+          _system.InternalOnInitialize ();
+          _system.SetEnabled (true);
         }
       else
         throw new System.Exception ("Unable to registered system outsize of OnInitialize cycle");
@@ -64,7 +72,7 @@ namespace UnityPackages.EntityComponentSystem {
       for (var _t = 0; _t < typesOf.Length; _t++)
         for (var _i = 0; _i < this.systems.Count; _i++)
           if (this.systems[_i].GetType () == typesOf[_t]) {
-            this.systems[_i].isEnabled = true;
+            this.systems[_i].SetEnabled (true);
             this.systems[_i].OnEnabled ();
           }
     }
@@ -73,7 +81,7 @@ namespace UnityPackages.EntityComponentSystem {
       for (var _t = 0; _t < typesOf.Length; _t++)
         for (var _i = 0; _i < this.systems.Count; _i++)
           if (this.systems[_i].GetType () == typesOf[_t]) {
-            this.systems[_i].isEnabled = false;
+            this.systems[_i].SetEnabled (false);
             this.systems[_i].OnDisabled ();
           }
     }
@@ -84,6 +92,13 @@ namespace UnityPackages.EntityComponentSystem {
         if (this.systems[_i].GetType () == _typeOfS)
           return (S) this.systems[_i];
       return new S ();
+    }
+
+    public System.Object GetSystem (System.Type typeOf) {
+      for (var _i = 0; _i < this.systems.Count; _i++)
+        if (this.systems[_i].GetType () == typeOf)
+          return this.systems[_i];
+      return null;
     }
 
     public bool HasSystem<S> () where S : ISystem, new () {
