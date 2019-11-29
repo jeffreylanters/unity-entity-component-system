@@ -12,7 +12,7 @@ namespace UnityPackages.EntityComponentSystem {
     private static Regex flattenObjectNameRegex = new Regex ("[^a-zA-Z0-9]");
     private static Regex matchComponentNameRegex = new Regex (@"PPtr<\$(.*?)>");
 
-    [CustomPropertyDrawer (typeof (ECS.Protected))]
+    [CustomPropertyDrawer (typeof (Protected))]
     public class ProtectedPropertyDrawer : PropertyDrawer {
       public override void OnGUI (UnityEngine.Rect position, SerializedProperty serializedProperty, UnityEngine.GUIContent label) {
         label.tooltip =
@@ -25,7 +25,7 @@ namespace UnityPackages.EntityComponentSystem {
       }
     }
 
-    [CustomPropertyDrawer (typeof (ECS.Reference))]
+    [CustomPropertyDrawer (typeof (Reference))]
     public class ReferencePropertyDrawer : PropertyDrawer {
       public override void OnGUI (UnityEngine.Rect position, SerializedProperty serializedProperty, UnityEngine.GUIContent label) {
         label.text = "@ " + serializedProperty.displayName;
@@ -40,7 +40,7 @@ namespace UnityPackages.EntityComponentSystem {
         if (Application.isPlaying == true)
           return;
 
-        var _selfReference = (ECS.Reference) attribute;
+        var _selfReference = (Reference) attribute;
         var _selfTransform = ((MonoBehaviour) serializedProperty.serializedObject.targetObject).transform;
         var _childTransforms = _selfTransform.GetComponentsInChildren<Transform> ();
         var _targetGameObjectName = flattenObjectNameRegex.Replace (serializedProperty.name, "").ToLower ().Trim ();
