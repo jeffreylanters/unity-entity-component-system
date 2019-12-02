@@ -1,10 +1,10 @@
 namespace UnityPackages.EntityComponentSystem {
 
   /// Describes a injectedable property within a system.
-  public class Inject : System.Attribute {
+  public class InjectedSystem : System.Attribute {
 
-    /// Sets the field values on a system.
-    public static void SetFieldValuesOnSystem (ISystem system) {
+    /// Sets the attributes values on a system.
+    public static void SetAttributeValues (ISystem system) {
       var _entitySystemFields = system.GetType ().GetFields (
         System.Reflection.BindingFlags.Instance |
         System.Reflection.BindingFlags.NonPublic |
