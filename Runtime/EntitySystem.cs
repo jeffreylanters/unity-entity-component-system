@@ -1,5 +1,6 @@
 namespace UnityPackages.EntityComponentSystem {
 
+  /// An entity system.
   public abstract class EntitySystem<S, C> : ISystem where S : EntitySystem<S, C>, new () where C : EntityComponent<C, S>, new () {
 
     /// An instance reference to the controller. This reference will be set during the
@@ -21,25 +22,33 @@ namespace UnityPackages.EntityComponentSystem {
     public virtual void OnEntityDisabled (C entity) { }
     public virtual void OnEntityWillDestroy (C entity) { }
 
+    /// Defines whether this system is enabled.
     private bool isEnabled;
 
+    /// A list of the system's instantiated entity components.
     public System.Collections.Generic.List<C> entities = new System.Collections.Generic.List<C> ();
+    
+    /// The first instantiated entity compoent if this system.
     public C entity { get { return this.entities[0]; } }
+    
+    /// Defines the number of instantiated entity components this system has.
     public int entityCount = 0;
+    
+    /// Defines whether the system has instantiated entity components.
     public bool hasEntities = false;
 
-    /// Gets a component on a given system.
+    /// Gets a entity's component on a given system.
     public void GetComponentOnEntity<GEC> (C entity, System.Action<GEC> action) {
       var _entity = entity.GetComponent<GEC> ();
       if (_entity != null)
         action (_entity);
     }
 
-    /// Gets a component on a given system.
+    /// Gets a entity's component on a given system.
     public GEC GetComponentOnEntity<GEC> (C entity) =>
       entity.GetComponent<GEC> ();
 
-    /// Checks if a given entity has a component.
+    /// Checks whether a given entity has a component.
     public bool HasComponentOnEntity<GEC> (C entity) =>
       entity.GetComponent<GEC> () != null;
 
@@ -64,7 +73,7 @@ namespace UnityPackages.EntityComponentSystem {
     public void InternalOnInitialize () =>
       Instance = Controller.Instance.GetSystem<S> ();
 
-    /// Internal method to add an entity to this system.
+    /// Internal method to add an entity's component to this system.
     public void InternalAddEntity (C component) {
       this.entityCount++;
       this.hasEntities = true;
@@ -72,7 +81,7 @@ namespace UnityPackages.EntityComponentSystem {
       this.OnEntityInitialize (component);
     }
 
-    /// Internal method to remove an entity from this system.
+    /// Internal method to remove an entity's component from this system.
     public void InternalRemoveEntry (C component) {
       this.entityCount--;
       this.hasEntities = this.entityCount > 0;
