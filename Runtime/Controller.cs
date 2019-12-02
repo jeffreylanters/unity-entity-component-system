@@ -9,8 +9,6 @@ namespace UnityPackages.EntityComponentSystem {
     public virtual void OnInitialized () { }
     public virtual void OnUpdate () { }
 
-    public bool debugging;
-
     private void Awake () {
       Instance = this;
       UnityEngine.GameObject.DontDestroyOnLoad (this.gameObject);
