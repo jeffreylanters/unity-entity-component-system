@@ -20,7 +20,7 @@ This simple ECS offers a better approach to game design that allows you to conce
 
 ```cs
 // Create one controller per project as your core
-public class MainController : ECS.Controller {
+public class MainController : Controller {
 
   // Event triggered when the controller is initializing
   public override void OnInitialize () {
@@ -49,7 +49,7 @@ public class MainController : ECS.Controller {
 
 ```cs
 // Create a system to take control of your entity's component
-public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
+public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
 
   // Event triggered when the system is initializing
   public override void OnInitialize () { }
@@ -59,13 +59,16 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
   public override void OnUpdate () {
 
     // EXAMPLE: Access the first entity's component
-    this.firstEntity;
+    this.entity;
 
     // EXAMPLE: Access all the entities components
     foreach (var _entity in this.entities) { }
     
     // EXAMPLE: Use the cached entity count to improve performance
     this.entityCount;
+    
+    // EXAMPLE: Use the cached has entity to improve performance
+    this.hasEntities;
 
     // EXAMPLE: Use the static 'Instance' to access other systems
     InventorySystem.Instance;
@@ -122,16 +125,16 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 
 ```cs
 // Create a component to provide properties to your entity
-public class ItemComponent : ECS.Component<ItemComponent, ItemSystem> {
+public class ItemComponent : EntityComponent<ItemComponent, ItemSystem> {
 
   // EXAMPLE: Use the 'Protected' attribute to mark properties as inaccessable
   //   The property cannot be changed in the editor inspector
-  [ECS.Protected] public bool isLegendary;
+  [Protected] public bool isLegendary;
 
   // EXAMPLE: Use the 'Reference' attribute to mark this property as a reference
   //   This makes the editor automatically assign the property based on 
   //   the property's name in the transforms children in Editor time.
   //   Casing, spaces and dashes will be ignored while searching.
-  [ECS.Reference] public Image itemSprite;
+  [Reference] public Image itemSprite;
 }
 ```
