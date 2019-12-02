@@ -79,6 +79,7 @@ namespace UnityPackages.EntityComponentSystem {
       this.hasEntities = true;
       this.entities.Add (component);
       this.OnEntityInitialize (component);
+      this.OnEntityStart (component);
     }
 
     /// Internal method to remove an entity's component from this system.
