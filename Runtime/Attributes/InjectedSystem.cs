@@ -5,13 +5,13 @@ namespace UnityPackages.EntityComponentSystem {
 
     /// Sets the attributes values on a system.
     public static void SetAttributeValues (ISystem system) {
-      var _entitySystemFields = system.GetType ().GetFields (
+      var _systemFields = system.GetType ().GetFields (
         System.Reflection.BindingFlags.Instance |
         System.Reflection.BindingFlags.NonPublic |
         System.Reflection.BindingFlags.Public);
-      foreach (var _entitySystemField in _entitySystemFields)
-        if (System.Attribute.GetCustomAttribute (_entitySystemField, typeof (Inject)) != null)
-          _entitySystemField.SetValue (system, Controller.Instance.GetSystem (_entitySystemField.FieldType));
+      foreach (var _systemField in _systemFields)
+        if (System.Attribute.GetCustomAttribute (_systemField, typeof (InjectedSystem)) != null)
+          _systemField.SetValue (system, Controller.Instance.GetSystem (_systemField.FieldType));
     }
   }
 }
