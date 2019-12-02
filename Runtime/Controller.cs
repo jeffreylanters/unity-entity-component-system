@@ -30,7 +30,7 @@ namespace UnityPackages.EntityComponentSystem {
       /// 'OnEnabled' and 'OnInitialized' on the systems.
       if (this.isInitialized == false) {
         for (var _i = 0; _i < this.systems.Count; _i++) {
-          Inject.SetFieldValuesOnSystem (this.systems[_i]);
+          InjectedSystem.SetAttributeValues (this.systems[_i]);
           this.systems[_i].OnEnabled ();
           this.systems[_i].OnInitialized ();
         }
