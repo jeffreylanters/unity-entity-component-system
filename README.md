@@ -51,6 +51,10 @@ public class MainController : Controller {
 // Create a system to take control of your entity's component
 public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
 
+  // EXAMPLE: Use the InjectedSystem attribute to create a permanent 
+  //   reference other systems. Can only be used within outer systems.
+  [InjectedSystem] private InventorySystem inventorySystem;
+
   // Event triggered when the system is initializing
   public override void OnInitialize () { }
 
@@ -127,14 +131,14 @@ public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
 // Create a component to provide properties to your entity
 public class ItemComponent : EntityComponent<ItemComponent, ItemSystem> {
 
-  // EXAMPLE: Use the 'Protected' attribute to mark properties as inaccessable
+  // EXAMPLE: Use the 'EditorProtection' attribute to mark properties as inaccessable
   //   The property cannot be changed in the editor inspector
-  [Protected] public bool isLegendary;
+  [EditorProtection] public bool isLegendary;
 
   // EXAMPLE: Use the 'Reference' attribute to mark this property as a reference
   //   This makes the editor automatically assign the property based on 
   //   the property's name in the transforms children in Editor time.
   //   Casing, spaces and dashes will be ignored while searching.
-  [Reference] public Image itemSprite;
+  [EditorReference] public Image itemSprite;
 }
 ```
