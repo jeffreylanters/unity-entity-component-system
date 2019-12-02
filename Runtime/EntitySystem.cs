@@ -24,7 +24,7 @@ namespace UnityPackages.EntityComponentSystem {
     private bool isEnabled;
 
     public System.Collections.Generic.List<C> entities = new System.Collections.Generic.List<C> ();
-    public C firstEntity { get { return this.entities[0]; } }
+    public C entity { get { return this.entities[0]; } }
     public int entityCount = 0;
     public bool hasEntities = false;
 
