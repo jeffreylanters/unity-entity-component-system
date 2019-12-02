@@ -25,6 +25,8 @@ namespace UnityPackages.EntityComponentSystem {
 
     public System.Collections.Generic.List<C> entities = new System.Collections.Generic.List<C> ();
     public C firstEntity { get { return this.entities[0]; } }
+    public int entityCount = 0;
+    public bool hasEntities = false;
 
     /// Gets a component on a given system.
     public void GetComponentOnEntity<GEC> (C entity, System.Action<GEC> action) {
@@ -64,12 +66,16 @@ namespace UnityPackages.EntityComponentSystem {
 
     /// Internal method to add an entity to this system.
     public void InternalAddEntity (C component) {
+      this.entityCount++;
+      this.hasEntities = true;
       this.entities.Add (component);
       this.OnEntityInitialize (component);
     }
 
     /// Internal method to remove an entity from this system.
     public void InternalRemoveEntry (C component) {
+      this.entityCount--;
+      this.hasEntities = this.entityCount > 0;
       this.OnEntityWillDestroy (component);
       this.entities.Remove (component);
     }
