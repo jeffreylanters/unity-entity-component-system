@@ -18,8 +18,8 @@ namespace UnityPackages.EntityComponentSystem {
       return this.system;
     }
 
-    /// During the 'Start' the entity component will be registered to the
-    /// matching system and invokes 'OnEntityStart' on it.
+    /// During the 'Start' the entity component will be registered 
+    /// to the matching system.
     private void Start () =>
       this.GetSystem ().InternalAddEntity ((C) this);
 
