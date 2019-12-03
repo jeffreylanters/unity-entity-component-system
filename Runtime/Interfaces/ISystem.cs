@@ -22,7 +22,7 @@ namespace UnityPackages.EntityComponentSystem {
     void OnDrawGizmos ();
 
     /// ---
-    void OnGUI ();
+    void OnDrawGui ();
 
     /// ---
     void SetEnabled (bool isEnabled);

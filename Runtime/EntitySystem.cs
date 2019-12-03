@@ -12,7 +12,7 @@ namespace UnityPackages.EntityComponentSystem {
     public virtual void OnInitialized () { }
     public virtual void OnUpdate () { }
     public virtual void OnDrawGizmos () { }
-    public virtual void OnGUI () { }
+    public virtual void OnDrawGui () { }
     public virtual void OnEnabled () { }
     public virtual void OnDisabled () { }
     public virtual void OnEntityInitialize (C entity) { }
@@ -27,13 +27,13 @@ namespace UnityPackages.EntityComponentSystem {
 
     /// A list of the system's instantiated entity components.
     public System.Collections.Generic.List<C> entities = new System.Collections.Generic.List<C> ();
-    
+
     /// The first instantiated entity compoent if this system.
     public C entity { get { return this.entities[0]; } }
-    
+
     /// Defines the number of instantiated entity components this system has.
     public int entityCount = 0;
-    
+
     /// Defines whether the system has instantiated entity components.
     public bool hasEntities = false;
 

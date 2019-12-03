@@ -8,6 +8,7 @@ namespace UnityPackages.EntityComponentSystem {
     public virtual void OnInitialize () { }
     public virtual void OnInitialized () { }
     public virtual void OnUpdate () { }
+    public virtual void OnDrawGui () { }
 
     private void Awake () {
       Instance = this;
@@ -48,9 +49,10 @@ namespace UnityPackages.EntityComponentSystem {
 #endif
 
     private void OnGUI () {
+      this.OnDrawGui ();
       for (var _i = 0; _i < this.systems.Count; _i++)
         if (this.systems[_i].GetEnabled () == true)
-          this.systems[_i].OnGUI ();
+          this.systems[_i].OnDrawGui ();
     }
 
     public void RegisterSystems (params System.Type[] typesOf) {
