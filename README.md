@@ -33,13 +33,13 @@ A better approach to game design that allows you to concentrate on the actual pr
                     [LOGIC] ← ← ← ← ← ← ← ←
               OnUpdate ↓                  ↑
                        ↓ OnUpdate         ↑
-                       ↓      ↳ → → → → → →
+                       ↓  → → → → → → → → ↑
                   [RENDERING] ← ← ← ← ← ← ←
              OnDrawGui ↓                  ↑
                        ↓ OnDrawGui        ↑
           OnDrawGizmos ↓                  ↑
                        ↓ OnDrawGizmos     ↑
-                       ↓      ↳ → → → → → →
+                       ↓  → → → → → → → → ↑
                [DECOMMISSIONING]
                        ↓ OnDisabled
                        ↓ OnEntityDisabled
