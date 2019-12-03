@@ -21,25 +21,25 @@ namespace UnityPackages.EntityComponentSystem {
     private void Update () {
 
       /// While the controller is not initialized, Invoke
-      /// 'OnEnabled' and 'OnInitialized' on the systems.
+      /// 'OnInitialized' on itelf, and then 'OnEnabled'
+      /// and 'OnInitialized' on the systems.
       if (this.isInitialized == false) {
+        this.OnInitialized ();
+        this.isInitialized = true;
+
         for (var _i = 0; _i < this.systems.Count; _i++) {
           InjectedSystem.SetAttributeValues (this.systems[_i]);
           this.systems[_i].OnEnabled ();
           this.systems[_i].OnInitialized ();
         }
-
-        this.OnInitialized ();
-        this.isInitialized = true;
       }
 
+      // Invoking 'OnUpdate' on the controller
       /// Invoking 'OnUpdate' on each enabled system
+      this.OnUpdate ();
       for (var _i = 0; _i < this.systems.Count; _i++)
         if (this.systems[_i].GetEnabled () == true)
           this.systems[_i].OnUpdate ();
-
-      // Invoking 'OnUpdate' on the controller
-      this.OnUpdate ();
     }
 
 #if UNITY_EDITOR

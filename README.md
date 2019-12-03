@@ -19,13 +19,26 @@ A better approach to game design that allows you to concentrate on the actual pr
 ### Overrideable Method Life Cycles
 
 ```
-           Controllers   EntitySystems
-  --------------------- -----------------------
+           CONTROLLERS   ENTITYSYSTEMS
+                [INITIALIZATION]
           OnInitialize ↓
                        ↓ OnInitialize
-                       ↓ OnEnabled
+                       ↓ OnEntityInitialize
+                       ↓ OnEntityStart
+                       ↓ OnEntityEnabled
+                       ↓ OnEntityInitialized
          OnInitialized ↓
+                       ↓ OnEnabled
                        ↓ OnInitialized
+                    [LOGIC]
+              OnUpdate ↓
+                       ↓ OnUpdate
+             OnDrawGui ↓
+                       ↓ OnDrawGui
+               [DECOMMISSIONING]
+                       ↓ OnDisabled
+                       ↓ OnEntityDisabled
+                       ↓ OnEntityWillDestory
 ```
 
 ### Controllers
