@@ -38,7 +38,7 @@ A better approach to game design that allows you to concentrate on the actual pr
                  ↓ *OnDrawGui                   ↑
    OnDrawGizmos* ↓                              ↑
                  ↓ *OnDrawGizmos                ↑
-                 ↓  → → → → → → → → ↑ → → → → → ↑
+                 ↓  → → → → → → → → → → → → → → ↑
          "DECOMMISSIONING"
                  ↓ *OnDisabled
                  ↓ *OnEntityDisabled
