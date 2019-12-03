@@ -57,7 +57,7 @@ public class MainController : Controller {
   public override void OnInitialize () {
 
     // Use the Register Systems method to register your systems to the controller
-    //  This can only be done during the initialization
+    //  This can only be done during 'OnInitialize'
     this.RegisterSystems (typeof(ItemSystem));
 
     // EXAMPLE: Use the Enable Systems method to enable any of your registered systems
