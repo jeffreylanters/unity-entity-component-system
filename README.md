@@ -78,6 +78,10 @@ public class MainController : Controller {
   // Event triggered when the system is drawing the gizmos
   //   This event is called every gizmos draw call
   public override void OnDrawGizmos () { }
+
+  // Event triggered when the system is drawing the gui
+  //   This event is called every gui draw call
+  public override void OnDrawGui () { }
 }
 ```
 

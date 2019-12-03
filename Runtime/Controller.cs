@@ -41,6 +41,7 @@ namespace UnityPackages.EntityComponentSystem {
     }
 
 #if UNITY_EDITOR
+    /// Invokes the OnDrawGizmos on the Systems
     private void OnDrawGizmos () {
       if (UnityEngine.Application.isPlaying == true)
         for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
@@ -48,6 +49,7 @@ namespace UnityPackages.EntityComponentSystem {
     }
 #endif
 
+    /// Invokes the OnDrawGui on the Systems
     private void OnGUI () {
       this.OnDrawGui ();
       for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
@@ -55,6 +57,7 @@ namespace UnityPackages.EntityComponentSystem {
           this.systems[_systemIndex].OnDrawGui ();
     }
 
+    /// Registers a system to this controller.
     public void RegisterSystems (params System.Type[] typesOf) {
       if (this.isInitialized == true)
         throw new System.Exception ("Unable to registered system outsize of OnInitialize cycle");
@@ -72,6 +75,7 @@ namespace UnityPackages.EntityComponentSystem {
         InjectedSystem.SetAttributeValues (this.systems[_systemIndex]);
     }
 
+    /// Enables systems.
     public void EnableSystems (params System.Type[] typesOf) {
       for (var _typeOfIndex = 0; _typeOfIndex < typesOf.Length; _typeOfIndex++)
         for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
@@ -81,6 +85,7 @@ namespace UnityPackages.EntityComponentSystem {
           }
     }
 
+    /// Disables systems.
     public void DisableSystems (params System.Type[] typesOf) {
       for (var _typeOfIndex = 0; _typeOfIndex < typesOf.Length; _typeOfIndex++)
         for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
@@ -90,6 +95,7 @@ namespace UnityPackages.EntityComponentSystem {
           }
     }
 
+    /// Gets a system from this controller.
     public S GetSystem<S> () where S : IEntitySystem, new () {
       var _typeOfS = typeof (S);
       for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
@@ -98,6 +104,7 @@ namespace UnityPackages.EntityComponentSystem {
       return new S ();
     }
 
+    /// Gets a system from this controller.
     public System.Object GetSystem (System.Type typeOf) {
       for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
         if (this.systems[_systemIndex].GetType () == typeOf)
@@ -105,6 +112,7 @@ namespace UnityPackages.EntityComponentSystem {
       return null;
     }
 
+    /// Check whether this controller has a system.
     public bool HasSystem<S> () where S : IEntitySystem, new () {
       var _typeOfS = typeof (S);
       for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
