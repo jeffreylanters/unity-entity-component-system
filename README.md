@@ -26,19 +26,20 @@ A better approach to game design that allows you to concentrate on the actual pr
                        ↓ OnEntityInitialize
                        ↓ OnEntityStart
                        ↓ OnEntityEnabled
-                       ↓ OnEntityInitialized
+                       ↓ OnEntityInitialized --onderaan
          OnInitialized ↓
                        ↓ OnEnabled
                        ↓ OnInitialized
-                    [LOGIC]  ← ← ← ← ← ← ↰
-              OnUpdate ↓                 ↑
-                       ↓ OnUpdate        ↑
-                       ↳ → → → → → → → → →
-                  [RENDERING]
-             OnDrawGui ↓
-                       ↓ OnDrawGui
-          OnDrawGizmos ↓
-                       ↓ OnDrawGizmos
+                    [LOGIC] ← ← ← ← ← ← ← ←
+              OnUpdate ↓                  ↑
+                       ↓ OnUpdate         ↑
+                       ↓      ↳ → → → → → →
+                  [RENDERING] ← ← ← ← ← ← ←
+             OnDrawGui ↓                  ↑
+                       ↓ OnDrawGui        ↑
+          OnDrawGizmos ↓                  ↑
+                       ↓ OnDrawGizmos     ↑
+                       ↓      ↳ → → → → → →
                [DECOMMISSIONING]
                        ↓ OnDisabled
                        ↓ OnEntityDisabled
