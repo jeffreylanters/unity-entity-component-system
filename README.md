@@ -19,14 +19,14 @@ A better approach to game design that allows you to concentrate on the actual pr
 ### Life Cycle
 
 ```
-  Controller LifeCycle      System LifeCycle
-    OnInitialize
-        ↓
-    OnInitialized
-        ↓
-    OnInitialized
-        ↓
-    OnUpdate
+                  Life Cycles
+           Controller     EntitySystem
+-------------------------------------------------
+          OnInitialize ↓
+                       ↓ OnInitialize
+                       ↓ OnEnabled
+                       ↓ OnInitialized
+         OnInitialized ↓
 ```
 
 ### Controllers

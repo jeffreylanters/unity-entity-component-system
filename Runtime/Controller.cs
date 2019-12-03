@@ -20,11 +20,6 @@ namespace UnityPackages.EntityComponentSystem {
     /// The update is invoked every frame
     private void Update () {
 
-      /// Invoking 'OnUpdate' on each enabled system
-      for (var _i = 0; _i < this.systems.Count; _i++)
-        if (this.systems[_i].GetEnabled () == true)
-          this.systems[_i].OnUpdate ();
-
       /// While the controller is not initialized, Invoke
       /// 'OnEnabled' and 'OnInitialized' on the systems.
       if (this.isInitialized == false) {
@@ -37,6 +32,13 @@ namespace UnityPackages.EntityComponentSystem {
         this.OnInitialized ();
         this.isInitialized = true;
       }
+
+      /// Invoking 'OnUpdate' on each enabled system
+      for (var _i = 0; _i < this.systems.Count; _i++)
+        if (this.systems[_i].GetEnabled () == true)
+          this.systems[_i].OnUpdate ();
+
+      // Invoking 'OnUpdate' on the controller
       this.OnUpdate ();
     }
 
