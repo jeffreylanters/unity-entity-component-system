@@ -18,9 +18,9 @@ A better approach to game design that allows you to concentrate on the actual pr
 
 ### Life Cycles
 
-```
+```csharp
            CONTROLLERS   ENTITYSYSTEMS
-                [INITIALIZATION]
+                "INITIALIZATION"
          OnInitialize* ↓
                        ↓ *OnInitialize
                        ↓ *OnEntityInitialize
@@ -28,23 +28,23 @@ A better approach to game design that allows you to concentrate on the actual pr
                        ↓ *OnEntityEnabled
                        ↓ *OnEntityInitialized
         OnInitialized* ↓
-                       ↓ Reference InjectedSystems
+                       ↓ ;Reference InjectedSystems
                        ↓ *OnEnabled
                        ↓ *OnInitialized
-                    [LOGIC] ← ← ← ← ← ← ← ←
-              OnUpdate ↓                  ↑
-                       ↓ OnUpdate         ↑
+                    "LOGIC" ← ← ← ← ← ← ← ←
+             OnUpdate* ↓                  ↑
+                       ↓ *OnUpdate        ↑
                        ↓  → → → → → → → → ↑
-                  [RENDERING] ← ← ← ← ← ← ←
-             OnDrawGui ↓                  ↑
-                       ↓ OnDrawGui        ↑
-          OnDrawGizmos ↓                  ↑
-                       ↓ OnDrawGizmos     ↑
+                  "RENDERING" ← ← ← ← ← ← ←
+            OnDrawGui* ↓                  ↑
+                       ↓ *OnDrawGui       ↑
+         OnDrawGizmos* ↓                  ↑
+                       ↓ *OnDrawGizmos    ↑
                        ↓  → → → → → → → → ↑
-               [DECOMMISSIONING]
-                       ↓ OnDisabled
-                       ↓ OnEntityDisabled
-                       ↓ OnEntityWillDestory
+               "DECOMMISSIONING"
+                       ↓ *OnDisabled
+                       ↓ *OnEntityDisabled
+                       ↓ *OnEntityWillDestory
 ```
 
 ### Controllers
