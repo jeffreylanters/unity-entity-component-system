@@ -16,17 +16,16 @@ A better approach to game design that allows you to concentrate on the actual pr
 
 ## Events and Usages Examples
 
-### Life Cycle
+### Overrideable Method Life Cycles
 
 ```
-                  Life Cycles
-           Controller     EntitySystem
--------------------------------------------------
+           Controllers   EntitySystems
+  --------------------- -----------------------
           OnInitialize ↓
                        ↓ OnInitialize
                        ↓ OnEnabled
-                       ↓ OnInitialized
          OnInitialized ↓
+                       ↓ OnInitialized
 ```
 
 ### Controllers
