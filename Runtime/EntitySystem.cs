@@ -19,7 +19,10 @@ namespace UnityPackages.EntityComponentSystem {
     public static S Instance;
 
     /// Defines whether this system is enabled.
-    private bool isEnabled;
+    private bool isEnabled = false;
+
+    /// Defines whether this component has been initialized.
+    private bool isInitialized = false;
 
     /// A list of the system's instantiated entity components.
     public System.Collections.Generic.List<C> entities = new System.Collections.Generic.List<C> ();
@@ -71,6 +74,11 @@ namespace UnityPackages.EntityComponentSystem {
 
     /// Internal method to update the children of the system.
     public void Internal_OnUpdate () {
+      if (this.isInitialized == false) {
+        this.OnInitialized ();
+        this.OnEnabled ();
+        this.isInitialized = true;
+      }
       for (var _entityIndex = 0; _entityIndex < this.entityCount; _entityIndex++)
         this.entities[_entityIndex].Internal_OnUpdate ();
     }

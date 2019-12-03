@@ -28,10 +28,6 @@ namespace UnityPackages.EntityComponentSystem {
       // on itelf. And then 'OnEnabled' and 'OnInitialized' on the systems.
       if (this.isInitialized == false) {
         this.OnInitialized ();
-        for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++) {
-          this.systems[_systemIndex].OnInitialized ();
-          this.systems[_systemIndex].OnEnabled ();
-        }
         this.isInitialized = true;
       }
 
