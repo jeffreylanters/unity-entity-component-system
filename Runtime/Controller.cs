@@ -56,20 +56,20 @@ namespace UnityPackages.EntityComponentSystem {
     }
 
     public void RegisterSystems (params System.Type[] typesOf) {
-      if (this.isInitialized == false) {
-        for (var _typeOfIndex = 0; _typeOfIndex < typesOf.Length; _typeOfIndex++) {
-          var _system = (IEntitySystem) System.Activator.CreateInstance (typesOf[_typeOfIndex]);
-          this.systems.Add (_system);
-          _system.OnInitialize ();
-          _system.Internal_OnInitialize ();
-          _system.SetEnabled (true);
-        }
-
-        // Set Values of the 'InjectedSystem' attributes
-        for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
-          InjectedSystem.SetAttributeValues (this.systems[_systemIndex]);
-      } else
+      if (this.isInitialized == true)
         throw new System.Exception ("Unable to registered system outsize of OnInitialize cycle");
+
+      for (var _typeOfIndex = 0; _typeOfIndex < typesOf.Length; _typeOfIndex++) {
+        var _system = (IEntitySystem) System.Activator.CreateInstance (typesOf[_typeOfIndex]);
+        this.systems.Add (_system);
+        _system.OnInitialize ();
+        _system.Internal_OnInitialize ();
+        _system.SetEnabled (true);
+      }
+
+      // Set Values of the 'InjectedSystem' attributes
+      for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
+        InjectedSystem.SetAttributeValues (this.systems[_systemIndex]);
     }
 
     public void EnableSystems (params System.Type[] typesOf) {
