@@ -18,6 +18,12 @@ A better approach to game design that allows you to concentrate on the actual pr
 
 ### Controllers
 
+```
+Controller Lifecycle
+    OnInitialize
+         ↓
+```
+
 ```cs
 // Create one controller per project as your core
 public class MainController : Controller {
@@ -42,6 +48,10 @@ public class MainController : Controller {
   // Event triggered when the system is updating
   //   This event is called every frame
   public override void OnUpdate () { }
+
+  // Event triggered when the system is drawing the gizmos
+  //   This event is called every gizmos draw call
+  public override void OnDrawGizmos () { }
 }
 ```
 
@@ -51,7 +61,7 @@ public class MainController : Controller {
 // Create a system to take control of your entity's component
 public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
 
-  // EXAMPLE: Use the InjectedSystem attribute to create a permanent 
+  // EXAMPLE: Use the InjectedSystem attribute to create a permanent
   //   reference other systems. Can only be used within outer systems.
   [InjectedSystem] private InventorySystem inventorySystem;
 
@@ -67,10 +77,10 @@ public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
 
     // EXAMPLE: Access all the entities components
     foreach (var _entity in this.entities) { }
-    
+
     // EXAMPLE: Use the cached entity count to improve performance
     this.entityCount;
-    
+
     // EXAMPLE: Use the cached has entity to improve performance
     this.hasEntities;
 
@@ -100,7 +110,7 @@ public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
 
   // Event triggered when the system is listing for GUI events
   //   This event is called every GUI draw call
-  public override void OnGUI () { }
+  public override void OnDrawGui () { }
 
   // Event triggered when the system is disabled
   public override void OnDisabled () { }
@@ -136,7 +146,7 @@ public class ItemComponent : EntityComponent<ItemComponent, ItemSystem> {
   [EditorProtection] public bool isLegendary;
 
   // EXAMPLE: Use the 'Reference' attribute to mark this property as a reference
-  //   This makes the editor automatically assign the property based on 
+  //   This makes the editor automatically assign the property based on
   //   the property's name in the transforms children in Editor time.
   //   Casing, spaces and dashes will be ignored while searching.
   [EditorReference] public Image itemSprite;
