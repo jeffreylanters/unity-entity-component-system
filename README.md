@@ -14,15 +14,13 @@ A better approach to game design that allows you to concentrate on the actual pr
 
 [Click here to read the Unity Packages installation guide](https://github.com/unity-packages/installation)
 
-## Events and Usages Examples
-
-### Life Cycles
+## Life Cycles
 
 ```csharp
-           CONTROLLERS   ENTITYSYSTEMS
-                "INITIALIZATION"
-         OnInitialize* ↓
-                       ↓ *OnInitialize
+           CONTROLLERS   ENTITYSYSTEMS                  |------------------
+                "INITIALIZATION"                        | * = overrideable method
+         OnInitialize* ↓                                | ; = internal
+                       ↓ *OnInitialize                  |------------------
                        ↓ *OnEntityInitialize
                        ↓ *OnEntityStart
                        ↓ *OnEntityEnabled
@@ -46,6 +44,8 @@ A better approach to game design that allows you to concentrate on the actual pr
                        ↓ *OnEntityDisabled
                        ↓ *OnEntityWillDestory
 ```
+
+## Usage Examples
 
 ### Controllers
 
@@ -164,6 +164,7 @@ public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
 
 ```cs
 // Create a component to provide properties to your entity
+// A component should only contain public properties.
 public class ItemComponent : EntityComponent<ItemComponent, ItemSystem> {
 
   // EXAMPLE: Use the 'EditorProtection' attribute to mark properties as inaccessable
