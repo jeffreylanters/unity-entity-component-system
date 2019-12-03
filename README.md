@@ -144,9 +144,6 @@ public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
   // Event triggered when an entity of this system is initializing
   public override void OnEntityInitialize (ItemComponent entity) { }
 
-  // Event triggered when an entity of this system is started
-  public override void OnEntityStart (ItemComponent entity) { }
-
   // Event triggered when an entity of this system is enabled
   public override void OnEntityEnabled (ItemComponent entity) { }
 
