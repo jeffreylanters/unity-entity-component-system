@@ -18,8 +18,8 @@ A better approach to game design that allows you to concentrate on the actual pr
 
 ```csharp
            CONTROLLERS   ENTITYSYSTEMS                  |------------------
-                "INITIALIZATION"                        | * = overrideable method
-         OnInitialize* ↓                                | ; = internal
+                "INITIALIZATION"                        | * = overridable method
+         OnInitialize* ↓                                | ; = internal event
                        ↓ *OnInitialize                  |------------------
                        ↓ *OnEntityInitialize
                        ↓ *OnEntityStart
