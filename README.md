@@ -14,15 +14,22 @@ A better approach to game design that allows you to concentrate on the actual pr
 
 [Click here to read the Unity Packages installation guide](https://github.com/unity-packages/installation)
 
-## Example Usage, and Methods
+## Events and Usages Examples
+
+### Life Cycle
+
+```
+  Controller LifeCycle      System LifeCycle
+    OnInitialize
+        ↓
+    OnInitialized
+        ↓
+    OnInitialized
+        ↓
+    OnUpdate
+```
 
 ### Controllers
-
-```
-Controller Lifecycle
-    OnInitialize
-         ↓
-```
 
 ```cs
 // Create one controller per project as your core
