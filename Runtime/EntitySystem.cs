@@ -76,7 +76,8 @@ namespace UnityPackages.EntityComponentSystem {
     public void Internal_OnUpdate () {
       if (this.isInitialized == false) {
         this.OnInitialized ();
-        this.OnEnabled ();
+        if (this.isEnabled == true)
+          this.OnEnabled ();
         this.isInitialized = true;
       }
       for (var _entityIndex = 0; _entityIndex < this.entityCount; _entityIndex++)
