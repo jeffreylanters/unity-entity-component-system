@@ -17,32 +17,32 @@ A better approach to game design that allows you to concentrate on the actual pr
 ## Life Cycles
 
 ```csharp
-           CONTROLLERS   ENTITYSYSTEMS       ╔════════════════════════════╗
-                "INITIALIZATION"             ║ * = overridable method     ║
-         OnInitialize* ↓                     ║ ; = internal event         ║
-                       ↓ *OnInitialize       ╚════════════════════════════╝
-                       ↓ *OnEntityInitialize
-                       ↓ *OnEntityStart
-                       ↓ *OnEntityEnabled
-                       ↓ *OnEntityInitialized
-        OnInitialized* ↓
-                       ↓ ;Reference InjectedSystems
-                       ↓ *OnEnabled
-                       ↓ *OnInitialized
-                    "LOGIC" ← ← ← ← ← ← ← ←
-             OnUpdate* ↓                  ↑
-                       ↓ *OnUpdate        ↑
-                       ↓  → → → → → → → → ↑
-                  "RENDERING" ← ← ← ← ← ← ←
-            OnDrawGui* ↓                  ↑
-                       ↓ *OnDrawGui       ↑
-         OnDrawGizmos* ↓                  ↑
-                       ↓ *OnDrawGizmos    ↑
-                       ↓  → → → → → → → → ↑
-               "DECOMMISSIONING"
-                       ↓ *OnDisabled
-                       ↓ *OnEntityDisabled
-                       ↓ *OnEntityWillDestory
+     CONTROLLERS   ENTITYSYSTEMS       ╔════════════════════════════╗
+          "INITIALIZATION"             ║ * = overridable method     ║
+   OnInitialize* ↓                     ║ ; = internal event         ║
+                 ↓ *OnInitialize       ╚════════════════════════════╝
+                 ↓ *OnEntityInitialize
+                 ↓ *OnEntityStart
+                 ↓ *OnEntityEnabled
+                 ↓ *OnEntityInitialized
+  OnInitialized* ↓
+                 ↓ ;Reference InjectedSystems
+                 ↓ *OnEnabled
+                 ↓ *OnInitialized
+              "LOGIC" ← ← ← ← ← ← ← ←
+       OnUpdate* ↓                  ↑
+                 ↓ *OnUpdate        ↑
+                 ↓  → → → → → → → → ↑
+            "RENDERING" ← ← ← ← ← ← ←
+      OnDrawGui* ↓                  ↑
+                 ↓ *OnDrawGui       ↑
+   OnDrawGizmos* ↓                  ↑
+                 ↓ *OnDrawGizmos    ↑
+                 ↓  → → → → → → → → ↑
+         "DECOMMISSIONING"
+                 ↓ *OnDisabled
+                 ↓ *OnEntityDisabled
+                 ↓ *OnEntityWillDestory
 ```
 
 ## Usage Examples
