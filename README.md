@@ -17,29 +17,30 @@ A better approach to game design that allows you to concentrate on the actual pr
 ## Life Cycles
 
 ```csharp
-     CONTROLLERS - ENTITYSYSTEMS       ╔════════════════════════════╗
-          "INITIALIZATION"             ║ * = overridable method     ║
+// It's recommended to build your entire project around these life cycle methods.
+    CONTROLLERS  -  ENTITYSYSTEMS      ╔════════════════════════════╗
+       " POST INITIALIZATION "         ║ * = overridable method     ║
    OnInitialize* ↓                     ║ ; = internal               ║
                  ↓ *OnInitialize       ╚════════════════════════════╝
                  ↓ *OnEntityInitialize
-                 ↓ *OnEntityStart
-                 ↓ *OnEntityEnabled
-                 ↓ *OnEntityInitialized
-  OnInitialized* ↓
                  ↓ ;Reference Injected Systems
-                 ↓ *OnEnabled
+        " PRE INITIALIZATION "
+  OnInitialized* ↓
                  ↓ *OnInitialized
-              "LOGIC" ← ← ← ← ← ← ← ← ← ← ← ← ← ←
-       OnUpdate* ↓                              ↑
-                 ↓ *OnUpdate                    ↑
-                 ↓  → → → → → → → → → → → → → → ↑
-            "RENDERING" ← ← ← ← ← ← ← ← ← ← ← ← ←
-      OnDrawGui* ↓                              ↑
-                 ↓ *OnDrawGui                   ↑
-   OnDrawGizmos* ↓                              ↑
-                 ↓ *OnDrawGizmos                ↑
-                 ↓  → → → → → → → → → → → → → → ↑
-         "DECOMMISSIONING"
+                 ↓ *OnEnabled
+                 ↓ *OnEntityInitialized
+                 ↓ *OnEntityEnabled
+             " LOGIC " ← ← ← ← ← ← ← ← ← ← ← ← ←
+       OnUpdate* ↓                             ↑
+                 ↓ *OnUpdate                   ↑
+                 ↓ → → → → → → → → → → → → → → ↑
+           " RENDERING " ← ← ← ← ← ← ← ← ← ← ← ←
+      OnDrawGui* ↓                             ↑
+                 ↓ *OnDrawGui                  ↑
+   OnDrawGizmos* ↓                             ↑
+                 ↓ *OnDrawGizmos               ↑
+                 ↓ → → → → → → → → → → → → → → ↑
+        " DECOMMISSIONING "
                  ↓ *OnDisabled
                  ↓ *OnEntityDisabled
                  ↓ *OnEntityWillDestory

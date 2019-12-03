@@ -1,7 +1,7 @@
 namespace UnityPackages.EntityComponentSystem {
 
   /// Base interface for every system
-  public interface ISystem {
+  public interface IEntitySystem {
 
     /// ---
     void OnInitialize ();
@@ -32,6 +32,9 @@ namespace UnityPackages.EntityComponentSystem {
 
     /// Internal method to set the instance reference. This method will
     /// be called after the controller and system initialization.
-    void InternalOnInitialize ();
+    void Internal_OnInitialize ();
+
+    /// Internal method to update the children of the system.
+    void Internal_OnUpdate ();
   }
 }

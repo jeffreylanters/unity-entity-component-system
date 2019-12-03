@@ -4,7 +4,7 @@ namespace UnityPackages.EntityComponentSystem {
   public class InjectedSystem : System.Attribute {
 
     /// Sets the attributes values on a system.
-    public static void SetAttributeValues (ISystem system) {
+    public static void SetAttributeValues (IEntitySystem system) {
       var _systemFields = system.GetType ().GetFields (
         System.Reflection.BindingFlags.Instance |
         System.Reflection.BindingFlags.NonPublic |

@@ -1,5 +1,5 @@
 namespace UnityPackages.EntityComponentSystem {
-  // TODO move this into a normal attribute and find the references to runtime!?
+
   /// Describes a reference property within a component.
   public class EditorReference : UnityEngine.PropertyAttribute { }
 

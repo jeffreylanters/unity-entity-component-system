@@ -1,13 +1,7 @@
 namespace UnityPackages.EntityComponentSystem {
 
   /// An entity system.
-  public abstract class EntitySystem<S, C> : ISystem where S : EntitySystem<S, C>, new () where C : EntityComponent<C, S>, new () {
-
-    /// An instance reference to the controller. This reference will be set during the
-    ///  'InternalOnInitialize' method inside this class. This method will be called
-    ///  after the controller and system initialization.
-    public static S Instance;
-
+  public abstract class EntitySystem<S, C> : IEntitySystem where S : EntitySystem<S, C>, new () where C : EntityComponent<C, S>, new () {
     public virtual void OnInitialize () { }
     public virtual void OnInitialized () { }
     public virtual void OnUpdate () { }
@@ -17,10 +11,12 @@ namespace UnityPackages.EntityComponentSystem {
     public virtual void OnDisabled () { }
     public virtual void OnEntityInitialize (C entity) { }
     public virtual void OnEntityInitialized (C entity) { }
-    public virtual void OnEntityStart (C entity) { }
     public virtual void OnEntityEnabled (C entity) { }
     public virtual void OnEntityDisabled (C entity) { }
     public virtual void OnEntityWillDestroy (C entity) { }
+
+    /// An instance reference to the controller.
+    public static S Instance;
 
     /// Defines whether this system is enabled.
     private bool isEnabled;
@@ -38,19 +34,19 @@ namespace UnityPackages.EntityComponentSystem {
     public bool hasEntities = false;
 
     /// Gets a entity's component on a given system.
-    public void GetComponentOnEntity<GEC> (C entity, System.Action<GEC> action) {
-      var _entity = entity.GetComponent<GEC> ();
+    public void GetComponentOnEntity<C2> (C entity, System.Action<C2> action) {
+      var _entity = entity.GetComponent<C2> ();
       if (_entity != null)
         action (_entity);
     }
 
     /// Gets a entity's component on a given system.
-    public GEC GetComponentOnEntity<GEC> (C entity) =>
-      entity.GetComponent<GEC> ();
+    public C2 GetComponentOnEntity<C2> (C entity) =>
+      entity.GetComponent<C2> ();
 
     /// Checks whether a given entity has a component.
-    public bool HasComponentOnEntity<GEC> (C entity) =>
-      entity.GetComponent<GEC> () != null;
+    public bool HasComponentOnEntity<C2> (C entity) =>
+      entity.GetComponent<C2> () != null;
 
     /// Starts a coroutine on this system.
     public UnityEngine.Coroutine StartCoroutine (System.Collections.IEnumerator routine) =>
@@ -70,20 +66,25 @@ namespace UnityPackages.EntityComponentSystem {
 
     /// Internal method to set the instance reference. This method will
     /// be called after the controller and system initialization.
-    public void InternalOnInitialize () =>
+    public void Internal_OnInitialize () =>
       Instance = Controller.Instance.GetSystem<S> ();
 
+    /// Internal method to update the children of the system.
+    public void Internal_OnUpdate () {
+      for (var _entityIndex = 0; _entityIndex < this.entityCount; _entityIndex++)
+        this.entities[_entityIndex].Internal_OnUpdate ();
+    }
+
     /// Internal method to add an entity's component to this system.
-    public void InternalAddEntity (C component) {
+    public void Internal_AddEntity (C component) {
       this.entityCount++;
       this.hasEntities = true;
       this.entities.Add (component);
       this.OnEntityInitialize (component);
-      this.OnEntityStart (component);
     }
 
     /// Internal method to remove an entity's component from this system.
-    public void InternalRemoveEntry (C component) {
+    public void Internal_RemoveEntry (C component) {
       this.entityCount--;
       this.hasEntities = this.entityCount > 0;
       this.OnEntityWillDestroy (component);
