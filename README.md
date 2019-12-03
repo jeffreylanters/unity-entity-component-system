@@ -17,9 +17,9 @@ A better approach to game design that allows you to concentrate on the actual pr
 ## Life Cycles
 
 ```csharp
-     CONTROLLERS   ENTITYSYSTEMS       ╔════════════════════════════╗
+     CONTROLLERS - ENTITYSYSTEMS       ╔════════════════════════════╗
           "INITIALIZATION"             ║ * = overridable method     ║
-   OnInitialize* ↓                     ║ ; = internal event         ║
+   OnInitialize* ↓                     ║ ; = internal               ║
                  ↓ *OnInitialize       ╚════════════════════════════╝
                  ↓ *OnEntityInitialize
                  ↓ *OnEntityStart
