@@ -1,5 +1,5 @@
 namespace UnityPackages.EntityComponentSystem {
-  
+
   // An entity component.
   public abstract class EntityComponent<C, S> : UnityEngine.MonoBehaviour where C : EntityComponent<C, S>, new () where S : EntitySystem<S, C>, new () {
 

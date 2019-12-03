@@ -16,20 +16,21 @@ A better approach to game design that allows you to concentrate on the actual pr
 
 ## Events and Usages Examples
 
-### Overrideable Method Life Cycles
+### Life Cycles
 
 ```
            CONTROLLERS   ENTITYSYSTEMS
                 [INITIALIZATION]
-          OnInitialize ↓
-                       ↓ OnInitialize
-                       ↓ OnEntityInitialize
-                       ↓ OnEntityStart
-                       ↓ OnEntityEnabled
-                       ↓ OnEntityInitialized --onderaan
-         OnInitialized ↓
-                       ↓ OnEnabled
-                       ↓ OnInitialized
+         OnInitialize* ↓
+                       ↓ *OnInitialize
+                       ↓ *OnEntityInitialize
+                       ↓ *OnEntityStart
+                       ↓ *OnEntityEnabled
+                       ↓ *OnEntityInitialized
+        OnInitialized* ↓
+                       ↓ Reference InjectedSystems
+                       ↓ *OnEnabled
+                       ↓ *OnInitialized
                     [LOGIC] ← ← ← ← ← ← ← ←
               OnUpdate ↓                  ↑
                        ↓ OnUpdate         ↑
