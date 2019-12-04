@@ -36,12 +36,12 @@ To install this package, add the following line to your `manifest.json` file loc
 ```csharp
 // It's recommended to build your entire project around these life cycle methods.
     CONTROLLERS  -  ENTITYSYSTEMS      ╔════════════════════════════╗
-       " POST INITIALIZATION "         ║ * = overridable method     ║
+        " PRE INITIALIZATION "         ║ * = overridable method     ║
    OnInitialize* ↓                     ║ ; = internal               ║
                  ↓ *OnInitialize       ╚════════════════════════════╝
                  ↓ *OnEntityInitialize
                  ↓ ;Reference Injected Systems
-        " PRE INITIALIZATION "
+       " POST INITIALIZATION "
   OnInitialized* ↓
                  ↓ *OnInitialized
                  ↓ *OnEnabled
