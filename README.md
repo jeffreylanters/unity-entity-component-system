@@ -2,9 +2,8 @@
 
 <img src="https://raw.githubusercontent.com/unity-packages/entity-component-system/master/.github/WIKI/logo.png" height="300px"></br>
 
-[![npm](https://img.shields.io/badge/dependencies-unity--packages-232c37.svg?style=for-the-badge)]()
+[![npm](https://img.shields.io/badge/unity--packages-3.0.1-232c37.svg?style=for-the-badge)]()
 [![license](https://img.shields.io/badge/license-MIT-%23ecc531.svg?style=for-the-badge)]()
-[![npm](https://img.shields.io/badge/version-3.0.1-1480c3.svg?style=for-the-badge)]()
 
 [![npm](https://img.shields.io/badge/sponsor_the_project-donate-E12C9A.svg?style=for-the-badge)](https://paypal.me/jeffreylanters)
 
