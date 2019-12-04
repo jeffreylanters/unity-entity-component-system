@@ -1,18 +1,40 @@
-# Entity Component System
+<div align="center">
 
-![](https://img.shields.io/badge/dependencies-unity--packages-%233bc6d8.svg) ![](https://img.shields.io/badge/license-MIT-%23ecc531.svg)
+<img src="https://raw.githubusercontent.com/unity-packages/entity-component-system/master/.github/WIKI/logo.png" height="300px"></br>
+
+[![npm](https://img.shields.io/badge/dependencies-unity--packages-232c37.svg?style=for-the-badge)]()
+[![license](https://img.shields.io/badge/license-MIT-%23ecc531.svg?style=for-the-badge)]()
+[![npm](https://img.shields.io/badge/version-3.0.1-1480c3.svg?style=for-the-badge)]()
 
 A better approach to game design that allows you to concentrate on the actual problems you are solving: the data and behavior that make up your game. By moving from object-oriented to data-oriented design it will be easier for you to reuse the code and easier for others to understand and work on it.
 
-> NOTE When using this Unity Package, make sure to **Star** this repository. When using any of the packages please make sure to give credits to **Jeffrey Lanters** somewhere in your app or game. **THESE PACKAGES ARE NOT ALLOWED TO BE SOLD ANYWHERE!**
+**&Lt;**
+[**Installation Guide**](https://github.com/unity-packages/installation) &middot;
+**&Gt;**
 
-## Install
+<br/><br/>
 
-```
+[![npm](https://img.shields.io/badge/sponsor_the_project-donate-E12C9A.svg?style=for-the-badge)](https://paypal.me/jeffreylanters)
+
+NOTE When using this Unity Package, make sure to **Star** this repository. When using any of the packages please make sure to give credits to **Jeffrey Lanters** and **Unity Packages** somewhere in your app or game. **THESE PACKAGES ARE NOT ALLOWED TO BE SOLD ANYWHERE!**
+
+**&Lt;**
+**Made with &hearts; by Jeffrey Lanters**
+**&Gt;**
+
+<br/><br/>
+
+</div>
+
+# Installation
+
+To install this package, add the following line to your `manifest.json` file located within your project's packages directory. For more details and troubleshooting of the Unity Packages manager, head over to the [Installation Guide](https://github.com/unity-packages/installation).
+
+```json
 "com.unity-packages.entity-component-system": "git+https://github.com/unity-packages/entity-component-system"
 ```
 
-[Click here to read the Unity Packages installation guide](https://github.com/unity-packages/installation)
+# Documentation
 
 ## Life Cycles
 
