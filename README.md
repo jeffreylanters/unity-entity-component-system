@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/unity-packages/entity-component-system/master/.github/WIKI/logo.png" height="300px"></br>
+<img src="https://raw.githubusercontent.com/unity-packages/entity-component-system/master/.github/logo.jpg" height="300px"></br>
 
 [![npm](https://img.shields.io/badge/unity--packages-3.0.1-232c37.svg?style=for-the-badge)]()
 [![license](https://img.shields.io/badge/license-MIT-%23ecc531.svg?style=for-the-badge)]()
