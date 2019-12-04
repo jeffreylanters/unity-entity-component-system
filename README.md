@@ -1,32 +1,81 @@
-# Entity Component System
+<div align="center">
 
-![](https://img.shields.io/badge/dependencies-unity--packages-%233bc6d8.svg) ![](https://img.shields.io/badge/license-MIT-%23ecc531.svg)
+<img src="https://raw.githubusercontent.com/unity-packages/entity-component-system/master/.github/WIKI/logo.png" height="300px"></br>
 
-This simple ECS offers a better approach to game design that allows you to concentrate on the actual problems you are solving: the data and behavior that make up your game. By moving from object-oriented to data-oriented design it will be easier for you to reuse the code and easier for others to understand and work on it.
+[![npm](https://img.shields.io/badge/unity--packages-3.0.1-232c37.svg?style=for-the-badge)]()
+[![license](https://img.shields.io/badge/license-MIT-%23ecc531.svg?style=for-the-badge)]()
 
-> NOTE When using this Unity Package, make sure to **Star** this repository. When using any of the packages please make sure to give credits to **Jeffrey Lanters** somewhere in your app or game. **THESE PACKAGES ARE NOT ALLOWED TO BE SOLD ANYWHERE!**
+[![npm](https://img.shields.io/badge/sponsor_the_project-donate-E12C9A.svg?style=for-the-badge)](https://paypal.me/jeffreylanters)
 
-## Install
+A better approach to game design that allows you to concentrate on the actual problems you are solving: the data and behavior that make up your game. By moving from object-oriented to data-oriented design it will be easier for you to reuse the code and easier for others to understand and work on it.
 
-```
+> When using this Unity Package, make sure to **Star** this repository. When using any of the packages please make sure to give credits to **Jeffrey Lanters** and **Unity Packages** somewhere in your app or game. **These packages are not allowed to be sold anywhere!**
+
+**&Lt;**
+**Made with &hearts; by Jeffrey Lanters**
+**&Gt;**
+
+<br/><br/>
+
+</div>
+
+# Installation
+
+To install this package, add the following line to your `manifest.json` file located within your project's packages directory. For more details and troubleshooting of the Unity Packages manager, head over to the [Installation Guide](https://github.com/unity-packages/installation).
+
+```json
 "com.unity-packages.entity-component-system": "git+https://github.com/unity-packages/entity-component-system"
 ```
 
-[Click here to read the Unity Packages installation guide](https://github.com/unity-packages/installation)
+<br/><br/>
 
-## Example Usage, and Methods
+# Documentation
+
+## Life Cycles
+
+```csharp
+// It's recommended to build your entire project around these life cycle methods.
+    CONTROLLERS  -  ENTITYSYSTEMS      ╔════════════════════════════╗
+       " POST INITIALIZATION "         ║ * = overridable method     ║
+   OnInitialize* ↓                     ║ ; = internal               ║
+                 ↓ *OnInitialize       ╚════════════════════════════╝
+                 ↓ *OnEntityInitialize
+                 ↓ ;Reference Injected Systems
+        " PRE INITIALIZATION "
+  OnInitialized* ↓
+                 ↓ *OnInitialized
+                 ↓ *OnEnabled
+                 ↓ *OnEntityInitialized
+                 ↓ *OnEntityEnabled
+             " LOGIC " ← ← ← ← ← ← ← ← ← ← ← ← ←
+       OnUpdate* ↓                             ↑
+                 ↓ *OnUpdate                   ↑
+                 ↓ → → → → → → → → → → → → → → ↑
+           " RENDERING " ← ← ← ← ← ← ← ← ← ← ← ←
+      OnDrawGui* ↓                             ↑
+                 ↓ *OnDrawGui                  ↑
+   OnDrawGizmos* ↓                             ↑
+                 ↓ *OnDrawGizmos               ↑
+                 ↓ → → → → → → → → → → → → → → ↑
+        " DECOMMISSIONING "
+                 ↓ *OnDisabled
+                 ↓ *OnEntityDisabled
+                 ↓ *OnEntityWillDestory
+```
+
+## Usage Examples
 
 ### Controllers
 
 ```cs
 // Create one controller per project as your core
-public class MainController : ECS.Controller {
+public class MainController : Controller {
 
   // Event triggered when the controller is initializing
   public override void OnInitialize () {
 
     // Use the Register Systems method to register your systems to the controller
-    //  This can only be done during the initialization
+    //  This can only be done during 'OnInitialize'
     this.RegisterSystems (typeof(ItemSystem));
 
     // EXAMPLE: Use the Enable Systems method to enable any of your registered systems
@@ -42,6 +91,14 @@ public class MainController : ECS.Controller {
   // Event triggered when the system is updating
   //   This event is called every frame
   public override void OnUpdate () { }
+
+  // Event triggered when the system is drawing the gizmos
+  //   This event is called every gizmos draw call
+  public override void OnDrawGizmos () { }
+
+  // Event triggered when the system is drawing the gui
+  //   This event is called every gui draw call
+  public override void OnDrawGui () { }
 }
 ```
 
@@ -49,7 +106,11 @@ public class MainController : ECS.Controller {
 
 ```cs
 // Create a system to take control of your entity's component
-public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
+public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
+
+  // EXAMPLE: Use the InjectedSystem attribute to create a permanent
+  //   reference other systems. Can only be used within outer systems.
+  [InjectedSystem] private InventorySystem inventorySystem;
 
   // Event triggered when the system is initializing
   public override void OnInitialize () { }
@@ -59,13 +120,16 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
   public override void OnUpdate () {
 
     // EXAMPLE: Access the first entity's component
-    this.firstEntity;
+    this.entity;
 
     // EXAMPLE: Access all the entities components
     foreach (var _entity in this.entities) { }
-    
+
     // EXAMPLE: Use the cached entity count to improve performance
     this.entityCount;
+
+    // EXAMPLE: Use the cached has entity to improve performance
+    this.hasEntities;
 
     // EXAMPLE: Use the static 'Instance' to access other systems
     InventorySystem.Instance;
@@ -93,16 +157,13 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 
   // Event triggered when the system is listing for GUI events
   //   This event is called every GUI draw call
-  public override void OnGUI () { }
+  public override void OnDrawGui () { }
 
   // Event triggered when the system is disabled
   public override void OnDisabled () { }
 
   // Event triggered when an entity of this system is initializing
   public override void OnEntityInitialize (ItemComponent entity) { }
-
-  // Event triggered when an entity of this system is started
-  public override void OnEntityStart (ItemComponent entity) { }
 
   // Event triggered when an entity of this system is enabled
   public override void OnEntityEnabled (ItemComponent entity) { }
@@ -122,16 +183,17 @@ public class ItemSystem : ECS.System<ItemSystem, ItemComponent> {
 
 ```cs
 // Create a component to provide properties to your entity
-public class ItemComponent : ECS.Component<ItemComponent, ItemSystem> {
+// A component should only contain public properties.
+public class ItemComponent : EntityComponent<ItemComponent, ItemSystem> {
 
-  // EXAMPLE: Use the 'Protected' attribute to mark properties as inaccessable
+  // EXAMPLE: Use the 'EditorProtection' attribute to mark properties as inaccessable
   //   The property cannot be changed in the editor inspector
-  [ECS.Protected] public bool isLegendary;
+  [EditorProtection] public bool isLegendary;
 
   // EXAMPLE: Use the 'Reference' attribute to mark this property as a reference
-  //   This makes the editor automatically assign the property based on 
+  //   This makes the editor automatically assign the property based on
   //   the property's name in the transforms children in Editor time.
   //   Casing, spaces and dashes will be ignored while searching.
-  [ECS.Reference] public Image itemSprite;
+  [EditorReference] public Image itemSprite;
 }
 ```
