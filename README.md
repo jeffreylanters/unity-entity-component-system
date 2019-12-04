@@ -10,17 +10,13 @@
 
 A better approach to game design that allows you to concentrate on the actual problems you are solving: the data and behavior that make up your game. By moving from object-oriented to data-oriented design it will be easier for you to reuse the code and easier for others to understand and work on it.
 
-> NOTE When using this Unity Package, make sure to **Star** this repository. When using any of the packages please make sure to give credits to **Jeffrey Lanters** and **Unity Packages** somewhere in your app or game. **THESE PACKAGES ARE NOT ALLOWED TO BE SOLD ANYWHERE!**
+> When using this Unity Package, make sure to **Star** this repository. When using any of the packages please make sure to give credits to **Jeffrey Lanters** and **Unity Packages** somewhere in your app or game.
 
-**&Lt;**
-[**Installation Guide**](https://github.com/unity-packages/installation) &middot;
-**&Gt;**
+> **THESE PACKAGES ARE NOT ALLOWED TO BE SOLD ANYWHERE!**
 
 **&Lt;**
 **Made with &hearts; by Jeffrey Lanters**
 **&Gt;**
-
-<br/><br/>
 
 <br/><br/>
 
@@ -33,6 +29,8 @@ To install this package, add the following line to your `manifest.json` file loc
 ```json
 "com.unity-packages.entity-component-system": "git+https://github.com/unity-packages/entity-component-system"
 ```
+
+<br/><br/>
 
 # Documentation
 
