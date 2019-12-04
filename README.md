@@ -3,7 +3,7 @@
 <img src="https://raw.githubusercontent.com/unity-packages/installation/master/.github/logo.jpg" height="300px"></br>
 
 [![npm](https://img.shields.io/badge/unity--packages-3.0.1-232c37.svg?style=for-the-badge)]()
-[![license](https://img.shields.io/badge/license-MIT-%23ecc531.svg?style=for-the-badge)]()
+[![license](https://img.shields.io/badge/license-Custom-%23ecc531.svg?style=for-the-badge)]()
 
 [![npm](https://img.shields.io/badge/sponsor_the_project-donate-E12C9A.svg?style=for-the-badge)](https://paypal.me/jeffreylanters)
 
@@ -36,12 +36,12 @@ To install this package, add the following line to your `manifest.json` file loc
 ```csharp
 // It's recommended to build your entire project around these life cycle methods.
     CONTROLLERS  -  ENTITYSYSTEMS      ╔════════════════════════════╗
-       " POST INITIALIZATION "         ║ * = overridable method     ║
+        " PRE INITIALIZATION "         ║ * = overridable method     ║
    OnInitialize* ↓                     ║ ; = internal               ║
                  ↓ *OnInitialize       ╚════════════════════════════╝
                  ↓ *OnEntityInitialize
                  ↓ ;Reference Injected Systems
-        " PRE INITIALIZATION "
+       " POST INITIALIZATION "
   OnInitialized* ↓
                  ↓ *OnInitialized
                  ↓ *OnEnabled
