@@ -6,21 +6,21 @@
 [![license](https://img.shields.io/badge/license-MIT-%23ecc531.svg?style=for-the-badge)]()
 [![npm](https://img.shields.io/badge/version-3.0.1-1480c3.svg?style=for-the-badge)]()
 
+[![npm](https://img.shields.io/badge/sponsor_the_project-donate-E12C9A.svg?style=for-the-badge)](https://paypal.me/jeffreylanters)
+
 A better approach to game design that allows you to concentrate on the actual problems you are solving: the data and behavior that make up your game. By moving from object-oriented to data-oriented design it will be easier for you to reuse the code and easier for others to understand and work on it.
+
+> NOTE When using this Unity Package, make sure to **Star** this repository. When using any of the packages please make sure to give credits to **Jeffrey Lanters** and **Unity Packages** somewhere in your app or game. **THESE PACKAGES ARE NOT ALLOWED TO BE SOLD ANYWHERE!**
 
 **&Lt;**
 [**Installation Guide**](https://github.com/unity-packages/installation) &middot;
 **&Gt;**
 
-<br/><br/>
-
-[![npm](https://img.shields.io/badge/sponsor_the_project-donate-E12C9A.svg?style=for-the-badge)](https://paypal.me/jeffreylanters)
-
-NOTE When using this Unity Package, make sure to **Star** this repository. When using any of the packages please make sure to give credits to **Jeffrey Lanters** and **Unity Packages** somewhere in your app or game. **THESE PACKAGES ARE NOT ALLOWED TO BE SOLD ANYWHERE!**
-
 **&Lt;**
 **Made with &hearts; by Jeffrey Lanters**
 **&Gt;**
+
+<br/><br/>
 
 <br/><br/>
 
