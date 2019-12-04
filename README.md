@@ -33,35 +33,9 @@ To install this package, add the following line to your `manifest.json` file loc
 
 ## Life Cycles
 
-```csharp
-// It's recommended to build your entire project around these life cycle methods.
-    CONTROLLERS  -  ENTITYSYSTEMS      ╔════════════════════════════╗
-        " PRE INITIALIZATION "         ║ * = overridable method     ║
-   OnInitialize* ↓                     ║ ; = internal               ║
-                 ↓ *OnInitialize       ╚════════════════════════════╝
-                 ↓ *OnEntityInitialize
-                 ↓ ;Reference Injected Systems
-       " POST INITIALIZATION "
-  OnInitialized* ↓
-                 ↓ *OnInitialized
-                 ↓ *OnEnabled
-                 ↓ *OnEntityInitialized
-                 ↓ *OnEntityEnabled
-             " LOGIC " ← ← ← ← ← ← ← ← ← ← ← ← ←
-       OnUpdate* ↓                             ↑
-                 ↓ *OnUpdate                   ↑
-                 ↓ → → → → → → → → → → → → → → ↑
-           " RENDERING " ← ← ← ← ← ← ← ← ← ← ← ←
-      OnDrawGui* ↓                             ↑
-                 ↓ *OnDrawGui                  ↑
-   OnDrawGizmos* ↓                             ↑
-                 ↓ *OnDrawGizmos               ↑
-                 ↓ → → → → → → → → → → → → → → ↑
-        " DECOMMISSIONING "
-                 ↓ *OnDisabled
-                 ↓ *OnEntityDisabled
-                 ↓ *OnEntityWillDestory
-```
+It's recommended to build your entire project around these life cycle methods.
+
+<img src="https://raw.githubusercontent.com/unity-packages/entity-component-system/master/.github/lifecycle.png" width="100%"></br>
 
 ## Usage Examples
 
