@@ -39,6 +39,8 @@ It's recommended to build your entire project around these life cycle methods.
 
 ## Usage Examples
 
+Examples of all the overridable methods, methods and properties of the module.
+
 ### Controllers
 
 ```cs
