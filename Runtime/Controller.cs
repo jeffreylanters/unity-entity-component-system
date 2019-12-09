@@ -31,7 +31,8 @@ namespace UnityPackages.EntityComponentSystem {
         this.isInitialized = true;
       }
 
-      // Invoking 'OnUpdate' on the controller, each enabled system
+      // Invoking 'OnUpdate' on the controller, each enabled system that wants
+      // to be updated using ShouldUpdate.
       for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
         this.systems[_systemIndex].Internal_OnUpdate ();
       this.OnUpdate ();
