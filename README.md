@@ -95,7 +95,7 @@ public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
   // Return whether this system should update.
   //   This event is called every frame
   public override bool ShouldUpdate () {
-    retrun true;
+    return true;
   }
 
   // Event triggered when the system is updating
