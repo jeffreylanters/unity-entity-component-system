@@ -14,6 +14,7 @@ namespace UnityPackages.EntityComponentSystem {
     public virtual void OnEntityEnabled (C entity) { }
     public virtual void OnEntityDisabled (C entity) { }
     public virtual void OnEntityWillDestroy (C entity) { }
+    public virtual bool ShouldUpdate () { return true; }
 
     /// An instance reference to the controller.
     public static S Instance;
