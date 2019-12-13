@@ -91,6 +91,13 @@ public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
   // Event triggered when the system is initializing
   public override void OnInitialize () { }
 
+  // Event triggered before the system is updating
+  // Return whether this system should update.
+  //   This event is called every frame
+  public override bool ShouldUpdate () {
+    return true;
+  }
+
   // Event triggered when the system is updating
   //   This event is called every frame
   public override void OnUpdate () {

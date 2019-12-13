@@ -19,6 +19,9 @@ namespace UnityPackages.EntityComponentSystem {
     void OnUpdate ();
 
     /// ---
+    bool ShouldUpdate ();
+
+    /// ---
     void OnDrawGizmos ();
 
     /// ---

@@ -31,13 +31,17 @@ namespace UnityPackages.EntityComponentSystem {
         this.isInitialized = true;
       }
 
-      // Invoking 'OnUpdate' on the controller, each enabled system
+      // Invoking 'OnUpdate' on the controller, each enabled system that wants
+      // to be updated using ShouldUpdate.
       for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
         this.systems[_systemIndex].Internal_OnUpdate ();
       this.OnUpdate ();
-      for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
-        if (this.systems[_systemIndex].GetEnabled () == true)
-          this.systems[_systemIndex].OnUpdate ();
+      for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++) {
+        var _system = this.systems[_systemIndex];
+        if (_system.GetEnabled () == true)
+          if (_system.ShouldUpdate () == true)
+            _system.OnUpdate ();
+      }
     }
 
 #if UNITY_EDITOR
