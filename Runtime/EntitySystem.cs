@@ -1,7 +1,10 @@
 namespace UnityPackages.EntityComponentSystem {
 
   /// An entity system.
-  public abstract class EntitySystem<S, C> : IEntitySystem where S : EntitySystem<S, C>, new () where C : EntityComponent<C, S>, new () {
+  public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEntitySystem
+  where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new ()
+  where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new () {
+
     public virtual void OnInitialize () { }
     public virtual void OnInitialized () { }
     public virtual void OnUpdate () { }
@@ -9,15 +12,15 @@ namespace UnityPackages.EntityComponentSystem {
     public virtual void OnDrawGui () { }
     public virtual void OnEnabled () { }
     public virtual void OnDisabled () { }
-    public virtual void OnEntityInitialize (C entity) { }
-    public virtual void OnEntityInitialized (C entity) { }
-    public virtual void OnEntityEnabled (C entity) { }
-    public virtual void OnEntityDisabled (C entity) { }
-    public virtual void OnEntityWillDestroy (C entity) { }
+    public virtual void OnEntityInitialize (EntityComponentType entity) { }
+    public virtual void OnEntityInitialized (EntityComponentType entity) { }
+    public virtual void OnEntityEnabled (EntityComponentType entity) { }
+    public virtual void OnEntityDisabled (EntityComponentType entity) { }
+    public virtual void OnEntityWillDestroy (EntityComponentType entity) { }
     public virtual bool ShouldUpdate () { return true; }
 
     /// An instance reference to the controller.
-    public static S Instance;
+    public static EntitySystemType Instance;
 
     /// Defines whether this system is enabled.
     private bool isEnabled = false;
@@ -26,10 +29,10 @@ namespace UnityPackages.EntityComponentSystem {
     private bool isInitialized = false;
 
     /// A list of the system's instantiated entity components.
-    public System.Collections.Generic.List<C> entities = new System.Collections.Generic.List<C> ();
+    public System.Collections.Generic.List<EntityComponentType> entities = new System.Collections.Generic.List<EntityComponentType> ();
 
     /// The first instantiated entity compoent if this system.
-    public C entity { get { return this.entities[0]; } }
+    public EntityComponentType entity { get { return this.entities[0]; } }
 
     /// Defines the number of instantiated entity components this system has.
     public int entityCount = 0;
@@ -38,18 +41,18 @@ namespace UnityPackages.EntityComponentSystem {
     public bool hasEntities = false;
 
     /// Gets a entity's component on a given system.
-    public void GetComponentOnEntity<C2> (C entity, System.Action<C2> action) {
+    public void GetComponentOnEntity<C2> (EntityComponentType entity, System.Action<C2> action) {
       var _entity = entity.GetComponent<C2> ();
       if (_entity != null)
         action (_entity);
     }
 
     /// Gets a entity's component on a given system.
-    public C2 GetComponentOnEntity<C2> (C entity) =>
+    public C2 GetComponentOnEntity<C2> (EntityComponentType entity) =>
       entity.GetComponent<C2> ();
 
     /// Checks whether a given entity has a component.
-    public bool HasComponentOnEntity<C2> (C entity) =>
+    public bool HasComponentOnEntity<C2> (EntityComponentType entity) =>
       entity.GetComponent<C2> () != null;
 
     /// Starts a coroutine on this system.
@@ -71,7 +74,7 @@ namespace UnityPackages.EntityComponentSystem {
     /// Internal method to set the instance reference. This method will
     /// be called after the controller and system initialization.
     public void Internal_OnInitialize () =>
-      Instance = Controller.Instance.GetSystem<S> ();
+      Instance = Controller.Instance.GetSystem<EntitySystemType> ();
 
     /// Internal method to update the children of the system.
     public void Internal_OnUpdate () {
@@ -86,7 +89,7 @@ namespace UnityPackages.EntityComponentSystem {
     }
 
     /// Internal method to add an entity's component to this system.
-    public void Internal_AddEntity (C component) {
+    public void Internal_AddEntity (EntityComponentType component) {
       this.entityCount++;
       this.hasEntities = true;
       this.entities.Add (component);
@@ -94,7 +97,7 @@ namespace UnityPackages.EntityComponentSystem {
     }
 
     /// Internal method to remove an entity's component from this system.
-    public void Internal_RemoveEntry (C component) {
+    public void Internal_RemoveEntry (EntityComponentType component) {
       this.entityCount--;
       this.hasEntities = this.entityCount > 0;
       this.OnEntityWillDestroy (component);
