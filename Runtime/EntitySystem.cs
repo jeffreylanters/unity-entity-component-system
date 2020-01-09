@@ -32,7 +32,7 @@ namespace UnityPackages.EntityComponentSystem {
     public System.Collections.Generic.List<EntityComponentType> entities = new System.Collections.Generic.List<EntityComponentType> ();
 
     /// The first instantiated entity compoent if this system.
-    public EntityComponentType entity { get { return this.entities[0]; } }
+    public EntityComponentType entity = null;
 
     /// Defines the number of instantiated entity components this system has.
     public int entityCount = 0;
@@ -90,6 +90,8 @@ namespace UnityPackages.EntityComponentSystem {
 
     /// Internal method to add an entity's component to this system.
     public void Internal_AddEntity (EntityComponentType component) {
+      if (this.hasEntities == false)
+        this.entity = component;
       this.entityCount++;
       this.hasEntities = true;
       this.entities.Add (component);
@@ -102,6 +104,7 @@ namespace UnityPackages.EntityComponentSystem {
       this.hasEntities = this.entityCount > 0;
       this.OnEntityWillDestroy (component);
       this.entities.Remove (component);
+      this.entity = this.hasEntities == false ? null : this.entities[0];
     }
   }
 }
