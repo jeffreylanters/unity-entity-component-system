@@ -48,7 +48,7 @@ namespace UnityPackages.EntityComponentSystem {
         this.isInitialized = true;
         this.GetSystem ().OnEntityInitialized ((EntityComponentType) this);
       }
-      if (this.isEnabled == false) {
+      if (this.isEnabled == false && this.activeInHierarchy == true) {
         this.isEnabled = true;
         this.GetSystem ().OnEntityEnabled ((EntityComponentType) this);
       }
