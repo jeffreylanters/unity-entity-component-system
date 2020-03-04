@@ -50,9 +50,9 @@ public class MainController : Controller {
   // Event triggered when the controller is initializing
   public override void OnInitialize () {
 
-    // Use the Register Systems method to register your systems to the controller
+    // Use the Register Systems or services method to register your systems to the controller
     //  This can only be done during 'OnInitialize'
-    this.RegisterSystems (typeof(ItemSystem));
+    this.Register (typeof(ItemSystem), typeof(SpawnService));
 
     // EXAMPLE: Use the Enable Systems method to enable any of your registered systems
     this.EnableSystems (typeof(ItemSystem));
@@ -185,7 +185,7 @@ public class ItemComponent : EntityComponent<ItemComponent, ItemSystem> {
 ### Services
 
 ```cs
-// Create a services to provide data or handle other non game object logic.
+// Create a services to provide data or handle other non scene logic.
 public class SpawnService : Service<SpawnService> {
 
   // EXAMPLE: Use the Injected attribute to create a permanent
