@@ -84,9 +84,10 @@ public class MainController : Controller {
 // Create a system to take control of your entity's component
 public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
 
-  // EXAMPLE: Use the InjectedSystem attribute to create a permanent
-  //   reference other systems. Can only be used within outer systems.
-  [InjectedSystem] private InventorySystem inventorySystem;
+  // EXAMPLE: Use the Injected attribute to create a permanent
+  //   reference other systems or services inside systems or services.
+  [Injected] private InventorySystem inventorySystem;
+  [Injected] private SpawnService spawnService;
 
   // Event triggered when the system is initializing
   public override void OnInitialize () { }
@@ -178,5 +179,32 @@ public class ItemComponent : EntityComponent<ItemComponent, ItemSystem> {
   //   the property's name in the transforms children in Editor time.
   //   Casing, spaces and dashes will be ignored while searching.
   [EditorReference] public Image itemSprite;
+}
+```
+
+### Services
+
+```cs
+// Create a services to provide data or handle other non game object logic.
+public class SpawnService : Service<SpawnService> {
+
+  // EXAMPLE: Use the Injected attribute to create a permanent
+  //   reference other systems or services inside systems or services.
+  [Injected] private InventorySystem inventorySystem;
+  [Injected] private SpawnService spawnService;
+
+  // Event triggered when the system is initializing
+  public override void OnInitialize () { }
+
+  // Event triggered when the system is initialized
+  public override void OnInitialized () { }
+
+  // Event triggered when the system is drawing the gizmos
+  //   This event is called every gizmos draw call
+  public override void OnDrawGizmos () { }
+
+  // Event triggered when the system is listing for GUI events
+  //   This event is called every GUI draw call
+  public override void OnDrawGui () { }
 }
 ```
