@@ -8,7 +8,8 @@ using UnityEngine;
 namespace UnityPackages.EntityComponentSystem.Editor {
   public enum NewFileType {
     Controller,
-    ComponentAndSystem
+    ComponentAndSystem,
+    Service
   }
 
   public class CreateNewFileEditorWindow : EditorWindow {
@@ -27,12 +28,20 @@ namespace UnityPackages.EntityComponentSystem.Editor {
       EditorWindow.GetWindowWithRect (typeof (CreateNewFileEditorWindow), new Rect (0, 0, 400, 150), true, "Create New File");
     }
 
+    [MenuItem ("Unity Packages/Entity Component System/Create Service")]
+    private static void CreateNewService () {
+      CreateNewFileEditorWindow.newFileType = NewFileType.Service;
+      EditorWindow.GetWindowWithRect (typeof (CreateNewFileEditorWindow), new Rect (0, 0, 400, 150), true, "Create New File");
+    }
+
     private void OnGUI () {
       var _newFileTypeReadable = "";
       if (CreateNewFileEditorWindow.newFileType == NewFileType.Controller)
         _newFileTypeReadable = "Controller";
       else if (CreateNewFileEditorWindow.newFileType == NewFileType.ComponentAndSystem)
         _newFileTypeReadable = "Component and System";
+      else if (CreateNewFileEditorWindow.newFileType == NewFileType.Service)
+        _newFileTypeReadable = "Service";
       GUILayout.BeginHorizontal (); {
         GUILayout.Space (20);
         GUILayout.BeginVertical (); {
@@ -59,12 +68,12 @@ namespace UnityPackages.EntityComponentSystem.Editor {
           "using UnityPackages.EntityComponentSystem;\n",
           "public class " + _fileName + "Controller  : Controller {",
           "\tpublic override void OnInitialize () {",
-          "\t\tthis.RegisterSystems();",
+          "\t\tthis.Register();",
           "\t}",
           "}"
         );
 
-      else if (CreateNewFileEditorWindow.newFileType == NewFileType.ComponentAndSystem) {
+      if (CreateNewFileEditorWindow.newFileType == NewFileType.ComponentAndSystem) {
         this.WriteContentToFile (this.FindDirectoryWithName (Application.dataPath, "Components"), _fileName + "Component", "cs",
           "using UnityPackages.EntityComponentSystem;\n",
           "public class " + _fileName + "Component : EntityComponent<" + _fileName + "Component, " + _fileName + "System> { }"
@@ -74,6 +83,12 @@ namespace UnityPackages.EntityComponentSystem.Editor {
           "public class " + _fileName + "System : EntitySystem<" + _fileName + "System, " + _fileName + "Component> { }"
         );
       }
+
+      if (CreateNewFileEditorWindow.newFileType == NewFileType.Service)
+        this.WriteContentToFile (this.FindDirectoryWithName (Application.dataPath, "Services"), _fileName + "Service", "cs",
+          "using UnityPackages.EntityComponentSystem;\n",
+          "public class " + _fileName + "Service : Service<" + _fileName + "Service> { }"
+        );
 
       this.Close ();
       AssetDatabase.Refresh ();

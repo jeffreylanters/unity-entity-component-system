@@ -2,7 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/unity-packages/installation/master/.github/logo.jpg" height="300px"></br>
 
-[![npm](https://img.shields.io/badge/unity--packages-3.1.0-232c37.svg?style=for-the-badge)]()
+[![npm](https://img.shields.io/badge/unity--packages-3.2.0-232c37.svg?style=for-the-badge)]()
 [![license](https://img.shields.io/badge/license-Custom-%23ecc531.svg?style=for-the-badge)]()
 
 [![npm](https://img.shields.io/badge/sponsor_the_project-donate-E12C9A.svg?style=for-the-badge)](https://paypal.me/jeffreylanters)
@@ -50,9 +50,9 @@ public class MainController : Controller {
   // Event triggered when the controller is initializing
   public override void OnInitialize () {
 
-    // Use the Register Systems method to register your systems to the controller
+    // Use the Register Systems or services method to register your systems to the controller
     //  This can only be done during 'OnInitialize'
-    this.RegisterSystems (typeof(ItemSystem));
+    this.Register (typeof(ItemSystem), typeof(SpawnService));
 
     // EXAMPLE: Use the Enable Systems method to enable any of your registered systems
     this.EnableSystems (typeof(ItemSystem));
@@ -84,9 +84,10 @@ public class MainController : Controller {
 // Create a system to take control of your entity's component
 public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
 
-  // EXAMPLE: Use the InjectedSystem attribute to create a permanent
-  //   reference other systems. Can only be used within outer systems.
-  [InjectedSystem] private InventorySystem inventorySystem;
+  // EXAMPLE: Use the Injected attribute to create a permanent
+  //   reference other systems or services inside systems or services.
+  [Injected] private InventorySystem inventorySystem;
+  [Injected] private SpawnService spawnService;
 
   // Event triggered when the system is initializing
   public override void OnInitialize () { }
@@ -178,5 +179,32 @@ public class ItemComponent : EntityComponent<ItemComponent, ItemSystem> {
   //   the property's name in the transforms children in Editor time.
   //   Casing, spaces and dashes will be ignored while searching.
   [EditorReference] public Image itemSprite;
+}
+```
+
+### Services
+
+```cs
+// Create a services to provide data or handle other non scene logic.
+public class SpawnService : Service<SpawnService> {
+
+  // EXAMPLE: Use the Injected attribute to create a permanent
+  //   reference other systems or services inside systems or services.
+  [Injected] private InventorySystem inventorySystem;
+  [Injected] private SpawnService spawnService;
+
+  // Event triggered when the system is initializing
+  public override void OnInitialize () { }
+
+  // Event triggered when the system is initialized
+  public override void OnInitialized () { }
+
+  // Event triggered when the system is drawing the gizmos
+  //   This event is called every gizmos draw call
+  public override void OnDrawGizmos () { }
+
+  // Event triggered when the system is listing for GUI events
+  //   This event is called every GUI draw call
+  public override void OnDrawGui () { }
 }
 ```
