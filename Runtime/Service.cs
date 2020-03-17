@@ -27,5 +27,13 @@ namespace UnityPackages.EntityComponentSystem {
         this.isInitialized = true;
       }
     }
+    
+    /// Starts a coroutine on this service.
+    public UnityEngine.Coroutine StartCoroutine (System.Collections.IEnumerator routine) =>
+      Controller.Instance.StartCoroutine (routine);
+
+    /// Stops a given coroutine.
+    public void StopCoroutine (System.Collections.IEnumerator routine) =>
+      Controller.Instance.StopCoroutine (routine);
   }
 }
