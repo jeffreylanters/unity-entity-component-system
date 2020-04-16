@@ -1,6 +1,7 @@
 namespace UnityPackages.EntityComponentSystem {
 
   /// Describes a injectedable system of service.
+  [System.AttributeUsage (System.AttributeTargets.Field)]
   public class Injected : System.Attribute {
 
     /// Sets the attributes values on an object.

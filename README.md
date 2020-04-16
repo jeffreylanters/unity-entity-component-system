@@ -170,15 +170,15 @@ public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
 // A component should only contain public properties.
 public class ItemComponent : EntityComponent<ItemComponent, ItemSystem> {
 
-  // EXAMPLE: Use the 'EditorProtection' attribute to mark properties as inaccessable
+  // EXAMPLE: Use the 'Protected' attribute to mark properties as inaccessable
   //   The property cannot be changed in the editor inspector
-  [EditorProtection] public bool isLegendary;
+  [Protected] public bool isLegendary;
 
-  // EXAMPLE: Use the 'Reference' attribute to mark this property as a reference
+  // EXAMPLE: Use the 'Referenced' attribute to mark this property as a reference
   //   This makes the editor automatically assign the property based on
   //   the property's name in the transforms children in Editor time.
   //   Casing, spaces and dashes will be ignored while searching.
-  [EditorReference] public Image itemSprite;
+  [Referenced] public Image itemSprite;
 }
 ```
 

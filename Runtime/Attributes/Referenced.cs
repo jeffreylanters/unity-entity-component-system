@@ -1,17 +1,14 @@
 namespace UnityPackages.EntityComponentSystem {
 
   /// Describes a reference property within a component.
-  public class EditorReference : UnityEngine.PropertyAttribute { }
+  [System.AttributeUsage (System.AttributeTargets.Field)]
+  public class Referenced : UnityEngine.PropertyAttribute { }
 
 #if UNITY_EDITOR
-  [UnityEditor.CustomPropertyDrawer (typeof (EditorReference))]
-  public class EditorReferenceDrawer : UnityEditor.PropertyDrawer {
+  [UnityEditor.CustomPropertyDrawer (typeof (Referenced))]
+  public class ReferencedDrawer : UnityEditor.PropertyDrawer {
     public override void OnGUI (UnityEngine.Rect position, UnityEditor.SerializedProperty serializedProperty, UnityEngine.GUIContent label) {
-      label.text = "@ " + serializedProperty.displayName;
-      label.tooltip =
-        "This is a managed reference to '" + serializedProperty.type + " " + serializedProperty.name + "', " +
-        "make sure a gameObject with a name like this is a child of this gameObject.";
-
+      label.text = serializedProperty.displayName;
       UnityEditor.EditorGUI.BeginDisabledGroup (true);
       UnityEditor.EditorGUI.PropertyField (position, serializedProperty, label, false);
       UnityEditor.EditorGUI.EndDisabledGroup ();
@@ -21,7 +18,7 @@ namespace UnityPackages.EntityComponentSystem {
 
       var _flattenObjectNameRegex = new System.Text.RegularExpressions.Regex ("[^a-zA-Z0-9]");
       var _matchComponentNameRegex = new System.Text.RegularExpressions.Regex (@"PPtr<\$(.*?)>");
-      var _selfReference = (EditorReference) attribute;
+      var _selfReference = (Referenced) attribute;
       var _selfTransform = ((UnityEngine.MonoBehaviour) serializedProperty.serializedObject.targetObject).transform;
       var _childTransforms = _selfTransform.GetComponentsInChildren<UnityEngine.Transform> ();
       var _targetGameObjectName = _flattenObjectNameRegex.Replace (serializedProperty.name, "").ToLower ().Trim ();
