@@ -120,8 +120,8 @@ public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
 
     // EXAMPLE: Use the 'GetComponentOnEntity' and 'HasComponentOnEntity'
     //   methods to access other components on entities
-    this.GetComponentOnEntity<OtherComponent> (this.firstEntity, entity => { });
-    this.HasComponentOnEntity<OtherComponent> (this.firstEntity);
+    this.GetComponentOnEntity<OtherComponent> (this.entity, entity => { });
+    this.HasComponentOnEntity<OtherComponent> (this.entity);
 
     // EXAMPLE: Use the 'StartCoroutine' and 'StopCoroutine' on IEnumerators
     //   Even though a System is no MonoBehaviour, it still can manage coroutines
