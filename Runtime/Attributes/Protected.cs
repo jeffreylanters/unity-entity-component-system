@@ -10,7 +10,8 @@ namespace UnityPackages.EntityComponentSystem {
     public override void OnGUI (UnityEngine.Rect position, UnityEditor.SerializedProperty serializedProperty, UnityEngine.GUIContent label) { }
 
     public override float GetPropertyHeight (UnityEditor.SerializedProperty property, UnityEngine.GUIContent label) {
-      return 0;
+      // https://forum.unity.com/threads/getpropertyheight-and-arrays.443235/
+      return -1;
     }
   }
 #endif
