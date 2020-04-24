@@ -33,17 +33,17 @@ Install using the Unity Package Manager. add the following line to your `manifes
 
 ## Documentation
 
-## Life Cycles
+### Life Cycles
 
 It's recommended to build your entire project around these life cycle methods.
 
 <img src="https://raw.githubusercontent.com/elraccoone/unity-entity-component-system/master/.github/WIKI/lifecycle.png" width="100%"></br>
 
-## Usage Examples
+### Usage Examples
 
 Examples of all the overridable methods, methods and properties of the module.
 
-### Controllers
+#### Controllers
 
 ```cs
 // Create one controller per project as your core
@@ -80,7 +80,7 @@ public class MainController : Controller {
 }
 ```
 
-### Systems
+#### Systems
 
 ```cs
 // Create a system to take control of your entity's component
@@ -165,7 +165,7 @@ public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
 }
 ```
 
-### Components
+#### Components
 
 ```cs
 // Create a component to provide properties to your entity
@@ -184,7 +184,7 @@ public class ItemComponent : EntityComponent<ItemComponent, ItemSystem> {
 }
 ```
 
-### Services
+#### Services
 
 ```cs
 // Create a services to provide data or handle other non scene logic.
