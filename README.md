@@ -1,35 +1,37 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/unity-packages/installation/master/.github/logo.jpg" height="300px"></br>
+<img src="https://raw.githubusercontent.com/elraccoone/unity-entity-component-system/master/.github/WIKI/logo.jpg" height="100px"></br>
 
-[![npm](https://img.shields.io/badge/unity--packages-3.2.0-232c37.svg?style=for-the-badge)]()
-[![license](https://img.shields.io/badge/license-Custom-%23ecc531.svg?style=for-the-badge)]()
+# Tweens
 
-[![npm](https://img.shields.io/badge/sponsor_the_project-donate-E12C9A.svg?style=for-the-badge)](https://paypal.me/jeffreylanters)
+[![npm](https://img.shields.io/badge/upm-3.2.0-232c37.svg?style=for-the-badge)]()
+[![license](https://img.shields.io/badge/license-Custom-%23ecc531.svg?style=for-the-badge)](./LICENSE.md)
+[![npm](https://img.shields.io/badge/sponsor-donate-E12C9A.svg?style=for-the-badge)](https://paypal.me/jeffreylanters)
 
 A better approach to game design that allows you to concentrate on the actual problems you are solving: the data and behavior that make up your game. By moving from object-oriented to data-oriented design it will be easier for you to reuse the code and easier for others to understand and work on it.
 
-> When using this Unity Package, make sure to **Star** this repository. When using any of the packages please make sure to give credits to **Jeffrey Lanters** and **Unity Packages** somewhere in your app or game. **These packages are not allowed to be sold anywhere!**
+When using this Unity Package, make sure to **Star** this repository. When using any of the packages please make sure to give credits to **Jeffrey Lanters / El Raccoone** somewhere in your app or game. **It it prohibited to distribute, sublicense, and/or sell copies of the Software!**
 
 **&Lt;**
-**Made with &hearts; by Jeffrey Lanters**
+[**Installation**](#installation) &middot;
+[**Documentation**](#documentation) &middot;
+[**License**](./LICENSE.md) &middot;
+[**Sponsor**](https://paypal.me/jeffreylanters)
 **&Gt;**
 
-<br/><br/>
+**Made with &hearts; by Jeffrey Lanters**
 
 </div>
 
-# Installation
+## Installation
 
-To install this package, add the following line to your `manifest.json` file located within your project's packages directory. For more details and troubleshooting of the Unity Packages manager, head over to the [Installation Guide](https://github.com/unity-packages/installation).
+Install using the Unity Package Manager. add the following line to your `manifest.json` file located within your project's packages directory.
 
 ```json
-"com.unity-packages.entity-component-system": "git+https://github.com/unity-packages/entity-component-system"
+"nl.elraccoone.entity-component-system": "git+https://github.com/unity-packages/entity-component-system"
 ```
 
-<br/><br/>
-
-# Documentation
+## Documentation
 
 ## Life Cycles
 
