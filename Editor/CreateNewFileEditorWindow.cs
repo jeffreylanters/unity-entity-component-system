@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace UnityPackages.EntityComponentSystem.Editor {
+namespace ElRaccoone.EntityComponentSystem.Editor {
   public enum NewFileType {
     Controller,
     ComponentAndSystem,
@@ -65,7 +65,7 @@ namespace UnityPackages.EntityComponentSystem.Editor {
 
       if (CreateNewFileEditorWindow.newFileType == NewFileType.Controller)
         this.WriteContentToFile (this.FindDirectoryWithName (Application.dataPath, "Controllers"), _fileName + "Controller", "cs",
-          "using UnityPackages.EntityComponentSystem;\n",
+          "using ElRaccoone.EntityComponentSystem;\n",
           "public class " + _fileName + "Controller  : Controller {",
           "\tpublic override void OnInitialize () {",
           "\t\tthis.Register();",
@@ -75,18 +75,18 @@ namespace UnityPackages.EntityComponentSystem.Editor {
 
       if (CreateNewFileEditorWindow.newFileType == NewFileType.ComponentAndSystem) {
         this.WriteContentToFile (this.FindDirectoryWithName (Application.dataPath, "Components"), _fileName + "Component", "cs",
-          "using UnityPackages.EntityComponentSystem;\n",
+          "using ElRaccoone.EntityComponentSystem;\n",
           "public class " + _fileName + "Component : EntityComponent<" + _fileName + "Component, " + _fileName + "System> { }"
         );
         this.WriteContentToFile (this.FindDirectoryWithName (Application.dataPath, "Systems"), _fileName + "System", "cs",
-          "using UnityPackages.EntityComponentSystem;\n",
+          "using ElRaccoone.EntityComponentSystem;\n",
           "public class " + _fileName + "System : EntitySystem<" + _fileName + "System, " + _fileName + "Component> { }"
         );
       }
 
       if (CreateNewFileEditorWindow.newFileType == NewFileType.Service)
         this.WriteContentToFile (this.FindDirectoryWithName (Application.dataPath, "Services"), _fileName + "Service", "cs",
-          "using UnityPackages.EntityComponentSystem;\n",
+          "using ElRaccoone.EntityComponentSystem;\n",
           "public class " + _fileName + "Service : Service<" + _fileName + "Service> { }"
         );
 

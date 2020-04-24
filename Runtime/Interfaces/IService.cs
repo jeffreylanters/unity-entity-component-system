@@ -1,4 +1,4 @@
-namespace UnityPackages.EntityComponentSystem {
+namespace ElRaccoone.EntityComponentSystem {
 
   /// Base interface for every service
   public interface IService {

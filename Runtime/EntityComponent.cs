@@ -1,4 +1,4 @@
-namespace UnityPackages.EntityComponentSystem {
+namespace ElRaccoone.EntityComponentSystem {
 
   // An entity component.
   public abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEngine.MonoBehaviour, IEntityComponent

@@ -1,4 +1,4 @@
-namespace UnityPackages.EntityComponentSystem {
+namespace ElRaccoone.EntityComponentSystem {
   public abstract class Controller : UnityEngine.MonoBehaviour {
     public virtual void OnInitialize () { }
     public virtual void OnInitialized () { }

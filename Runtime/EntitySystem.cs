@@ -1,4 +1,4 @@
-namespace UnityPackages.EntityComponentSystem {
+namespace ElRaccoone.EntityComponentSystem {
 
   /// An entity system.
   public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEntitySystem

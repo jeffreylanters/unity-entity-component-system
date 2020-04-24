@@ -1,4 +1,4 @@
-namespace UnityPackages.EntityComponentSystem {
+namespace ElRaccoone.EntityComponentSystem {
 
   /// Describes a protected property within a component.
   [System.AttributeUsage (System.AttributeTargets.Field)]

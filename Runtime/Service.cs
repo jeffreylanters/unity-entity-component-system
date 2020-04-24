@@ -1,4 +1,4 @@
-namespace UnityPackages.EntityComponentSystem {
+namespace ElRaccoone.EntityComponentSystem {
 
   /// A service.
   public abstract class Service<ServiceType> : IService
@@ -27,7 +27,7 @@ namespace UnityPackages.EntityComponentSystem {
         this.isInitialized = true;
       }
     }
-    
+
     /// Starts a coroutine on this service.
     public UnityEngine.Coroutine StartCoroutine (System.Collections.IEnumerator routine) =>
       Controller.Instance.StartCoroutine (routine);

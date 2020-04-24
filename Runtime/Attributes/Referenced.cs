@@ -1,4 +1,4 @@
-namespace UnityPackages.EntityComponentSystem {
+namespace ElRaccoone.EntityComponentSystem {
 
   /// Describes a reference property within a component.
   [System.AttributeUsage (System.AttributeTargets.Field)]
