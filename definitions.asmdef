@@ -1,5 +1,5 @@
 {
-    "name": "unity-packages.entity-component-system",
+    "name": "nl.elraccoone.entity-component-system",
     "references": [],
     "optionalUnityReferences": [],
     "includePlatforms": [],

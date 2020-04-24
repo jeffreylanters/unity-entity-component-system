@@ -28,7 +28,7 @@ When using this Unity Package, make sure to **Star** this repository. When using
 Install using the Unity Package Manager. add the following line to your `manifest.json` file located within your project's packages directory.
 
 ```json
-"nl.elraccoone.entity-component-system": "git+https://github.com/unity-packages/entity-component-system"
+"nl.elraccoone.entity-component-system": "git+https://github.com/elraccoone/unity-entity-component-system"
 ```
 
 ## Documentation
@@ -37,7 +37,7 @@ Install using the Unity Package Manager. add the following line to your `manifes
 
 It's recommended to build your entire project around these life cycle methods.
 
-<img src="https://raw.githubusercontent.com/unity-packages/entity-component-system/master/.github/lifecycle.png" width="100%"></br>
+<img src="https://raw.githubusercontent.com/elraccoone/unity-entity-component-system/master/.github/WIKI/lifecycle.png" width="100%"></br>
 
 ## Usage Examples
 
