@@ -16,19 +16,19 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
     private static NewFileType newFileType;
     private string fileName;
 
-    [MenuItem ("Unity Packages/Entity Component System/Create New Controller")]
+    [MenuItem ("Assets/Entity Component System/Create New Controller")]
     private static void CreateNewController () {
       CreateNewFileEditorWindow.newFileType = NewFileType.Controller;
       EditorWindow.GetWindowWithRect (typeof (CreateNewFileEditorWindow), new Rect (0, 0, 400, 150), true, "Create New File");
     }
 
-    [MenuItem ("Unity Packages/Entity Component System/Create New Component and System")]
+    [MenuItem ("Assets/Entity Component System/Create New Component and System")]
     private static void CreateNewComponentAndSystem () {
       CreateNewFileEditorWindow.newFileType = NewFileType.ComponentAndSystem;
       EditorWindow.GetWindowWithRect (typeof (CreateNewFileEditorWindow), new Rect (0, 0, 400, 150), true, "Create New File");
     }
 
-    [MenuItem ("Unity Packages/Entity Component System/Create Service")]
+    [MenuItem ("Assets/Entity Component System/Create Service")]
     private static void CreateNewService () {
       CreateNewFileEditorWindow.newFileType = NewFileType.Service;
       EditorWindow.GetWindowWithRect (typeof (CreateNewFileEditorWindow), new Rect (0, 0, 400, 150), true, "Create New File");
