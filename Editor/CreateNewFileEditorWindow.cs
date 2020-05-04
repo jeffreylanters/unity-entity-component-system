@@ -99,7 +99,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
       foreach (var _directory in _directories)
         if (_directory.Split ('/').Last ().ToLower () == name.ToLower ())
           return _directory;
-      Debug.LogWarning ("There is no directory named '" + name + "', creating in root.");
+      Debug.LogWarning ("There is no directory named '" + name + "', creating in project root.");
       return directory;
     }
 
@@ -122,6 +122,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           _fileContent += _fileContentLine + "\n";
         outfile.Write (_fileContent);
       }
+      Debug.Log("Creating '" + fileName + "' in '" + filePath + "'.");
     }
   }
 }
