@@ -20,7 +20,7 @@ namespace ElRaccoone.EntityComponentSystem {
       var _matchComponentNameRegex = new System.Text.RegularExpressions.Regex (@"PPtr<\$(.*?)>");
       var _selfReference = (Referenced) attribute;
       var _selfTransform = ((UnityEngine.MonoBehaviour) serializedProperty.serializedObject.targetObject).transform;
-      var _childTransforms = _selfTransform.GetComponentsInChildren<UnityEngine.Transform> ();
+      var _childTransforms = _selfTransform.GetComponentsInChildren<UnityEngine.Transform> (true);
       var _targetGameObjectName = _flattenObjectNameRegex.Replace (serializedProperty.name, "").ToLower ().Trim ();
       var _targetTypeName = _matchComponentNameRegex.Match (serializedProperty.type).Groups[1].Value;
 
