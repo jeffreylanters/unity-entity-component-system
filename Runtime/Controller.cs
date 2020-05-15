@@ -35,13 +35,14 @@ namespace ElRaccoone.EntityComponentSystem {
         this.isInitialized = true;
       }
 
-      // Invoking 'OnUpdate' on the controller, each enabled system that wants
-      // to be updated using ShouldUpdate.
+      // Invoking 'Internal_OnUpdate' on each system.
       for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
         this.systems[_systemIndex].Internal_OnUpdate ();
       for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
         this.services[_serviceIndex].Internal_OnUpdate ();
+      // Invoking 'OnUpdate' on the controller.
       this.OnUpdate ();
+      // Invoking 'OnUpdate' on each enabled system that Should to be updated.
       for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++) {
         var _system = this.systems[_systemIndex];
         if (_system.GetEnabled () == true)
