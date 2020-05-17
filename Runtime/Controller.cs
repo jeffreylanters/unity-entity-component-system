@@ -19,7 +19,7 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// During the awake, this system will start the initialization.
     private void Awake () {
-      UnityEngine.GameObject.DontDestroyOnLoad (this.gameObject);
+      UnityEngine.Object.DontDestroyOnLoad (this.transform.root.gameObject);
       Controller.Instance = this;
       this.systems = new System.Collections.Generic.List<IEntitySystem> ();
       this.services = new System.Collections.Generic.List<IService> ();
