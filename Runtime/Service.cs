@@ -2,7 +2,7 @@ namespace ElRaccoone.EntityComponentSystem {
 
   /// A service.
   public abstract class Service<ServiceType> : IService
-  where ServiceType : Service<ServiceType>, new () {
+  where ServiceType : Service<ServiceType>, new() {
 
     public virtual void OnInitialize () { }
     public virtual void OnInitialized () { }
