@@ -170,7 +170,7 @@ public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
 
 #### Components
 
-The entities, or things, that populate your game or program and the data associated with your entities, but organized by the data itself rather than by entity. (This difference in organization is one of the key differences between an object-oriented and a data-oriented design.)
+The entities, or things, that populate your game or program and the data associated with it.
 
 ```cs
 // Create a component to provide properties to your entity
