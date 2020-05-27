@@ -63,7 +63,6 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// Invokes the OnDrawGui on the Systems
     private void OnGUI () {
-      this.OnDrawGui ();
       for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
         if (this.systems[_systemIndex].GetEnabled () == true)
           this.systems[_systemIndex].OnDrawGui ();
@@ -79,10 +78,6 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// Method invoked when the controller updates, will be called every frame.
     public virtual void OnUpdate () { }
-
-    // Method invoked when the controller is drawing the gizmos, will be called
-    // every gizmos draw call.
-    public virtual void OnDrawGui () { }
 
     // Register your systems and services to the controller. This can only be
     // done during 'OnInitialize' cycle.
