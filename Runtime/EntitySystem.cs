@@ -88,6 +88,10 @@ namespace ElRaccoone.EntityComponentSystem {
       new UnityEngine.GameObject ("entity " + typeof (EntityComponentType).Name)
         .AddComponent<EntityComponentType> ();
 
+    /// 
+    public EntityComponentType[] MatchEntities (System.Predicate<EntityComponentType> match) =>
+      this.entities.FindAll (match).ToArray ();
+
     /// Starts a coroutine on this system.
     public UnityEngine.Coroutine StartCoroutine (System.Collections.IEnumerator routine) =>
       Controller.Instance.StartCoroutine (routine);
