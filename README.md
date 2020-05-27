@@ -83,6 +83,8 @@ public class MainController : Controller {
 
 #### Systems
 
+the logic that transforms the component data from its current state to its next state— for example, a system might update the positions of all moving entities by their velocity times the time interval since the previous frame.
+
 ```cs
 // Create a system to take control of your entity's component
 public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
@@ -167,6 +169,8 @@ public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
 ```
 
 #### Components
+
+The entities, or things, that populate your game or program and the data associated with your entities, but organized by the data itself rather than by entity. (This difference in organization is one of the key differences between an object-oriented and a data-oriented design.)
 
 ```cs
 // Create a component to provide properties to your entity
