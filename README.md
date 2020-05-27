@@ -51,10 +51,13 @@ public class MainController : Controller {
   }
 }
 public class EnemyComponent : EntityComponent<EnemyComponent, EnemySystem> {
+  [Referenced] public BoxCollider collider;
   [Protected] public int level;
   public float speed;
 }
 public class EnemySystem : EntitySystem<EnemySystem, EnemyComponent> {
+  [Injected] public AiSystem aiSystem;
+  [Injected] public AudioService AudioService;
   public override void OnUpdate () {
     var _delta = Time.deltaTime;
     foreach (var _entity in this.entities)
@@ -63,7 +66,7 @@ public class EnemySystem : EntitySystem<EnemySystem, EnemyComponent> {
 }
 ```
 
-### Meta Data Documentation
+### Meta Data
 
 ```cs
 /// A controller.
@@ -134,5 +137,75 @@ public abstract class EntityComponent<EntityComponentType, EntitySystemType> : U
   public void SetLocalScale (float x, float y, float z);
   /// Adds to the local Scale of an entity.
   public void AddLocalScale (float x, float y, float z);
+}
+```
+
+```cs
+/// An entity system.
+public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEntitySystem
+  where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new()
+  where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new() {
+
+  /// An instance reference to the controller.
+  public static EntitySystemType Instance;
+  /// A list of the system's instantiated entity components.
+  public System.Collections.Generic.List<EntityComponentType> entities;
+  /// The first instantiated entity compoent if this system.
+  public EntityComponentType entity;
+  /// Defines the number of instantiated entity components this system has.
+  public int entityCount;
+  /// Defines whether the system has instantiated entity components.
+  public bool hasEntities;
+
+    /// Event triggered when the system will initialize.
+  public virtual void OnInitialize ();
+  /// Event triggered when the system is initialized.
+  public virtual void OnInitialized ();
+  /// Event triggered when the system updates, will be called every frame.
+  public virtual void OnUpdate ();
+  // Event triggered when the system is drawing the gizmos, will be called
+  // every gizmos draw call.
+  public virtual void OnDrawGizmos ();
+  // Event triggered when the system is drawing the gui, will be called every
+  // on gui draw call.
+  public virtual void OnDrawGui ();
+  // Event triggered when the system becomes enabled.
+  public virtual void OnEnabled ();
+  // Event triggered when the system becomes disabled.
+  public virtual void OnDisabled ();
+  // Event triggered when an entity of this system is initializing.
+  public virtual void OnEntityInitialize (EntityComponentType entity);
+  // Event triggered when an entity of this system is initialized.
+  public virtual void OnEntityInitialized (EntityComponentType entity);
+  // Event triggered when an entity of this system becomes enabled.
+  public virtual void OnEntityEnabled (EntityComponentType entity);
+  // Event triggered when an entity of this system becomes disabled.
+  public virtual void OnEntityDisabled (EntityComponentType entity);
+  // Event triggered when an entity of this system will destroy.
+  public virtual void OnEntityWillDestroy (EntityComponentType entity);
+  // Event triggered before the system will update, return whether this system
+  // should update. will be called every frame.
+  public virtual bool ShouldUpdate ();
+
+  /// Returns another component on an entity.
+  public void GetComponentOnEntity<C> (EntityComponentType entity, System.Action<C> then);
+  /// Returns another component on an entity.
+  public C GetComponentOnEntity<C> (EntityComponentType entity);
+  /// Checks whether an entity has a specific component.
+  public bool HasComponentOnEntity<C> (EntityComponentType entity);
+  /// Creates a new entity.
+  public EntityComponentType CreateEntity ();
+  /// Clones an entity.
+  public EntityComponentType CloneEntity (EntityComponentType entity);
+  /// Finds entities using a predicate match.
+  public EntityComponentType[] MatchEntities (System.Predicate<EntityComponentType> match);
+  /// Starts a coroutine on this system.
+  public UnityEngine.Coroutine StartCoroutine (System.Collections.IEnumerator routine);
+  /// Stops a given coroutine.
+  public void StopCoroutine (System.Collections.IEnumerator routine);
+  /// Enables or disables this system.
+  public void SetEnabled (bool isEnabled);
+  /// Gets the enabled status of this system
+  public bool GetEnabled ();
 }
 ```

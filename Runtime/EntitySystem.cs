@@ -69,10 +69,10 @@ namespace ElRaccoone.EntityComponentSystem {
     public virtual bool ShouldUpdate () { return true; }
 
     /// Returns another component on an entity.
-    public void GetComponentOnEntity<C> (EntityComponentType entity, System.Action<C> action) {
+    public void GetComponentOnEntity<C> (EntityComponentType entity, System.Action<C> then) {
       var _entity = entity.GetComponent<C> ();
       if (_entity != null)
-        action (_entity);
+        then (_entity);
     }
 
     /// Returns another component on an entity.
