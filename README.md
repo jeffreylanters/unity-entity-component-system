@@ -79,13 +79,13 @@ public abstract class Controller {
   /// A reference to the controller.
   public static Controller Instance;
 
-  /// Event triggered when the controller is initializing.
+  /// Method invoked when the controller is initializing.
   public virtual void OnInitialize ();
-  /// Event triggered when the controller is initialized.
+  /// Method invoked when the controller is initialized.
   public virtual void OnInitialized ();
-  /// Event triggered when the controller updates, will be called every frame.
+  /// Method invoked when the controller updates, will be called every frame.
   public virtual void OnUpdate ();
-  // Event triggered when the controller is drawing the gizmos, will be called
+  // Method invoked when the controller is drawing the gizmos, will be called
   // every gizmos draw call.
   public virtual void OnDrawGui ();
 
@@ -161,33 +161,33 @@ public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEnt
   /// Defines whether the system has instantiated entity components.
   public bool hasEntities;
 
-    /// Event triggered when the system will initialize.
+    /// Method invoked when the system will initialize.
   public virtual void OnInitialize ();
-  /// Event triggered when the system is initialized.
+  /// Method invoked when the system is initialized.
   public virtual void OnInitialized ();
-  /// Event triggered when the system updates, will be called every frame.
+  /// Method invoked when the system updates, will be called every frame.
   public virtual void OnUpdate ();
-  // Event triggered when the system is drawing the gizmos, will be called
+  // Method invoked when the system is drawing the gizmos, will be called
   // every gizmos draw call.
   public virtual void OnDrawGizmos ();
-  // Event triggered when the system is drawing the gui, will be called every
+  // Method invoked when the system is drawing the gui, will be called every
   // on gui draw call.
   public virtual void OnDrawGui ();
-  // Event triggered when the system becomes enabled.
+  // Method invoked when the system becomes enabled.
   public virtual void OnEnabled ();
-  // Event triggered when the system becomes disabled.
+  // Method invoked when the system becomes disabled.
   public virtual void OnDisabled ();
-  // Event triggered when an entity of this system is initializing.
+  // Method invoked when an entity of this system is initializing.
   public virtual void OnEntityInitialize (EntityComponentType entity);
-  // Event triggered when an entity of this system is initialized.
+  // Method invoked when an entity of this system is initialized.
   public virtual void OnEntityInitialized (EntityComponentType entity);
-  // Event triggered when an entity of this system becomes enabled.
+  // Method invoked when an entity of this system becomes enabled.
   public virtual void OnEntityEnabled (EntityComponentType entity);
-  // Event triggered when an entity of this system becomes disabled.
+  // Method invoked when an entity of this system becomes disabled.
   public virtual void OnEntityDisabled (EntityComponentType entity);
-  // Event triggered when an entity of this system will destroy.
+  // Method invoked when an entity of this system will destroy.
   public virtual void OnEntityWillDestroy (EntityComponentType entity);
-  // Event triggered before the system will update, return whether this system
+  // Method invoked before the system will update, return whether this system
   // should update. will be called every frame.
   public virtual bool ShouldUpdate ();
 
@@ -222,14 +222,14 @@ public abstract class Service<ServiceType> : IService
   /// An instance reference to the service.
   public static ServiceType Instance;
 
-  /// Event triggered when the service will initialize.
+  /// Method invoked when the service will initialize.
   public virtual void OnInitialize ();
-  /// Event triggered when the system is initialized.
+  /// Method invoked when the system is initialized.
   public virtual void OnInitialized ();
-  // Event triggered when the service is drawing the gizmos, will be called
+  // Method invoked when the service is drawing the gizmos, will be called
   // every gizmos draw call.
   public virtual void OnDrawGizmos ();
-  // Event triggered when the service is drawing the gui, will be called every
+  // Method invoked when the service is drawing the gui, will be called every
   // on gui draw call.
   public virtual void OnDrawGui ();
 

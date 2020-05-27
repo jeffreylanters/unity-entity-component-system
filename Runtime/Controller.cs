@@ -71,16 +71,16 @@ namespace ElRaccoone.EntityComponentSystem {
         this.services[_serviceIndex].OnDrawGui ();
     }
 
-    /// Event triggered when the controller is initializing.
+    /// Method invoked when the controller is initializing.
     public virtual void OnInitialize () { }
 
-    /// Event triggered when the controller is initialized.
+    /// Method invoked when the controller is initialized.
     public virtual void OnInitialized () { }
 
-    /// Event triggered when the controller updates, will be called every frame.
+    /// Method invoked when the controller updates, will be called every frame.
     public virtual void OnUpdate () { }
 
-    // Event triggered when the controller is drawing the gizmos, will be called
+    // Method invoked when the controller is drawing the gizmos, will be called
     // every gizmos draw call.
     public virtual void OnDrawGui () { }
 

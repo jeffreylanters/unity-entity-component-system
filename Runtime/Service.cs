@@ -10,17 +10,17 @@ namespace ElRaccoone.EntityComponentSystem {
     /// An instance reference to the service.
     public static ServiceType Instance;
 
-    /// Event triggered when the service will initialize.
+    /// Method invoked when the service will initialize.
     public virtual void OnInitialize () { }
 
-    /// Event triggered when the system is initialized.
+    /// Method invoked when the system is initialized.
     public virtual void OnInitialized () { }
 
-    // Event triggered when the service is drawing the gizmos, will be called
+    // Method invoked when the service is drawing the gizmos, will be called
     // every gizmos draw call.
     public virtual void OnDrawGizmos () { }
 
-    // Event triggered when the service is drawing the gui, will be called every
+    // Method invoked when the service is drawing the gui, will be called every
     // on gui draw call.
     public virtual void OnDrawGui () { }
 
