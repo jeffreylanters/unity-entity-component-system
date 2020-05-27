@@ -38,11 +38,11 @@ Install using the Unity Package Manager. add the following line to your `manifes
 
 It's recommended to build your entire project around these life cycle methods.
 
-Use build in file generator to create new instances for any of these types.
-
 <img src="https://raw.githubusercontent.com/elraccoone/unity-entity-component-system/master/.github/WIKI/lifecycle.png" width="100%"></br>
 
 ### Basic Example Usage
+
+Basic example usage of some of the ECS features.
 
 ```cs
 public class MainController : Controller {
@@ -71,6 +71,8 @@ public class EnemySystem : EntitySystem<EnemySystem, EnemyComponent> {
 ```
 
 ### Meta Data
+
+Use build in file generator to create new instances for any of these types.
 
 ```cs
 /// Base class for every controller.
