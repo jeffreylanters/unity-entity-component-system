@@ -38,180 +38,101 @@ Install using the Unity Package Manager. add the following line to your `manifes
 
 It's recommended to build your entire project around these life cycle methods.
 
+Use build in file generator to create new instances for any of these types.
+
 <img src="https://raw.githubusercontent.com/elraccoone/unity-entity-component-system/master/.github/WIKI/lifecycle.png" width="100%"></br>
 
-### Usage Examples
-
-Examples of all the overridable methods, methods and properties of the module.
-
-#### Controllers
+### Basic Example Usage
 
 ```cs
-// Create one controller per project as your core
 public class MainController : Controller {
-
-  // Event triggered when the controller is initializing
   public override void OnInitialize () {
-
-    // Use the Register Systems or services method to register your systems to the controller
-    //  This can only be done during 'OnInitialize'
-    this.Register (typeof(ItemSystem), typeof(SpawnService));
-
-    // EXAMPLE: Use the Enable Systems method to enable any of your registered systems
-    this.EnableSystems (typeof(ItemSystem));
-
-    // EXAMPLE: Use the Disable Systems method to disable any of your registered systems
-    this.DisableSystems (typeof(ItemSystem));
+    this.Register (typeof (EnemySystem));
   }
-
-  // Event triggered when the controller is initialized
-  public override void OnInitialized () { }
-
-  // Event triggered when the system is updating
-  //   This event is called every frame
-  public override void OnUpdate () { }
-
-  // Event triggered when the system is drawing the gizmos
-  //   This event is called every gizmos draw call
-  public override void OnDrawGizmos () { }
-
-  // Event triggered when the system is drawing the gui
-  //   This event is called every gui draw call
-  public override void OnDrawGui () { }
 }
-```
-
-#### Systems
-
-the logic that transforms the component data from its current state to its next state— for example, a system might update the positions of all moving entities by their velocity times the time interval since the previous frame.
-
-```cs
-// Create a system to take control of your entity's component
-public class ItemSystem : EntitySystem<ItemSystem, ItemComponent> {
-
-  // EXAMPLE: Use the Injected attribute to create a permanent
-  //   reference other systems or services inside systems or services.
-  [Injected] private InventorySystem inventorySystem;
-  [Injected] private SpawnService spawnService;
-
-  // Event triggered when the system is initializing
-  public override void OnInitialize () { }
-
-  // Event triggered before the system is updating
-  // Return whether this system should update.
-  //   This event is called every frame
-  public override bool ShouldUpdate () {
-    return true;
-  }
-
-  // Event triggered when the system is updating
-  //   This event is called every frame
+public class EnemyComponent : EntityComponent<EnemyComponent, EnemySystem> {
+  [Protected] public int level;
+  public float speed;
+}
+public class EnemySystem : EntitySystem<EnemySystem, EnemyComponent> {
   public override void OnUpdate () {
-
-    // EXAMPLE: Access the first entity's component
-    this.entity;
-
-    // EXAMPLE: Access all the entities components
-    foreach (var _entity in this.entities) { }
-
-    // EXAMPLE: Use the cached entity count to improve performance
-    this.entityCount;
-
-    // EXAMPLE: Use the cached has entity to improve performance
-    this.hasEntities;
-
-    // EXAMPLE: Use the static 'Instance' to access other systems
-    InventorySystem.Instance;
-
-    // EXAMPLE: Use the 'GetComponentOnEntity' and 'HasComponentOnEntity'
-    //   methods to access other components on entities
-    this.GetComponentOnEntity<OtherComponent> (this.entity, entity => { });
-    this.HasComponentOnEntity<OtherComponent> (this.entity);
-
-    // EXAMPLE: Use the 'StartCoroutine' and 'StopCoroutine' on IEnumerators
-    //   Even though a System is no MonoBehaviour, it still can manage coroutines
-    this.StartCoroutine ();
-    this.StopCoroutine ();
+    var _delta = Time.deltaTime;
+    foreach (var _entity in this.entities)
+      _entity.AddPosition(_delta * _entity.speed, 0, 0);
   }
-
-  // Event triggered when the system is enabled
-  public override void OnEnabled () { }
-
-  // Event triggered when the system is initialized
-  public override void OnInitialized () { }
-
-  // Event triggered when the system is drawing the gizmos
-  //   This event is called every gizmos draw call
-  public override void OnDrawGizmos () { }
-
-  // Event triggered when the system is listing for GUI events
-  //   This event is called every GUI draw call
-  public override void OnDrawGui () { }
-
-  // Event triggered when the system is disabled
-  public override void OnDisabled () { }
-
-  // Event triggered when an entity of this system is initializing
-  public override void OnEntityInitialize (ItemComponent entity) { }
-
-  // Event triggered when an entity of this system is enabled
-  public override void OnEntityEnabled (ItemComponent entity) { }
-
-  // Event triggered when an entity of this system is initialized
-  public override void OnEntityInitialized (ItemComponent entity) { }
-
-  // Event triggered when an entity of this system is disabled
-  public override void OnEntityDisabled (ItemComponent entity) { }
-
-  // Event triggered when an entity of this system will destroy
-  public override void OnEntityWillDestroy (ItemComponent entity) { }
 }
 ```
 
-#### Components
-
-The entities, or things, that populate your game or program and the data associated with it.
+### Meta Data Documentation
 
 ```cs
-// Create a component to provide properties to your entity
-// A component should only contain public properties.
-public class ItemComponent : EntityComponent<ItemComponent, ItemSystem> {
+/// A controller.
+public abstract class Controller {
 
-  // EXAMPLE: Use the 'Protected' attribute to mark properties as inaccessable
-  //   The property cannot be changed in the editor inspector
-  [Protected] public bool isLegendary;
+  /// A reference to the controller.
+  public static Controller Instance;
 
-  // EXAMPLE: Use the 'Referenced' attribute to mark this property as a reference
-  //   This makes the editor automatically assign the property based on
-  //   the property's name in the transforms children in Editor time.
-  //   Casing, spaces and dashes will be ignored while searching.
-  [Referenced] public Image itemSprite;
+  /// Event triggered when the controller is initializing.
+  public virtual void OnInitialize ();
+  /// Event triggered when the controller is initialized.
+  public virtual void OnInitialized ();
+  /// Event triggered when the controller updates, will be called every frame.
+  public virtual void OnUpdate ();
+  // Event triggered when the controller is drawing the gizmos, will be called
+  // every gizmos draw call.
+  public virtual void OnDrawGui ();
+
+  // Register your systems and services to the controller. This can only be
+  // done during 'OnInitialize' cycle.
+  public void Register (params System.Type[] typesOf);
+  /// Enables systems.
+  public void EnableSystems (params System.Type[] typesOf);
+  /// Disables systems.
+  public void DisableSystems (params System.Type[] typesOf);
+  /// Gets a system from this controller.
+  public S GetSystem<S> () where S : IEntitySystem, new();
+  /// Gets a system from this controller.
+  public System.Object GetSystem (System.Type typeOf);
+  /// Check whether this controller has a system.
+  public bool HasSystem<S> () where S : IEntitySystem, new();
+  /// Gets a service from this controller.
+  public S GetService<S> () where S : IService, new();
+  /// Gets a system from this controller.
+  public System.Object GetService (System.Type typeOf);
+  /// Check whether this controller has a service.
+  public bool HasService<S> () where S : IService, new();
 }
 ```
 
-#### Services
-
 ```cs
-// Create a services to provide data or handle other non scene logic.
-public class SpawnService : Service<SpawnService> {
+// An entity component.
+public abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEngine.MonoBehaviour, IEntityComponent
+  where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new()
+  where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new() {
 
-  // EXAMPLE: Use the Injected attribute to create a permanent
-  //   reference other systems or services inside systems or services.
-  [Injected] private InventorySystem inventorySystem;
-  [Injected] private SpawnService spawnService;
-
-  // Event triggered when the system is initializing
-  public override void OnInitialize () { }
-
-  // Event triggered when the system is initialized
-  public override void OnInitialized () { }
-
-  // Event triggered when the system is drawing the gizmos
-  //   This event is called every gizmos draw call
-  public override void OnDrawGizmos () { }
-
-  // Event triggered when the system is listing for GUI events
-  //   This event is called every GUI draw call
-  public override void OnDrawGui () { }
+  /// Adds an asset to the entity.
+  public void AddAsset (UnityEngine.Object asset);
+  /// Loads a resources and adds it as an asset to the entity.
+  public void AddAsset (string assetResourcePath);
+  /// Sets the position of an entity.
+  public void SetPosition (float x, float y, float z = 0);
+  /// Adds to the position of an entity.
+  public void AddPosition (float x, float y, float z = 0);
+  /// Sets the local position of an entity.
+  public void SetLocalPosition (float x, float y, float z = 0);
+  /// Adds to the local position of an entity.
+  public void AddLocalPosition (float x, float y, float z = 0);
+  /// Sets the EulerAngles of an entity.
+  public void SetEulerAngles (float x, float y, float z);
+  /// Adds to the EulerAngles of an entity.
+  public void AddEulerAngles (float x, float y, float z);
+  /// Sets the local EulerAngles of an entity.
+  public void SetLocalEulerAngles (float x, float y, float z);
+  /// Adds to the local EulerAngles of an entity.
+  public void AddLocalEulerAngles (float x, float y, float z);
+  /// Sets the local scale of an entity.
+  public void SetLocalScale (float x, float y, float z);
+  /// Adds to the local Scale of an entity.
+  public void AddLocalScale (float x, float y, float z);
 }
 ```

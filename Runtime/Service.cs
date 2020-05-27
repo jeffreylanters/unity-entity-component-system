@@ -4,16 +4,25 @@ namespace ElRaccoone.EntityComponentSystem {
   public abstract class Service<ServiceType> : IService
     where ServiceType : Service<ServiceType>, new() {
 
-    public virtual void OnInitialize () { }
-    public virtual void OnInitialized () { }
-    public virtual void OnDrawGizmos () { }
-    public virtual void OnDrawGui () { }
+    /// Defines whether this service has been initialized.
+    private bool isInitialized = false;
 
     /// An instance reference to the service.
     public static ServiceType Instance;
 
-    /// Defines whether this service has been initialized.
-    private bool isInitialized = false;
+    /// Event triggered when the service will initialize.
+    public virtual void OnInitialize () { }
+
+    /// Event triggered when the system is initialized.
+    public virtual void OnInitialized () { }
+
+    // Event triggered when the service is drawing the gizmos, will be called
+    // every gizmos draw call.
+    public virtual void OnDrawGizmos () { }
+
+    // Event triggered when the service is drawing the gui, will be called every
+    // on gui draw call.
+    public virtual void OnDrawGui () { }
 
     /// Starts a coroutine on this service.
     public UnityEngine.Coroutine StartCoroutine (System.Collections.IEnumerator routine) =>

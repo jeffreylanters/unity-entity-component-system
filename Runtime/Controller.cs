@@ -3,22 +3,6 @@ namespace ElRaccoone.EntityComponentSystem {
   /// A controller.
   public abstract class Controller : UnityEngine.MonoBehaviour {
 
-    /// Event triggered when the controller is initializing.
-    public virtual void OnInitialize () { }
-
-    /// Event triggered when the controller is initialized.
-    public virtual void OnInitialized () { }
-
-    /// Event triggered when the controller updates, will be called every frame.
-    public virtual void OnUpdate () { }
-
-    // Event triggered when the controller is drawing the gizmos, will be called
-    // every gizmos draw call.
-    public virtual void OnDrawGui () { }
-
-    /// A reference to the controller.
-    public static Controller Instance;
-
     /// A list of the controller's instantiated entity systems.
     private System.Collections.Generic.List<IEntitySystem> systems;
 
@@ -27,6 +11,9 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// Defines whether this controller has been intialized.
     private bool isInitialized;
+
+    /// A reference to the controller.
+    public static Controller Instance;
 
     /// During the awake, this system will start the initialization.
     private void Awake () {
@@ -84,8 +71,21 @@ namespace ElRaccoone.EntityComponentSystem {
         this.services[_serviceIndex].OnDrawGui ();
     }
 
+    /// Event triggered when the controller is initializing.
+    public virtual void OnInitialize () { }
+
+    /// Event triggered when the controller is initialized.
+    public virtual void OnInitialized () { }
+
+    /// Event triggered when the controller updates, will be called every frame.
+    public virtual void OnUpdate () { }
+
+    // Event triggered when the controller is drawing the gizmos, will be called
+    // every gizmos draw call.
+    public virtual void OnDrawGui () { }
+
     // Register your systems and services to the controller. This can only be
-    // done during 'OnInitialize'
+    // done during 'OnInitialize' cycle.
     public void Register (params System.Type[] typesOf) {
       if (this.isInitialized == true)
         throw new System.Exception ("Unable to registered system outsize of OnInitialize cycle");

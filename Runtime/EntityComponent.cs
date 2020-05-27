@@ -45,7 +45,7 @@ namespace ElRaccoone.EntityComponentSystem {
     public void AddAsset (UnityEngine.Object asset) =>
       UnityEngine.Object.Instantiate (asset, UnityEngine.Vector3.zero, UnityEngine.Quaternion.identity, this.transform);
 
-    /// Adds an asset to the entity.
+    /// Loads a resources and adds it as an asset to the entity.
     public void AddAsset (string assetResourcePath) =>
       this.AddAsset (UnityEngine.Resources.Load (assetResourcePath));
 

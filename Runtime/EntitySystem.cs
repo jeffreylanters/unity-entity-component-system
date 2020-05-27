@@ -5,6 +5,27 @@ namespace ElRaccoone.EntityComponentSystem {
     where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new()
     where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new() {
 
+    /// Defines whether this system is enabled.
+    private bool isEnabled = false;
+
+    /// Defines whether this component has been initialized.
+    private bool isInitialized = false;
+
+    /// An instance reference to the controller.
+    public static EntitySystemType Instance;
+
+    /// A list of the system's instantiated entity components.
+    public System.Collections.Generic.List<EntityComponentType> entities = new System.Collections.Generic.List<EntityComponentType> ();
+
+    /// The first instantiated entity compoent if this system.
+    public EntityComponentType entity = null;
+
+    /// Defines the number of instantiated entity components this system has.
+    public int entityCount = 0;
+
+    /// Defines whether the system has instantiated entity components.
+    public bool hasEntities = false;
+
     /// Event triggered when the system will initialize.
     public virtual void OnInitialize () { }
 
@@ -46,27 +67,6 @@ namespace ElRaccoone.EntityComponentSystem {
     // Event triggered before the system will update, return whether this system
     // should update. will be called every frame.
     public virtual bool ShouldUpdate () { return true; }
-
-    /// An instance reference to the controller.
-    public static EntitySystemType Instance;
-
-    /// Defines whether this system is enabled.
-    private bool isEnabled = false;
-
-    /// Defines whether this component has been initialized.
-    private bool isInitialized = false;
-
-    /// A list of the system's instantiated entity components.
-    public System.Collections.Generic.List<EntityComponentType> entities = new System.Collections.Generic.List<EntityComponentType> ();
-
-    /// The first instantiated entity compoent if this system.
-    public EntityComponentType entity = null;
-
-    /// Defines the number of instantiated entity components this system has.
-    public int entityCount = 0;
-
-    /// Defines whether the system has instantiated entity components.
-    public bool hasEntities = false;
 
     /// Returns another component on an entity.
     public void GetComponentOnEntity<C> (EntityComponentType entity, System.Action<C> action) {
