@@ -1,6 +1,6 @@
 namespace ElRaccoone.EntityComponentSystem {
 
-  /// A service.
+  /// Base class for every service.
   public abstract class Service<ServiceType> : IService
     where ServiceType : Service<ServiceType>, new() {
 

@@ -50,14 +50,18 @@ public class MainController : Controller {
     this.Register (typeof (EnemySystem));
   }
 }
+
 public class EnemyComponent : EntityComponent<EnemyComponent, EnemySystem> {
   [Referenced] public BoxCollider collider;
   [Protected] public int level;
+
   public float speed;
 }
+
 public class EnemySystem : EntitySystem<EnemySystem, EnemyComponent> {
   [Injected] public AiSystem aiSystem;
   [Injected] public AudioService AudioService;
+
   public override void OnUpdate () {
     var _delta = Time.deltaTime;
     foreach (var _entity in this.entities)
@@ -69,7 +73,7 @@ public class EnemySystem : EntitySystem<EnemySystem, EnemyComponent> {
 ### Meta Data
 
 ```cs
-/// A controller.
+/// Base class for every controller.
 public abstract class Controller {
 
   /// A reference to the controller.
@@ -108,7 +112,7 @@ public abstract class Controller {
 ```
 
 ```cs
-// An entity component.
+/// Base class for every entity component.
 public abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEngine.MonoBehaviour, IEntityComponent
   where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new()
   where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new() {
@@ -141,7 +145,7 @@ public abstract class EntityComponent<EntityComponentType, EntitySystemType> : U
 ```
 
 ```cs
-/// An entity system.
+/// Base class for every entity system.
 public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEntitySystem
   where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new()
   where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new() {
@@ -208,4 +212,30 @@ public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEnt
   /// Gets the enabled status of this system
   public bool GetEnabled ();
 }
+```
+
+```cs
+/// Base class for every service
+public abstract class Service<ServiceType> : IService
+  where ServiceType : Service<ServiceType>, new() {
+
+  /// An instance reference to the service.
+  public static ServiceType Instance;
+
+  /// Event triggered when the service will initialize.
+  public virtual void OnInitialize ();
+  /// Event triggered when the system is initialized.
+  public virtual void OnInitialized ();
+  // Event triggered when the service is drawing the gizmos, will be called
+  // every gizmos draw call.
+  public virtual void OnDrawGizmos ();
+  // Event triggered when the service is drawing the gui, will be called every
+  // on gui draw call.
+  public virtual void OnDrawGui ();
+
+  /// Starts a coroutine on this service.
+  public UnityEngine.Coroutine StartCoroutine (System.Collections.IEnumerator routine);
+  /// Stops a given coroutine.
+  public void StopCoroutine (System.Collections.IEnumerator routine);
+  }
 ```

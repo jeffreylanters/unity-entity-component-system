@@ -1,6 +1,6 @@
 namespace ElRaccoone.EntityComponentSystem {
 
-  /// An entity system.
+  /// Base class for every entity system.
   public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEntitySystem
     where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new()
     where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new() {

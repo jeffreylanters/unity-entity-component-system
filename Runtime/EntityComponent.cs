@@ -1,6 +1,6 @@
 namespace ElRaccoone.EntityComponentSystem {
 
-  // An entity component.
+  /// Base class for every entity component.
   public abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEngine.MonoBehaviour, IEntityComponent
     where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new()
     where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new() {
