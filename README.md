@@ -237,5 +237,5 @@ public abstract class Service<ServiceType> : IService
   public UnityEngine.Coroutine StartCoroutine (System.Collections.IEnumerator routine);
   /// Stops a given coroutine.
   public void StopCoroutine (System.Collections.IEnumerator routine);
-  }
+}
 ```
