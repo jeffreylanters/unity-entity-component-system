@@ -88,7 +88,11 @@ namespace ElRaccoone.EntityComponentSystem {
       new UnityEngine.GameObject ("entity " + typeof (EntityComponentType).Name)
         .AddComponent<EntityComponentType> ();
 
-    /// 
+    /// Clones an entity.
+    public EntityComponentType CloneEntity (EntityComponentType entity) =>
+      UnityEngine.Object.Instantiate (entity).GetComponent<EntityComponentType> ();
+
+    /// Finds entities using a predicate match.
     public EntityComponentType[] MatchEntities (System.Predicate<EntityComponentType> match) =>
       this.entities.FindAll (match).ToArray ();
 
