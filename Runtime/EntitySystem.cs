@@ -83,6 +83,11 @@ namespace ElRaccoone.EntityComponentSystem {
     public bool HasComponentOnEntity<C> (EntityComponentType entity) =>
       entity.GetComponent<C> () != null;
 
+    /// Creates a new entity.
+    public EntityComponentType CreateEntity () =>
+      new UnityEngine.GameObject ("entity " + typeof (EntityComponentType).Name)
+        .AddComponent<EntityComponentType> ();
+
     /// Starts a coroutine on this system.
     public UnityEngine.Coroutine StartCoroutine (System.Collections.IEnumerator routine) =>
       Controller.Instance.StartCoroutine (routine);

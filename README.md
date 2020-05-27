@@ -4,7 +4,7 @@
 
 # Entity Component System
 
-[![npm](https://img.shields.io/badge/upm-3.2.0-232c37.svg?style=for-the-badge)]()
+[![npm](https://img.shields.io/badge/upm-3.3.0-232c37.svg?style=for-the-badge)]()
 [![license](https://img.shields.io/badge/license-Custom-%23ecc531.svg?style=for-the-badge)](./LICENSE.md)
 [![npm](https://img.shields.io/badge/sponsor-donate-E12C9A.svg?style=for-the-badge)](https://paypal.me/jeffreylanters)
 [![npm](https://img.shields.io/github/stars/elraccoone/unity-entity-component-system.svg?style=for-the-badge)]()

@@ -41,6 +41,54 @@ namespace ElRaccoone.EntityComponentSystem {
     private void OnDestroy () =>
       this.GetSystem ().Internal_RemoveEntry ((EntityComponentType)this);
 
+    /// Adds an asset to the entity.
+    public void AddAsset (UnityEngine.Object asset) =>
+      UnityEngine.Object.Instantiate (asset, UnityEngine.Vector3.zero, UnityEngine.Quaternion.identity, this.transform);
+
+    /// Adds an asset to the entity.
+    public void AddAsset (string assetResourcePath) =>
+      this.AddAsset (UnityEngine.Resources.Load (assetResourcePath));
+
+    /// Sets the position of an entity.
+    public void SetPosition (float x, float y, float z = 0) =>
+      this.transform.position = new UnityEngine.Vector3 (x, y, z);
+
+    /// Adds to the position of an entity.
+    public void AddPosition (float x, float y, float z = 0) =>
+      this.transform.position += new UnityEngine.Vector3 (x, y, z);
+
+    /// Sets the local position of an entity.
+    public void SetLocalPosition (float x, float y, float z = 0) =>
+      this.transform.localPosition = new UnityEngine.Vector3 (x, y, z);
+
+    /// Adds to the local position of an entity.
+    public void AddLocalPosition (float x, float y, float z = 0) =>
+      this.transform.localPosition += new UnityEngine.Vector3 (x, y, z);
+
+    /// Sets the EulerAngles of an entity.
+    public void SetEulerAngles (float x, float y, float z) =>
+      this.transform.eulerAngles = new UnityEngine.Vector3 (x, y, z);
+
+    /// Adds to the EulerAngles of an entity.
+    public void AddEulerAngles (float x, float y, float z) =>
+      this.transform.eulerAngles += new UnityEngine.Vector3 (x, y, z);
+
+    /// Sets the local EulerAngles of an entity.
+    public void SetLocalEulerAngles (float x, float y, float z) =>
+      this.transform.localEulerAngles = new UnityEngine.Vector3 (x, y, z);
+
+    /// Adds to the local EulerAngles of an entity.
+    public void AddLocalEulerAngles (float x, float y, float z) =>
+      this.transform.localEulerAngles += new UnityEngine.Vector3 (x, y, z);
+
+    /// Sets the local scale of an entity.
+    public void SetLocalScale (float x, float y, float z) =>
+      this.transform.localScale = new UnityEngine.Vector3 (x, y, z);
+
+    /// Adds to the local Scale of an entity.
+    public void AddLocalScale (float x, float y, float z) =>
+      this.transform.localScale += new UnityEngine.Vector3 (x, y, z);
+
     /// During the 'InteralOnUpdate' the entity component will invoke its 
     /// 'OnEntityEnabled' and 'OnEntityInitialized' if needed.
     [Internal]
