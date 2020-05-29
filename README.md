@@ -205,6 +205,8 @@ public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEnt
   public EntityComponentType CloneEntity (EntityComponentType entity);
   /// Finds entities using a predicate match.
   public EntityComponentType[] MatchEntities (System.Predicate<EntityComponentType> match);
+  /// Finds an entity using a predicate match.
+  public EntityComponentType[] MatchEntity (System.Predicate<EntityComponentType> match);
   /// Starts a coroutine on this system.
   public UnityEngine.Coroutine StartCoroutine (System.Collections.IEnumerator routine);
   /// Stops a given coroutine.
