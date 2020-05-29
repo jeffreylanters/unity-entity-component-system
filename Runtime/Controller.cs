@@ -14,6 +14,10 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// A reference to the controller.
     public static Controller Instance;
+    
+    /// The assets that can be added to entities.
+    [UnityEngine.Header ("Resources")]
+    public UnityEngine.Object[] assets;
 
     /// During the awake, this system will start the initialization.
     private void Awake () {
