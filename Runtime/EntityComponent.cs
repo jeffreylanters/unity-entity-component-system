@@ -42,12 +42,17 @@ namespace ElRaccoone.EntityComponentSystem {
       this.GetSystem ().Internal_RemoveEntry ((EntityComponentType)this);
 
     /// Adds an asset to the entity.
-    public void AddAsset (UnityEngine.Object asset) =>
+    public UnityEngine.Object AddAsset (UnityEngine.Object asset) =>
       UnityEngine.Object.Instantiate (asset, UnityEngine.Vector3.zero, UnityEngine.Quaternion.identity, this.transform);
 
-    /// Loads a resources and adds it as an asset to the entity.
-    public void AddAsset (string assetResourcePath) =>
-      this.AddAsset (UnityEngine.Resources.Load (assetResourcePath));
+    /// Loads a asset from the controller and adds it as an asset to the entity.
+    public UnityEngine.Object AddAsset (string assetName) {
+      var _assets = Controller.Instance.assets;
+      for (var _i = 0; _i < _assets.Length; _i++)
+        if (_assets[_i].name == assetName)
+          return this.AddAsset (_assets[_i]);
+      throw new System.Exception ("Unable to load asset, it was not added to the controller");
+    }
 
     /// Sets the position of an entity.
     public void SetPosition (float x, float y, float z = 0) =>
@@ -88,6 +93,10 @@ namespace ElRaccoone.EntityComponentSystem {
     /// Adds to the local Scale of an entity.
     public void AddLocalScale (float x, float y, float z) =>
       this.transform.localScale += new UnityEngine.Vector3 (x, y, z);
+
+    /// Sets the game object of the entity active.
+    public void SetActive (bool value) =>
+      this.gameObject.SetActive (value);
 
     /// During the 'InteralOnUpdate' the entity component will invoke its 
     /// 'OnEntityEnabled' and 'OnEntityInitialized' if needed.

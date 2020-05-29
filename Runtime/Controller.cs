@@ -14,7 +14,7 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// A reference to the controller.
     public static Controller Instance;
-    
+
     /// The assets that can be added to entities.
     [UnityEngine.Header ("Resources")]
     public UnityEngine.Object[] assets;
@@ -143,7 +143,7 @@ namespace ElRaccoone.EntityComponentSystem {
       for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
         if (this.systems[_systemIndex].GetType () == _typeOfS)
           return (S)this.systems[_systemIndex];
-      throw new System.Exception ("Unable to get system, it was not registerd");
+      throw new System.Exception ("Unable to get system, it was not registerd to the controller");
     }
 
     /// Gets a system from this controller.
@@ -151,7 +151,7 @@ namespace ElRaccoone.EntityComponentSystem {
       for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
         if (this.systems[_systemIndex].GetType () == typeOf)
           return this.systems[_systemIndex];
-      throw new System.Exception ("Unable to get system, it was not registerd");
+      throw new System.Exception ("Unable to get system, it was not registerd to the controller");
     }
 
     /// Check whether this controller has a system.
@@ -169,7 +169,7 @@ namespace ElRaccoone.EntityComponentSystem {
       for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
         if (this.services[_serviceIndex].GetType () == _typeOfS)
           return (S)this.services[_serviceIndex];
-      throw new System.Exception ("Unable to get service, it was not registerd");
+      throw new System.Exception ("Unable to get service, it was not registerd to the controller");
     }
 
     /// Gets a system from this controller.
@@ -177,7 +177,7 @@ namespace ElRaccoone.EntityComponentSystem {
       for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
         if (this.services[_serviceIndex].GetType () == typeOf)
           return this.services[_serviceIndex];
-      throw new System.Exception ("Unable to get service, it was not registerd");
+      throw new System.Exception ("Unable to get service, it was not registerd to the controller");
     }
 
     /// Check whether this controller has a service.
