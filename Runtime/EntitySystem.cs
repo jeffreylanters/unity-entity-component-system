@@ -96,6 +96,10 @@ namespace ElRaccoone.EntityComponentSystem {
     public EntityComponentType[] MatchEntities (System.Predicate<EntityComponentType> match) =>
       this.entities.FindAll (match).ToArray ();
 
+    /// Finds an entity using a predicate match.
+    public EntityComponentType[] MatchEntity (System.Predicate<EntityComponentType> match) =>
+      this.entities.Find (match);
+
     /// Starts a coroutine on this system.
     public UnityEngine.Coroutine StartCoroutine (System.Collections.IEnumerator routine) =>
       Controller.Instance.StartCoroutine (routine);
