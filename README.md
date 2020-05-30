@@ -119,7 +119,7 @@ public abstract class EntityComponent<EntityComponentType, EntitySystemType> : U
   where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new()
   where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new() {
   
-  // NOTE: This class allows the usage of [Referenced] and [Protected] objects and primives.
+  // NOTE: This class allows the usage of [Referenced] and [Protected] objects and primitives.
 
   /// Adds an asset to the entity.
   public void AddAsset (UnityEngine.Object asset);
