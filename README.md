@@ -115,9 +115,10 @@ public abstract class Controller {
 
 ```cs
 /// Base class for every entity component.
-public abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEngine.MonoBehaviour, IAllowsInjectables, IEntityComponent
+public abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEngine.MonoBehaviour, IEntityComponent
   where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new()
   where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new() {
+  // This class allows the usage of [Referenced] and [Protected] objects and primives.
 
   /// Adds an asset to the entity.
   public void AddAsset (UnityEngine.Object asset);
@@ -148,9 +149,10 @@ public abstract class EntityComponent<EntityComponentType, EntitySystemType> : U
 
 ```cs
 /// Base class for every entity system.
-public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IAllowsInjectables, IEntitySystem
+public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEntitySystem
   where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new()
   where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new() {
+  // This class allows the usage of [Injected] systems and services.
 
   /// An instance reference to the controller.
   public static EntitySystemType Instance;
@@ -220,8 +222,9 @@ public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IAll
 
 ```cs
 /// Base class for every service
-public abstract class Service<ServiceType> : IAllowsInjectables, IService
+public abstract class Service<ServiceType> : IService
   where ServiceType : Service<ServiceType>, new() {
+  // This class allows the usage of [Injected] systems and services.
 
   /// An instance reference to the service.
   public static ServiceType Instance;
