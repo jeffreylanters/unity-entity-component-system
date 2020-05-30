@@ -115,7 +115,7 @@ public abstract class Controller {
 
 ```cs
 /// Base class for every entity component.
-public abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEngine.MonoBehaviour, IEntityComponent
+public abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEngine.MonoBehaviour, IAllowsInjectables, IEntityComponent
   where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new()
   where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new() {
 
@@ -148,7 +148,7 @@ public abstract class EntityComponent<EntityComponentType, EntitySystemType> : U
 
 ```cs
 /// Base class for every entity system.
-public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEntitySystem
+public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IAllowsInjectables, IEntitySystem
   where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new()
   where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new() {
 
@@ -220,7 +220,7 @@ public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEnt
 
 ```cs
 /// Base class for every service
-public abstract class Service<ServiceType> : IService
+public abstract class Service<ServiceType> : IAllowsInjectables, IService
   where ServiceType : Service<ServiceType>, new() {
 
   /// An instance reference to the service.
