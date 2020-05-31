@@ -132,6 +132,8 @@ public abstract class EntityComponent<EntityComponentType, EntitySystemType> : U
   
   // NOTE: This class allows the usage of [Referenced] and [Protected] objects and primitives.
 
+  /// Sets the game object of the entity active.
+  public void SetActive (bool value);
   /// Adds an asset to the entity.
   public void AddAsset (UnityEngine.Object asset);
   /// Loads a resources and adds it as an asset to the entity.
