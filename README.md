@@ -46,8 +46,8 @@ Basic example usage of some of the ECS features.
 
 ```cs
 public class MainController : Controller {
-  public override void OnInitialize() {
-    this.Register (typeof(EnemySystem, typeof(AiSystem), typeof(AudioService));
+  public override void OnInitialize () {
+    this.Register (typeof (EnemySystem), typeof (AiSystem), typeof (AudioService));
   }
 }
 
@@ -62,15 +62,15 @@ public class EnemySystem : EntitySystem<EnemySystem, EnemyComponent> {
   [Injected] public AiSystem aiSystem;
   [Injected] public AudioService AudioService;
   
-  public override void OnEntityInitialized(EnemyComponent entity) {
+  public override void OnEntityInitialized (EnemyComponent entity) {
     if (entity.level > 5)
-      entity.speed *= 2;
+      this.aiSystem.Trigger (entity);
   }
 
-  public override void OnUpdate() {
+  public override void OnUpdate () {
     var _delta = Time.deltaTime;
     foreach (var _entity in this.entities)
-      _entity.AddPosition(_delta * _entity.speed, 0, 0);
+      _entity.AddPosition (_delta * _entity.speed, 0, 0);
   }
 }
 ```
