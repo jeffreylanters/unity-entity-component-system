@@ -53,14 +53,14 @@ public class MainController : Controller {
 
 public class EnemyComponent : EntityComponent<EnemyComponent, EnemySystem> {
   [Referenced] public BoxCollider collider;
-  [Protected] public int level;
+  [Protected] public float speed = 1;
 
-  public float speed;
+  public int level;
 }
 
 public class EnemySystem : EntitySystem<EnemySystem, EnemyComponent> {
-  [Injected] public AiSystem aiSystem;
-  [Injected] public AudioService AudioService;
+  [Injected] private AiSystem aiSystem;
+  [Injected] private AudioService AudioService;
   
   public override void OnEntityInitialized (EnemyComponent entity) {
     if (entity.level > 5)
