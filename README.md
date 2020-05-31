@@ -45,20 +45,20 @@ It's recommended to build your entire project around these life cycle methods.
 Basic example usage of some of the ECS features.
 
 ```cs
-public class MainController: Controller {
+public class MainController : Controller {
   public override void OnInitialize() {
     this.Register (typeof(EnemySystem, typeof(AiSystem), typeof(AudioService));
   }
 }
 
-public class EnemyComponent: EntityComponent<EnemyComponent, EnemySystem> {
+public class EnemyComponent : EntityComponent<EnemyComponent, EnemySystem> {
   [Referenced] public BoxCollider collider;
   [Protected] public int level;
 
   public float speed;
 }
 
-public class EnemySystem: EntitySystem<EnemySystem, EnemyComponent> {
+public class EnemySystem : EntitySystem<EnemySystem, EnemyComponent> {
   [Injected] public AiSystem aiSystem;
   [Injected] public AudioService AudioService;
   
