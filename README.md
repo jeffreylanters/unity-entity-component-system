@@ -73,6 +73,12 @@ public class EnemySystem : EntitySystem<EnemySystem, EnemyComponent> {
       _entity.AddPosition (_delta * _entity.speed, 0, 0);
   }
 }
+
+public class AudioService : Service<AudioService> {
+  public void Play (string audioClipName) {
+    // ...
+  }
+}
 ```
 
 ### Meta Data
