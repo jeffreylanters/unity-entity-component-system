@@ -41,6 +41,14 @@ namespace ElRaccoone.EntityComponentSystem {
     private void OnDestroy () =>
       this.GetSystem ().Internal_RemoveEntry ((EntityComponentType)this);
 
+    /// Sets the game object of the entity active.
+    public void SetActive (bool value) =>
+      this.gameObject.SetActive (value);
+
+    /// Destroys the game object of the entity.
+    public void Destroy () =>
+      UnityEngine.Object.Destroy (this.gameObject);
+
     /// Adds an asset to the entity.
     public UnityEngine.Object AddAsset (UnityEngine.Object asset) =>
       UnityEngine.Object.Instantiate (asset, UnityEngine.Vector3.zero, UnityEngine.Quaternion.identity, this.transform);
@@ -93,10 +101,6 @@ namespace ElRaccoone.EntityComponentSystem {
     /// Adds to the local Scale of an entity.
     public void AddLocalScale (float x, float y, float z) =>
       this.transform.localScale += new UnityEngine.Vector3 (x, y, z);
-
-    /// Sets the game object of the entity active.
-    public void SetActive (bool value) =>
-      this.gameObject.SetActive (value);
 
     /// During the 'InteralOnUpdate' the entity component will invoke its 
     /// 'OnEntityEnabled' and 'OnEntityInitialized' if needed.
