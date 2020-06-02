@@ -134,6 +134,8 @@ public abstract class EntityComponent<EntityComponentType, EntitySystemType> : U
 
   /// Sets the game object of the entity active.
   public void SetActive (bool value);
+  /// Destroys the game object of the entity.
+  public void Destroy ();
   /// Adds an asset to the entity.
   public void AddAsset (UnityEngine.Object asset);
   /// Loads a resources and adds it as an asset to the entity.
