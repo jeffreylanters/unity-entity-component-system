@@ -1,6 +1,6 @@
 namespace ElRaccoone.EntityComponentSystem {
 
-  /// Describes a injectedable system of service.
+  /// Describes a injectedable system, service or controller.
   [System.AttributeUsage (System.AttributeTargets.Field)]
   public class Injected : System.Attribute {
 
