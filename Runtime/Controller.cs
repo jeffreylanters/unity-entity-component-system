@@ -1,7 +1,7 @@
 namespace ElRaccoone.EntityComponentSystem {
 
   /// Base class for every controller.
-  public abstract class Controller : UnityEngine.MonoBehaviour {
+  public abstract class Controller : UnityEngine.MonoBehaviour, IController {
 
     /// A list of the controller's instantiated entity systems.
     private System.Collections.Generic.List<IEntitySystem> systems;
