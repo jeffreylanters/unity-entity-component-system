@@ -61,6 +61,7 @@ public class EnemyComponent : EntityComponent<EnemyComponent, EnemySystem> {
 public class EnemySystem : EntitySystem<EnemySystem, EnemyComponent> {
   [Injected] private AiSystem aiSystem;
   [Injected] private AudioService AudioService;
+  [Injected] private MainController mainController;
 
   public override void OnEntityInitialized (EnemyComponent entity) {
     if (entity.level > 5)
@@ -89,7 +90,7 @@ Use build in file generator to create new instances for any of these types.
 /// Base class for every controller.
 public abstract class Controller {
 
-  // NOTE: This class allows the usage of [Injected] systems and services.
+  // NOTE: This class allows the usage of [Injected] systems, services and controller.
 
   /// A reference to the controller.
   public static Controller Instance;
@@ -171,7 +172,7 @@ public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEnt
   where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new()
   where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new() {
 
-  // NOTE: This class allows the usage of [Injected] systems and services.
+  // NOTE: This class allows the usage of [Injected] systems, services and controller.
 
   /// An instance reference to the controller.
   public static EntitySystemType Instance;
@@ -244,7 +245,7 @@ public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEnt
 public abstract class Service<ServiceType> : IService
   where ServiceType : Service<ServiceType>, new() {
 
-  // NOTE: This class allows the usage of [Injected] systems and services.
+  // NOTE: This class allows the usage of [Injected] systems, services and controller.
 
   /// An instance reference to the service.
   public static ServiceType Instance;
