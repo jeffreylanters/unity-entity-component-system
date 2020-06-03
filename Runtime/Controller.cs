@@ -21,6 +21,8 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// During the awake, this system will start the initialization.
     private void Awake () {
+      if (Controller.Instance != null)
+        throw new System.Exception ("A project cannot exceed the limit of one controller!");
       UnityEngine.Object.DontDestroyOnLoad (this.transform.root.gameObject);
       Controller.Instance = this;
       this.systems = new System.Collections.Generic.List<IEntitySystem> ();
