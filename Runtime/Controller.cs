@@ -110,7 +110,8 @@ namespace ElRaccoone.EntityComponentSystem {
         }
       }
 
-      // Set Values of the 'InjectedSystem' attributes
+      // Set Values of the 'Injected' attributes
+      Injected.SetAttributeValues (this);
       for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
         Injected.SetAttributeValues (this.systems[_systemIndex]);
       for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)

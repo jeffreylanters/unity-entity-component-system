@@ -61,7 +61,7 @@ public class EnemyComponent : EntityComponent<EnemyComponent, EnemySystem> {
 public class EnemySystem : EntitySystem<EnemySystem, EnemyComponent> {
   [Injected] private AiSystem aiSystem;
   [Injected] private AudioService AudioService;
-  
+
   public override void OnEntityInitialized (EnemyComponent entity) {
     if (entity.level > 5)
       this.aiSystem.Trigger (entity);
@@ -88,6 +88,8 @@ Use build in file generator to create new instances for any of these types.
 ```cs
 /// Base class for every controller.
 public abstract class Controller {
+
+  // NOTE: This class allows the usage of [Injected] systems and services.
 
   /// A reference to the controller.
   public static Controller Instance;
@@ -129,7 +131,7 @@ public abstract class Controller {
 public abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEngine.MonoBehaviour, IEntityComponent
   where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new()
   where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new() {
-  
+
   // NOTE: This class allows the usage of [Referenced] and [Protected] objects and primitives.
 
   /// Sets the game object of the entity active.
