@@ -12,10 +12,12 @@ namespace ElRaccoone.EntityComponentSystem {
       foreach (var _field in _fields)
         if (System.Attribute.GetCustomAttribute (_field, typeof (Injected)) != null)
           foreach (var _fieldInterface in _field.FieldType.GetInterfaces ()) {
-            if (_fieldInterface == typeof (IService))
-              _field.SetValue (target, Controller.Instance.GetService (_field.FieldType));
-            else if (_fieldInterface == typeof (IEntitySystem))
+            if (_fieldInterface == typeof (IEntitySystem))
               _field.SetValue (target, Controller.Instance.GetSystem (_field.FieldType));
+            else if (_fieldInterface == typeof (IService))
+              _field.SetValue (target, Controller.Instance.GetService (_field.FieldType));
+            else if (_fieldInterface == typeof (IController))
+              _field.SetValue (target, Controller.Instance);
           }
     }
   }
