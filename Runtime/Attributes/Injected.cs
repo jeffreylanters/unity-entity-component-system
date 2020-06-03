@@ -8,8 +8,7 @@ namespace ElRaccoone.EntityComponentSystem {
     public static void SetAttributeValues (System.Object target) {
       var _fields = target.GetType ().GetFields (
         System.Reflection.BindingFlags.Instance |
-        System.Reflection.BindingFlags.NonPublic |
-        System.Reflection.BindingFlags.Public);
+        System.Reflection.BindingFlags.NonPublic);
       foreach (var _field in _fields)
         if (System.Attribute.GetCustomAttribute (_field, typeof (Injected)) != null)
           foreach (var _fieldInterface in _field.FieldType.GetInterfaces ()) {
