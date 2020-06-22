@@ -55,11 +55,7 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// Loads a asset from the controller and adds it as an asset to the entity.
     public UnityEngine.Object AddAsset (string assetName) {
-      var _assets = Controller.Instance.assets;
-      for (var _i = 0; _i < _assets.Length; _i++)
-        if (_assets[_i].name == assetName)
-          return this.AddAsset (_assets[_i]);
-      throw new System.Exception ("Unable to load asset, it was not added to the controller");
+      return this.AddAsset (Controller.Instance.GetAsset (assetName));
     }
 
     /// Sets the position of an entity.
