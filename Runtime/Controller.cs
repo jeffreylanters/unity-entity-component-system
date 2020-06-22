@@ -191,5 +191,21 @@ namespace ElRaccoone.EntityComponentSystem {
           return true;
       return false;
     }
+    
+    /// Gets an asset from this controller.
+    public Object GetAsset (string name) {
+      for (var _i = 0; _i < this.assets.Length; _i++)
+        if (this.assets[_i].name == name)
+          return this.assets[_i];
+      throw new System.Exception ("Unable to get asset, it was not added to the controller");
+    }
+    
+    /// Check whether this controller has an asset.
+    public bool GetAsset (string name) {
+      for (var _i = 0; _i < this.assets.Length; _i++)
+        if (this.assets[_i].name == name)
+          return true;
+      throw false;
+    }
   }
 }
