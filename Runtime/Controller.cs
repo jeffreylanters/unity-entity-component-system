@@ -200,7 +200,7 @@ namespace ElRaccoone.EntityComponentSystem {
     }
     
     /// Check whether this controller has an asset.
-    public bool GetAsset (string name) {
+    public bool HasAsset (string name) {
       for (var _i = 0; _i < this.assets.Length; _i++)
         if (this.assets[_i].name == name)
           return true;
