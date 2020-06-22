@@ -16,7 +16,6 @@ namespace ElRaccoone.EntityComponentSystem {
     public static Controller Instance;
 
     /// The assets that can be added to entities.
-    [UnityEngine.Header ("Resources")]
     public UnityEngine.Object[] assets;
 
     /// During the awake, this system will start the initialization.
@@ -193,7 +192,7 @@ namespace ElRaccoone.EntityComponentSystem {
     }
     
     /// Gets an asset from this controller.
-    public Object GetAsset (string name) {
+    public UnityEngine.Object GetAsset (string name) {
       for (var _i = 0; _i < this.assets.Length; _i++)
         if (this.assets[_i].name == name)
           return this.assets[_i];
@@ -205,7 +204,7 @@ namespace ElRaccoone.EntityComponentSystem {
       for (var _i = 0; _i < this.assets.Length; _i++)
         if (this.assets[_i].name == name)
           return true;
-      throw false;
+      return false;
     }
   }
 }
