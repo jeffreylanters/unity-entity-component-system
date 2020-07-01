@@ -17,6 +17,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
     private string fileName;
     private bool shouldOverwriteAllVirtuals;
     private bool shouldImportCommonNamespaces;
+    private bool shouldAddFileHeaderComments;
 
     [MenuItem ("ECS/Generate Controller", false, 100)]
     private static void GenerateNewController () {
@@ -53,6 +54,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
       GUILayout.FlexibleSpace ();
       this.shouldImportCommonNamespaces = GUILayout.Toggle (this.shouldImportCommonNamespaces, " Import Common Namespaces");
       this.shouldOverwriteAllVirtuals = GUILayout.Toggle (this.shouldOverwriteAllVirtuals, " Overwrite All Virtuals");
+      this.shouldAddFileHeaderComments = GUILayout.Toggle (this.shouldAddFileHeaderComments, " Add File Header Comments");
       GUILayout.FlexibleSpace ();
       if (GenerateFileEditorWindow.generateFileType == GenerateFileType.Controller) {
         if (GUILayout.Button ("Generate " + this.fileName + "Controller"))
@@ -72,6 +74,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
     private void Generate () {
       var _overwriteAllVirtuals = this.shouldOverwriteAllVirtuals;
       var _importCommonNamespaces = this.shouldImportCommonNamespaces;
+      var _addFileHeaderComments = this.shouldAddFileHeaderComments;
       var _fileName = this.fileName;
       this.fileName = "";
 
@@ -80,7 +83,14 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           _importCommonNamespaces ? "using UnityEngine;" : null,
           "using ElRaccoone.EntityComponentSystem;",
           _importCommonNamespaces ? "using System.Collections.Generic;" : null,
-          "public class " + _fileName + "Controller  : Controller {",
+          "",
+          _addFileHeaderComments ? "/*" : null,
+          _addFileHeaderComments ? " * Project: " + PlayerSettings.productName : null,
+          _addFileHeaderComments ? " * Author: " : null,
+          _addFileHeaderComments ? " *" : null,
+          _addFileHeaderComments ? " * Controller for " + _fileName + "." : null,
+          _addFileHeaderComments ? " */" : null,
+          "public class " + _fileName + "Controller : Controller {",
           "\tpublic override void OnInitialize () {",
           "\t\tthis.Register();",
           "\t}",
@@ -94,6 +104,13 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           _importCommonNamespaces? "using UnityEngine;" : null,
           "using ElRaccoone.EntityComponentSystem;",
           _importCommonNamespaces? "using System.Collections.Generic;" : null,
+          "",
+          _addFileHeaderComments ? "/*" : null,
+          _addFileHeaderComments ? " * Project: " + PlayerSettings.productName : null,
+          _addFileHeaderComments ? " * Author: " : null,
+          _addFileHeaderComments ? " *" : null,
+          _addFileHeaderComments ? " * Entity Component for " + _fileName + "." : null,
+          _addFileHeaderComments ? " */" : null,
           "public class " + _fileName + "Component : EntityComponent<" + _fileName + "Component, " + _fileName + "System> {",
           "}"
         });
@@ -103,6 +120,13 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           _importCommonNamespaces? "using UnityEngine;" : null,
           "using ElRaccoone.EntityComponentSystem;",
           _importCommonNamespaces? "using System.Collections.Generic;" : null,
+          "",
+          _addFileHeaderComments ? "/*" : null,
+          _addFileHeaderComments ? " * Project: " + PlayerSettings.productName : null,
+          _addFileHeaderComments ? " * Author: " : null,
+          _addFileHeaderComments ? " *" : null,
+          _addFileHeaderComments ? " * Entity System for " + _fileName + "." : null,
+          _addFileHeaderComments ? " */" : null,
           "public class " + _fileName + "System : EntitySystem<" + _fileName + "System, " + _fileName + "Component> {",
           _overwriteAllVirtuals ? "\tpublic override void OnInitialize () { }" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnInitialized () { }" : null,
@@ -125,6 +149,13 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           _importCommonNamespaces? "using UnityEngine;" : null,
           "using ElRaccoone.EntityComponentSystem;",
           _importCommonNamespaces? "using System.Collections.Generic;" : null,
+          "",
+          _addFileHeaderComments ? "/*" : null,
+          _addFileHeaderComments ? " * Project: " + PlayerSettings.productName : null,
+          _addFileHeaderComments ? " * Author: " : null,
+          _addFileHeaderComments ? " *" : null,
+          _addFileHeaderComments ? " * Service for " + _fileName + "." : null,
+          _addFileHeaderComments ? " */" : null,
           "public class " + _fileName + "Service : Service<" + _fileName + "Service> {",
           _overwriteAllVirtuals ? "\tpublic override void OnInitialize () { }" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnInitialized () { }" : null,
