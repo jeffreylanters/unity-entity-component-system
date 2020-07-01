@@ -9,7 +9,8 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
   public enum GenerateFileType {
     Controller,
     ComponentAndSystem,
-    Service
+    Service,
+    Class
   }
 
   public class GenerateFileEditorWindow : EditorWindow {
@@ -37,6 +38,12 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
       EditorWindow.GetWindowWithRect (typeof (GenerateFileEditorWindow), new Rect (0, 0, 400, 180), true, "Generate Service");
     }
 
+    [MenuItem ("ECS/Generate Class", false, 100)]
+    private static void GenerateNewClass () {
+      GenerateFileEditorWindow.generateFileType = GenerateFileType.Class;
+      EditorWindow.GetWindowWithRect (typeof (GenerateFileEditorWindow), new Rect (0, 0, 400, 180), true, "Generate Class");
+    }
+
     private void OnGUI () {
       var _newFileTypeReadable = "";
       if (GenerateFileEditorWindow.generateFileType == GenerateFileType.Controller)
@@ -45,6 +52,8 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
         _newFileTypeReadable = "Component and System";
       else if (GenerateFileEditorWindow.generateFileType == GenerateFileType.Service)
         _newFileTypeReadable = "Service";
+      else if (GenerateFileEditorWindow.generateFileType == GenerateFileType.Class)
+        _newFileTypeReadable = "Class";
       GUILayout.BeginHorizontal ();
       GUILayout.Space (20);
       GUILayout.BeginVertical ();
@@ -62,8 +71,11 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
       } else if (GenerateFileEditorWindow.generateFileType == GenerateFileType.ComponentAndSystem) {
         if (GUILayout.Button ("Generate " + this.fileName + "Component and -System"))
           this.Generate ();
-      } else if (GenerateFileEditorWindow.generateFileType == GenerateFileType.Service)
+      } else if (GenerateFileEditorWindow.generateFileType == GenerateFileType.Service) {
         if (GUILayout.Button ("Generate " + this.fileName + "Service"))
+          this.Generate ();
+      } else if (GenerateFileEditorWindow.generateFileType == GenerateFileType.Class)
+        if (GUILayout.Button ("Generate " + this.fileName))
           this.Generate ();
       GUILayout.Space (20);
       GUILayout.EndVertical ();
@@ -80,8 +92,8 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
 
       if (GenerateFileEditorWindow.generateFileType == GenerateFileType.Controller)
         this.WriteContentToFile (this.FindDirectoryWithName (Application.dataPath, "Controllers"), _fileName + "Controller", "cs", new string[] {
-          _importCommonNamespaces ? "using UnityEngine;" : null,
           "using ElRaccoone.EntityComponentSystem;",
+          _importCommonNamespaces ? "using UnityEngine;" : null,
           _importCommonNamespaces ? "using System.Collections.Generic;" : null,
           "",
           _addFileHeaderComments ? "/*" : null,
@@ -101,9 +113,9 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
 
       if (GenerateFileEditorWindow.generateFileType == GenerateFileType.ComponentAndSystem)
         this.WriteContentToFile (this.FindDirectoryWithName (Application.dataPath, "Components"), _fileName + "Component", "cs", new string[] {
-          _importCommonNamespaces? "using UnityEngine;" : null,
           "using ElRaccoone.EntityComponentSystem;",
-          _importCommonNamespaces? "using System.Collections.Generic;" : null,
+          _importCommonNamespaces ? "using UnityEngine;" : null,
+          _importCommonNamespaces ? "using System.Collections.Generic;" : null,
           "",
           _addFileHeaderComments ? "/*" : null,
           _addFileHeaderComments ? " * Project: " + PlayerSettings.productName : null,
@@ -117,9 +129,9 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
 
       if (GenerateFileEditorWindow.generateFileType == GenerateFileType.ComponentAndSystem)
         this.WriteContentToFile (this.FindDirectoryWithName (Application.dataPath, "Systems"), _fileName + "System", "cs", new string[] {
-          _importCommonNamespaces? "using UnityEngine;" : null,
           "using ElRaccoone.EntityComponentSystem;",
-          _importCommonNamespaces? "using System.Collections.Generic;" : null,
+          _importCommonNamespaces ? "using UnityEngine;" : null,
+          _importCommonNamespaces ? "using System.Collections.Generic;" : null,
           "",
           _addFileHeaderComments ? "/*" : null,
           _addFileHeaderComments ? " * Project: " + PlayerSettings.productName : null,
@@ -146,9 +158,9 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
 
       if (GenerateFileEditorWindow.generateFileType == GenerateFileType.Service)
         this.WriteContentToFile (this.FindDirectoryWithName (Application.dataPath, "Services"), _fileName + "Service", "cs", new string[] {
-          _importCommonNamespaces? "using UnityEngine;" : null,
           "using ElRaccoone.EntityComponentSystem;",
-          _importCommonNamespaces? "using System.Collections.Generic;" : null,
+          _importCommonNamespaces ? "using UnityEngine;" : null,
+          _importCommonNamespaces ? "using System.Collections.Generic;" : null,
           "",
           _addFileHeaderComments ? "/*" : null,
           _addFileHeaderComments ? " * Project: " + PlayerSettings.productName : null,
@@ -161,6 +173,21 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           _overwriteAllVirtuals ? "\tpublic override void OnInitialized () { }" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnDrawGizmos () { }" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnDrawGui () { }" : null,
+          "}"
+        });
+
+      if (GenerateFileEditorWindow.generateFileType == GenerateFileType.Class)
+        this.WriteContentToFile (Application.dataPath, _fileName + "", "cs", new string[] {
+          _importCommonNamespaces ? "using UnityEngine;" : null,
+          _importCommonNamespaces ? "using System.Collections.Generic;" : null,
+          _importCommonNamespaces ? "" : null,
+          _addFileHeaderComments ? "/*" : null,
+          _addFileHeaderComments ? " * Project: " + PlayerSettings.productName : null,
+          _addFileHeaderComments ? " * Author: " : null,
+          _addFileHeaderComments ? " *" : null,
+          _addFileHeaderComments ? " * " + _fileName + "." : null,
+          _addFileHeaderComments ? " */" : null,
+          "public class " + _fileName + " {",
           "}"
         });
 
