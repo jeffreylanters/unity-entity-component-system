@@ -13,7 +13,12 @@ namespace ElRaccoone.EntityComponentSystem {
       UnityEditor.EditorGUI.PropertyField (position, serializedProperty, label, false);
       UnityEditor.EditorGUI.EndDisabledGroup ();
 
+      // Don't allow Self Assigning when the editor is playing
       if (UnityEngine.Application.isPlaying == true)
+        return;
+        
+      // Don't allow Self Assigning when more than one gameObject is selected
+      if (UnityEditor.Selection.gameObjects.Length != 1)
         return;
 
       var _flattenObjectNameRegex = new System.Text.RegularExpressions.Regex ("[^a-zA-Z0-9]");
