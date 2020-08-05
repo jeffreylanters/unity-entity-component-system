@@ -24,7 +24,7 @@ When using any of the packages, please make sure to **Star** this repository and
 
 </div>
 
-## Installation
+# Installation
 
 Install using the Unity Package Manager. add the following line to your `manifest.json` file located within your project's packages directory.
 
@@ -32,15 +32,15 @@ Install using the Unity Package Manager. add the following line to your `manifes
 "nl.elraccoone.entity-component-system": "git+https://github.com/elraccoone/unity-entity-component-system"
 ```
 
-## Documentation
+# Documentation
 
-### Life Cycles
+## Life Cycles
 
 It's recommended to build your entire project around these life cycle methods.
 
 <img src="https://raw.githubusercontent.com/elraccoone/unity-entity-component-system/master/.github/WIKI/lifecycle.png" width="100%"></br>
 
-### Basic Example Usage
+## Basic Example Usage
 
 Basic example usage of some of the ECS features.
 
@@ -82,7 +82,7 @@ public class AudioService : Service<AudioService> {
 }
 ```
 
-### Meta Data
+## Meta Data
 
 Use build in file generator to create new instances for any of these types.
 
