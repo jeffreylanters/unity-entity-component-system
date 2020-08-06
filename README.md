@@ -4,7 +4,7 @@
 
 # Entity Component System
 
-[![npm](https://img.shields.io/badge/upm-3.4.1-232c37.svg?style=for-the-badge)]()
+[![npm](https://img.shields.io/badge/upm-3.4.2-232c37.svg?style=for-the-badge)]()
 [![license](https://img.shields.io/badge/license-Custom-%23ecc531.svg?style=for-the-badge)](./LICENSE.md)
 [![npm](https://img.shields.io/badge/sponsor-donate-E12C9A.svg?style=for-the-badge)](https://paypal.me/jeffreylanters)
 [![npm](https://img.shields.io/github/stars/elraccoone/unity-entity-component-system.svg?style=for-the-badge)]()
@@ -233,6 +233,7 @@ public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEnt
   public UnityEngine.Coroutine StartCoroutine (System.Collections.IEnumerator routine);
   /// Stops a given coroutine.
   public void StopCoroutine (System.Collections.IEnumerator routine);
+  public void StopCoroutine (UnityEngine.Coroutine routine);
   /// Enables or disables this system.
   public void SetEnabled (bool isEnabled);
   /// Gets the enabled status of this system

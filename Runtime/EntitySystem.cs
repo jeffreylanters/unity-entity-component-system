@@ -108,6 +108,10 @@ namespace ElRaccoone.EntityComponentSystem {
     public void StopCoroutine (System.Collections.IEnumerator routine) =>
       Controller.Instance.StopCoroutine (routine);
 
+    /// Stops a given coroutine.
+    public void StopCoroutine (UnityEngine.Coroutine routine) =>
+      Controller.Instance.StopCoroutine (routine);
+
     /// Enables or disables this system.
     public void SetEnabled (bool isEnabled) =>
       Instance.isEnabled = isEnabled;
