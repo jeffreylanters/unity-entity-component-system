@@ -6,7 +6,7 @@ namespace ElRaccoone.EntityComponentSystem {
     where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new() {
 
     /// Defines whether this component is enabled.
-    private bool isEnabled = false;
+    public bool isEnabled { get; private set; } = false;
 
     /// Defines whether this component has been initialized.
     private bool isInitialized = false;
