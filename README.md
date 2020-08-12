@@ -135,6 +135,8 @@ public abstract class EntityComponent<EntityComponentType, EntitySystemType> : U
 
   // NOTE: This class allows the usage of [Referenced] and [Protected] objects and primitives.
 
+  /// Defines whether this component is enabled.
+  public bool isEnabled;
   /// Sets the game object of the entity active.
   public void SetActive (bool value);
   /// Destroys the game object of the entity.
