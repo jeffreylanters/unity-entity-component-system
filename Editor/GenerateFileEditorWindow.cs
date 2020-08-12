@@ -113,7 +113,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           "using ElRaccoone.EntityComponentSystem;",
           _importCommonNamespaces ? "using UnityEngine;" : null,
           _importCommonNamespaces ? "using System.Collections.Generic;" : null,
-          
+          "",
           _addFileHeaderComments ? "/// Project: " + PlayerSettings.productName : null,
           _addFileHeaderComments ? "/// Author: " : null,
           _addFileHeaderComments ? "/// Entity Component for " + _fileName + "." : null,
@@ -126,7 +126,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           "using ElRaccoone.EntityComponentSystem;",
           _importCommonNamespaces ? "using UnityEngine;" : null,
           _importCommonNamespaces ? "using System.Collections.Generic;" : null,
-          
+          "",
           _addFileHeaderComments ? "/// Project: " + PlayerSettings.productName : null,
           _addFileHeaderComments ? "/// Author: " : null,
           _addFileHeaderComments ? "/// Entity System for " + _fileName + "." : null,
