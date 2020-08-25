@@ -143,8 +143,9 @@ public abstract class EntityComponent<EntityComponentType, EntitySystemType> : U
   public void Destroy ();
   /// Adds an asset to the entity.
   public void AddAsset (UnityEngine.Object asset);
-  /// Loads a resources and adds it as an asset to the entity.
-  public void AddAsset (string assetResourcePath);
+  /// Loads a asset from the controller and adds it as an asset to the entity.
+  public void AddAsset (string name);
+  
   /// Sets the position of an entity.
   public void SetPosition (float x, float y, float z = 0);
   /// Adds to the position of an entity.
