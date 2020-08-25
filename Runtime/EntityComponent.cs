@@ -54,9 +54,8 @@ namespace ElRaccoone.EntityComponentSystem {
       UnityEngine.Object.Instantiate (asset, UnityEngine.Vector3.zero, UnityEngine.Quaternion.identity, this.transform);
 
     /// Loads a asset from the controller and adds it as an asset to the entity.
-    public UnityEngine.Object AddAsset (string name) {
-      return this.AddAsset (Controller.Instance.GetAsset (name));
-    }
+    public UnityEngine.Object AddAsset (string name) =>
+      this.AddAsset (Controller.Instance.GetAsset (name));
 
     /// Sets the position of an entity.
     public void SetPosition (float x, float y, float z = 0) =>
