@@ -124,6 +124,10 @@ public abstract class Controller {
   public System.Object GetService (System.Type typeOf);
   /// Check whether this controller has a service.
   public bool HasService<S> () where S : IService, new();
+  /// Gets an asset from this controller.
+  public UnityEngine.Object GetAsset (string name);
+  /// Check whether this controller has an asset.
+  public bool HasAsset (string name);
 }
 ```
 
