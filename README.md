@@ -4,7 +4,7 @@
 
 # Entity Component System
 
-[![npm](https://img.shields.io/badge/upm-3.4.2-232c37.svg?style=for-the-badge)]()
+[![npm](https://img.shields.io/badge/upm-3.4.3-232c37.svg?style=for-the-badge)]()
 [![license](https://img.shields.io/badge/license-Custom-%23ecc531.svg?style=for-the-badge)](./LICENSE.md)
 [![npm](https://img.shields.io/badge/sponsor-donate-E12C9A.svg?style=for-the-badge)](https://paypal.me/jeffreylanters)
 [![npm](https://img.shields.io/github/stars/elraccoone/unity-entity-component-system.svg?style=for-the-badge)]()
@@ -149,7 +149,7 @@ public abstract class EntityComponent<EntityComponentType, EntitySystemType> : U
   public void AddAsset (UnityEngine.Object asset);
   /// Loads a asset from the controller and adds it as an asset to the entity.
   public void AddAsset (string name);
-  
+
   /// Sets the position of an entity.
   public void SetPosition (float x, float y, float z = 0);
   /// Adds to the position of an entity.
@@ -232,6 +232,8 @@ public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEnt
   public EntityComponentType CreateEntity ();
   /// Clones an entity.
   public EntityComponentType CloneEntity (EntityComponentType entity);
+  /// Clones an entity on a given position in the hierarchy.
+  public EntityComponentType CloneEntity (EntityComponentType entity, UnityEngine.Transform parentTransform);
   /// Finds entities using a predicate match.
   public EntityComponentType[] MatchEntities (System.Predicate<EntityComponentType> match);
   /// Finds an entity using a predicate match.

@@ -92,6 +92,10 @@ namespace ElRaccoone.EntityComponentSystem {
     public EntityComponentType CloneEntity (EntityComponentType entity) =>
       UnityEngine.Object.Instantiate (entity).GetComponent<EntityComponentType> ();
 
+    /// Clones an entity on a given position in the hierarchy.
+    public EntityComponentType CloneEntity (EntityComponentType entity, UnityEngine.Transform parentTransform) =>
+      UnityEngine.Object.Instantiate (entity, parentTransform).GetComponent<EntityComponentType> ();
+
     /// Finds entities using a predicate match.
     public EntityComponentType[] MatchEntities (System.Predicate<EntityComponentType> match) =>
       this.entities.FindAll (match).ToArray ();
