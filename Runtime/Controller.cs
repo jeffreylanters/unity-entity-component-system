@@ -192,7 +192,7 @@ namespace ElRaccoone.EntityComponentSystem {
     }
     
     /// Gets an asset from this controller.
-    public UnityEngine.Object GetAsset (string name) {
+    public AssetType GetAsset<AssetType> (string name) where AssetType : UnityEngine.Object {
       for (var _i = 0; _i < this.assets.Length; _i++)
         if (this.assets[_i].name == name)
           return this.assets[_i];
