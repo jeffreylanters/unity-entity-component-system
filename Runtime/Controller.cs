@@ -195,7 +195,7 @@ namespace ElRaccoone.EntityComponentSystem {
     public AssetType GetAsset<AssetType> (string name) where AssetType : UnityEngine.Object {
       for (var _i = 0; _i < this.assets.Length; _i++)
         if (this.assets[_i].name == name)
-          return this.assets[_i];
+          return this.assets[_i] as AssetType;
       throw new System.Exception ("Unable to get asset, it was not added to the controller");
     }
     
