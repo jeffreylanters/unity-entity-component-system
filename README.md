@@ -6,7 +6,7 @@
 
 # Entity Component System
 
-[![npm](https://img.shields.io/badge/upm-3.4.3-232c37.svg?style=for-the-badge)]()
+[![npm](https://img.shields.io/badge/upm-3.5.0-232c37.svg?style=for-the-badge)]()
 [![npm](https://img.shields.io/github/stars/elraccoone/unity-entity-component-system.svg?style=for-the-badge)]()
 [![npm](https://img.shields.io/badge/build-passing-brightgreen.svg?style=for-the-badge)]()
 
