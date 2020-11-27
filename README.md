@@ -54,9 +54,8 @@ Use build in file generator to create new instances for any of these types.
 
 ```cs
 /// Base class for every controller.
+// NOTE: This class allows the usage of [Injected] systems, services and controller.
 public abstract class Controller {
-
-  // NOTE: This class allows the usage of [Injected] systems, services and controller.
 
   /// A reference to the controller.
   public static Controller Instance;
@@ -99,11 +98,10 @@ public abstract class Controller {
 
 ```cs
 /// Base class for every entity component.
+// NOTE: This class allows the usage of [Referenced] and [Protected] objects and primitives.
 public abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEngine.MonoBehaviour, IEntityComponent
   where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new()
   where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new() {
-
-  // NOTE: This class allows the usage of [Referenced] and [Protected] objects and primitives.
 
   /// Defines whether this component is enabled.
   public bool isEnabled { get; };
@@ -141,11 +139,10 @@ public abstract class EntityComponent<EntityComponentType, EntitySystemType> : U
 
 ```cs
 /// Base class for every entity system.
+// NOTE: This class allows the usage of [Injected] systems, services and controller.
 public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEntitySystem
   where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new()
   where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new() {
-
-  // NOTE: This class allows the usage of [Injected] systems, services and controller.
 
   /// An instance reference to the controller.
   public static EntitySystemType Instance;
@@ -225,10 +222,9 @@ public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEnt
 
 ```cs
 /// Base class for every service
+// NOTE: This class allows the usage of [Injected] systems, services and controller.
 public abstract class Service<ServiceType> : IService
   where ServiceType : Service<ServiceType>, new() {
-
-  // NOTE: This class allows the usage of [Injected] systems, services and controller.
 
   /// An instance reference to the service.
   public static ServiceType Instance;
