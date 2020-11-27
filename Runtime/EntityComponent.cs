@@ -55,7 +55,7 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// Loads a asset from the controller and adds it as an asset to the entity.
     public UnityEngine.Object AddAsset (string name) =>
-      this.AddAsset (Controller.Instance.GetAsset (name));
+      this.AddAsset (Controller.Instance.GetAsset<UnityEngine.Object> (name));
 
     /// Sets the position of an entity.
     public void SetPosition (float x, float y, float z = 0) =>
