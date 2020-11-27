@@ -48,52 +48,7 @@ It's recommended to build your entire project around these life cycle methods.
 
 <img src="https://raw.githubusercontent.com/elraccoone/unity-entity-component-system/master/.github/WIKI/lifecycle.png" width="100%"></br>
 
-## Basic Example Usage
-
-Basic example usage of some of the ECS features.
-
-```cs
-public class MainController : Controller {
-  [Injected] private AiSystem aiSystem;
-
-  public override void OnInitialize () {
-    this.Register (typeof (EnemySystem), typeof (AiSystem), typeof (AudioService));
-    var _myAsset = this.GetAsset<MyAssetType>("MyAssetName");
-  }
-}
-
-public class EnemyComponent : EntityComponent<EnemyComponent, EnemySystem> {
-  [Referenced] public BoxCollider collider;
-  [Protected] public float speed = 1;
-
-  public int level;
-}
-
-public class EnemySystem : EntitySystem<EnemySystem, EnemyComponent> {
-  [Injected] private AiSystem aiSystem;
-  [Injected] private AudioService AudioService;
-  [Injected] private MainController mainController;
-
-  public override void OnEntityInitialized (EnemyComponent entity) {
-    if (entity.level > 5)
-      this.aiSystem.Trigger (entity);
-  }
-
-  public override void OnUpdate () {
-    var _delta = Time.deltaTime;
-    foreach (var _entity in this.entities)
-      _entity.AddPosition (_delta * _entity.speed, 0, 0);
-  }
-}
-
-public class AudioService : Service<AudioService> {
-  public void Play (string audioClipName) {
-    // ...
-  }
-}
-```
-
-## Meta Data
+## Classes, Methods and Properties
 
 Use build in file generator to create new instances for any of these types.
 
