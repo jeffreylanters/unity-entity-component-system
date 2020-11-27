@@ -50,7 +50,7 @@ It's recommended to build your entire project around these life cycle methods.
 
 ## Getting Started
 
-It's recommended to get started by using the file generator to generate your scripts. When it's your first time using the ECS, you might want to enable the _Overwrite All Virtuals_ option to see what's possible.
+It's recommended to get started by using the built-in File Generator. When it's your first time using the ECS, you might want to enable the _Overwrite All Virtuals_ option to see all the available methods for each type of class.
 
 <img src="https://raw.githubusercontent.com/elraccoone/unity-entity-component-system/master/.github/WIKI/generator.png" width="100%"></br>
 
