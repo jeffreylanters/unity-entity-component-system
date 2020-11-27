@@ -133,7 +133,13 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           "public class " + _fileName + "System : EntitySystem<" + _fileName + "System, " + _fileName + "Component> {",
           _overwriteAllVirtuals ? "\tpublic override void OnInitialize () { }" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnInitialized () { }" : null,
+#if ECS_PHYSICS
+          _overwriteAllVirtuals ? "\tpublic override void OnPhysics () { }" : null,
+#endif
           _overwriteAllVirtuals ? "\tpublic override void OnUpdate () { }" : null,
+#if ECS_GRAPHICS
+          _overwriteAllVirtuals ? "\tpublic override void OnRender () { }" : null,
+#endif
           _overwriteAllVirtuals ? "\tpublic override void OnDrawGizmos () { }" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnDrawGui () { }" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnEnabled () { }" : null,

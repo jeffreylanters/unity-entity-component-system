@@ -15,8 +15,18 @@ namespace ElRaccoone.EntityComponentSystem {
     // Method invoked when the system becomes disabled.
     void OnDisabled ();
 
+#if ECS_PHYSICS
+    /// Method invoked when the physics update, will be called every fixed frame.
+    void OnPhysics ();
+#endif
+
     /// Method invoked when the system updates, will be called every frame.
     void OnUpdate ();
+
+#if ECS_GRAPHICS
+    /// Method invoked when the camera renders, will be called every late frame.
+    void OnRender ();
+#endif
 
     // Method invoked before the system will update, return whether this system
     // should update. will be called every frame.

@@ -54,8 +54,11 @@ Basic example usage of some of the ECS features.
 
 ```cs
 public class MainController : Controller {
+  [Injected] private AiSystem aiSystem;
+
   public override void OnInitialize () {
     this.Register (typeof (EnemySystem), typeof (AiSystem), typeof (AudioService));
+    var _myAsset = this.GetAsset<MyAssetType>("MyAssetName");
   }
 }
 
@@ -204,8 +207,15 @@ public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEnt
   public virtual void OnInitialize ();
   /// Method invoked when the system is initialized.
   public virtual void OnInitialized ();
-  /// Method invoked when the system updates, will be called every frame.
+  /// Method invoked when the physics update, will be called every fixed frame.
+  /// NOTE: Define the ECS_PHYSICS scripting symbol to use this method.
+  public virtual void OnPhysics ();
+  // Method invoked when the system is drawing the gizmos, will be called
+  // every gizmos draw call.
   public virtual void OnUpdate ();
+  /// Method invoked when the camera renders, will be called every late frame.
+  /// NOTE: Define the ECS_RENDER scripting symbol to use this method.
+  public virtual void OnRender ();
   // Method invoked when the system is drawing the gizmos, will be called
   // every gizmos draw call.
   public virtual void OnDrawGizmos ();

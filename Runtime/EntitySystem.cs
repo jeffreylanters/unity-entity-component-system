@@ -32,8 +32,18 @@ namespace ElRaccoone.EntityComponentSystem {
     /// Method invoked when the system is initialized.
     public virtual void OnInitialized () { }
 
+#if ECS_PHYSICS
+    /// Method invoked when the physics update, will be called every fixed frame.
+    public virtual void OnPhysics () { }
+#endif
+
     /// Method invoked when the system updates, will be called every frame.
     public virtual void OnUpdate () { }
+
+#if ECS_GRAPHICS
+    /// Method invoked when the camera renders, will be called every late frame.
+    public virtual void OnRender () { }
+#endif
 
     // Method invoked when the system is drawing the gizmos, will be called
     // every gizmos draw call.

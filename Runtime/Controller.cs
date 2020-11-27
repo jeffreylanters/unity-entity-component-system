@@ -54,6 +54,30 @@ namespace ElRaccoone.EntityComponentSystem {
       }
     }
 
+#if ECS_PHYSICS
+    /// During the FixedUpdate
+    private void FixedUpdate () {
+      // Invoking 'OnPhysics' on each enabled system that should update.
+      for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++) {
+        var _system = this.systems[_systemIndex];
+        if (_system.GetEnabled () == true)
+          _system.OnPhysics ();
+      }
+    }
+#endif
+
+#if ECS_GRAPHICS
+    /// During the LateUpdate
+    private void LateUpdate () {
+      // Invoking 'OnRender' on each enabled system that should to be updated.
+      for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++) {
+        var _system = this.systems[_systemIndex];
+        if (_system.GetEnabled () == true)
+          _system.OnRender ();
+      }
+    }
+#endif
+
 #if UNITY_EDITOR
     /// Invokes the OnDrawGizmos on the Systems
     private void OnDrawGizmos () {
@@ -190,7 +214,7 @@ namespace ElRaccoone.EntityComponentSystem {
           return true;
       return false;
     }
-    
+
     /// Gets an asset from this controller.
     public UnityEngine.Object GetAsset (string name) {
       for (var _i = 0; _i < this.assets.Length; _i++)
@@ -198,7 +222,7 @@ namespace ElRaccoone.EntityComponentSystem {
           return this.assets[_i];
       throw new System.Exception ("Unable to get asset, it was not added to the controller");
     }
-    
+
     /// Check whether this controller has an asset.
     public bool HasAsset (string name) {
       for (var _i = 0; _i < this.assets.Length; _i++)
