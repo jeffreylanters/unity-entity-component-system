@@ -84,6 +84,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
     }
 
     private void Generate () {
+      var _dateTimeStamp = System.DateTime.Now.ToString ("dddd, dd MMMM yyyy HH:mm:ss");
       var _overwriteAllVirtuals = this.shouldOverwriteAllVirtuals;
       var _importCommonNamespaces = this.shouldImportCommonNamespaces;
       var _addFileHeaderComments = this.shouldAddFileHeaderComments;
@@ -98,6 +99,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           "",
           _addFileHeaderComments ? "/// Project: " + PlayerSettings.productName : null,
           _addFileHeaderComments ? "/// Author: " : null,
+          _addFileHeaderComments ? "/// Created: " + _dateTimeStamp : null,
           _addFileHeaderComments ? "/// Controller for " + _fileName + "." : null,
           "public class " + _fileName + "Controller : Controller {",
           "\tpublic override void OnInitialize () {",
@@ -116,6 +118,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           "",
           _addFileHeaderComments ? "/// Project: " + PlayerSettings.productName : null,
           _addFileHeaderComments ? "/// Author: " : null,
+          _addFileHeaderComments ? "/// Created: " + _dateTimeStamp : null,
           _addFileHeaderComments ? "/// Entity Component for " + _fileName + "." : null,
           "public class " + _fileName + "Component : EntityComponent<" + _fileName + "Component, " + _fileName + "System> {",
           "}"
@@ -129,6 +132,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           "",
           _addFileHeaderComments ? "/// Project: " + PlayerSettings.productName : null,
           _addFileHeaderComments ? "/// Author: " : null,
+          _addFileHeaderComments ? "/// Created: " + _dateTimeStamp : null,
           _addFileHeaderComments ? "/// Entity System for " + _fileName + "." : null,
           "public class " + _fileName + "System : EntitySystem<" + _fileName + "System, " + _fileName + "Component> {",
           _overwriteAllVirtuals ? "\tpublic override void OnInitialize () { }" : null,
@@ -161,6 +165,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           "",
           _addFileHeaderComments ? "/// Project: " + PlayerSettings.productName : null,
           _addFileHeaderComments ? "/// Author: " : null,
+          _addFileHeaderComments ? "/// Created: " + _dateTimeStamp : null,
           _addFileHeaderComments ? "/// Service for " + _fileName + "." : null,
           "public class " + _fileName + "Service : Service<" + _fileName + "Service> {",
           _overwriteAllVirtuals ? "\tpublic override void OnInitialize () { }" : null,
@@ -177,6 +182,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           _importCommonNamespaces ? "" : null,
           _addFileHeaderComments ? "/// Project: " + PlayerSettings.productName : null,
           _addFileHeaderComments ? "/// Author: " : null,
+          _addFileHeaderComments ? "/// Created: " + _dateTimeStamp : null,
           _addFileHeaderComments ? "/// " + _fileName + "." : null,
           "public class " + _fileName + " {",
           "}"
