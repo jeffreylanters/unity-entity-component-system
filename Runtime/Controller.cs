@@ -1,5 +1,3 @@
-#define ECS_ALL
-
 namespace ElRaccoone.EntityComponentSystem {
 
   /// Base class for every controller.
