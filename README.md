@@ -72,9 +72,6 @@ public abstract class Controller {
   public virtual void OnInitialized ();
   /// Method invoked when the controller updates, will be called every frame.
   public virtual void OnUpdate ();
-  /// Method invoked when the controller is drawing the gizmos, will be called
-  /// every gizmos draw call.
-  public virtual void OnDrawGui ();
 
   /// Register your systems and services to the controller. This can only be
   /// done during 'OnInitialize' cycle.
