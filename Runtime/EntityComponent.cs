@@ -5,14 +5,14 @@ namespace ElRaccoone.EntityComponentSystem {
     where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new()
     where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new() {
 
-    /// Defines whether this component is enabled.
-    public bool isEnabled { get; private set; } = false;
-
     /// Defines whether this component has been initialized.
     private bool isInitialized = false;
 
     /// The system matched with this entity's component.
     private EntitySystemType system = null;
+
+    /// Defines whether this component is enabled.
+    public bool isEnabled { get; private set; } = false;
 
     /// Gets the system matched with this entity's component. If it's not
     /// defined, it will be fetched from the controller.
