@@ -5,9 +5,6 @@ namespace ElRaccoone.EntityComponentSystem {
     where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new()
     where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new() {
 
-    /// Defines whether this system is enabled.
-    private bool isEnabled = false;
-
     /// Defines whether this component has been initialized.
     private bool isInitialized = false;
 
@@ -126,13 +123,10 @@ namespace ElRaccoone.EntityComponentSystem {
     public void StopCoroutine (UnityEngine.Coroutine routine) =>
       Controller.Instance.StopCoroutine (routine);
 
-    /// Enables or disables this system.
-    public void SetEnabled (bool isEnabled) =>
-      Instance.isEnabled = isEnabled;
-
-    /// Gets the enabled status of this system
-    public bool GetEnabled () =>
-      Instance.isEnabled;
+    /// Sets whether the system is enabled or disabled, enabling the system allows
+    /// it to invoke all of the cycle calls such as OnUpdate and OnDrawGizmos.
+    public void SetEnabled (bool value) =>
+      Controller.Instance.SetSystemEnabled<EntitySystemType> (value);
 
     /// Internal method to set the instance reference. This method will
     /// be called after the controller and system initialization.
@@ -145,7 +139,7 @@ namespace ElRaccoone.EntityComponentSystem {
     public void Internal_OnUpdate () {
       if (this.isInitialized == false) {
         this.OnInitialized ();
-        if (this.isEnabled == true)
+        if (Controller.Instance.IsSystemEnabled<EntitySystemType> () == true)
           this.OnEnabled ();
         this.isInitialized = true;
       }

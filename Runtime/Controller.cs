@@ -1,3 +1,5 @@
+#define ECS_ALL
+
 namespace ElRaccoone.EntityComponentSystem {
 
   /// Base class for every controller.
@@ -5,6 +7,9 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// A list of the controller's instantiated entity systems.
     private System.Collections.Generic.List<IEntitySystem> systems;
+
+    /// A list of the controller's instantiated entity systems which are enabled.
+    private System.Collections.Generic.List<IEntitySystem> enabledSystemsCache;
 
     /// A list of the controller's instantiated services.
     private System.Collections.Generic.List<IService> services;
@@ -25,6 +30,7 @@ namespace ElRaccoone.EntityComponentSystem {
       UnityEngine.Object.DontDestroyOnLoad (this.transform.root.gameObject);
       Controller.Instance = this;
       this.systems = new System.Collections.Generic.List<IEntitySystem> ();
+      this.enabledSystemsCache = new System.Collections.Generic.List<IEntitySystem> ();
       this.services = new System.Collections.Generic.List<IService> ();
       this.OnInitialize ();
     }
@@ -46,55 +52,47 @@ namespace ElRaccoone.EntityComponentSystem {
       // Invoking 'OnUpdate' on the controller.
       this.OnUpdate ();
       // Invoking 'OnUpdate' on each enabled system that Should to be updated.
-      for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++) {
-        var _system = this.systems[_systemIndex];
-        if (_system.GetEnabled () == true)
-          if (_system.ShouldUpdate () == true)
-            _system.OnUpdate ();
+      for (var _systemIndex = 0; _systemIndex < this.enabledSystemsCache.Count; _systemIndex++) {
+        var _system = this.enabledSystemsCache[_systemIndex];
+        if (_system.ShouldUpdate () == true)
+          _system.OnUpdate ();
       }
     }
 
-#if ECS_PHYSICS
-    /// During the FixedUpdate
+#if ECS_PHYSICS || ECS_ALL
+    /// During the FixedUpdate, 'OnPhysics' will be invoked on each enabled system.
     private void FixedUpdate () {
-      // Invoking 'OnPhysics' on each enabled system that should update.
-      for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++) {
-        var _system = this.systems[_systemIndex];
-        if (_system.GetEnabled () == true)
-          _system.OnPhysics ();
-      }
+      for (var _systemIndex = 0; _systemIndex < this.enabledSystemsCache.Count; _systemIndex++)
+        this.enabledSystemsCache[_systemIndex].OnPhysics ();
     }
 #endif
 
-#if ECS_GRAPHICS
-    /// During the LateUpdate
+#if ECS_GRAPHICS || ECS_ALL
+    /// During the LateUpdate, 'OnRender' will be invoked on each enabled system.
     private void LateUpdate () {
-      // Invoking 'OnRender' on each enabled system that should to be updated.
-      for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++) {
-        var _system = this.systems[_systemIndex];
-        if (_system.GetEnabled () == true)
-          _system.OnRender ();
-      }
+      for (var _systemIndex = 0; _systemIndex < this.enabledSystemsCache.Count; _systemIndex++)
+        this.enabledSystemsCache[_systemIndex].OnRender ();
     }
 #endif
 
 #if UNITY_EDITOR
-    /// Invokes the OnDrawGizmos on the Systems
+    /// During the OnDrawGizmos, 'OnDrawGizmos' will be invoked on each enabled
+    /// system and all services.
     private void OnDrawGizmos () {
       if (UnityEngine.Application.isPlaying == true) {
-        for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
-          this.systems[_systemIndex].OnDrawGizmos ();
+        for (var _systemIndex = 0; _systemIndex < this.enabledSystemsCache.Count; _systemIndex++) 
+          this.enabledSystemsCache[_systemIndex].OnDrawGizmos ();
         for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
           this.services[_serviceIndex].OnDrawGizmos ();
       }
     }
 #endif
 
-    /// Invokes the OnDrawGui on the Systems
+    /// During the OnGUI, 'OnDrawGui' will be invoked on each enabled system and
+    /// all services.
     private void OnGUI () {
-      for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
-        if (this.systems[_systemIndex].GetEnabled () == true)
-          this.systems[_systemIndex].OnDrawGui ();
+      for (var _systemIndex = 0; _systemIndex < this.enabledSystemsCache.Count; _systemIndex++)
+        this.enabledSystemsCache[_systemIndex].OnDrawGui ();
       for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
         this.services[_serviceIndex].OnDrawGui ();
     }
@@ -121,9 +119,9 @@ namespace ElRaccoone.EntityComponentSystem {
         if (_instance is IEntitySystem) {
           var _system = _instance as IEntitySystem;
           this.systems.Add (_system);
+          this.enabledSystemsCache.Add (_system);
           _system.OnInitialize ();
           _system.Internal_OnInitialize ();
-          _system.SetEnabled (true);
         }
 
         // When the instance is a type of the system, add it to the services
@@ -143,24 +141,35 @@ namespace ElRaccoone.EntityComponentSystem {
         Injected.SetAttributeValues (this.services[_serviceIndex]);
     }
 
-    /// Enables systems.
-    public void EnableSystems (params System.Type[] typesOf) {
-      for (var _typeOfIndex = 0; _typeOfIndex < typesOf.Length; _typeOfIndex++)
+    /// Enables or disabled a system, enabling the systems allows them to invoke
+    /// their cycle methods such as OnUpdate, OnPhysics, OnDrawGui and others.
+    public void SetSystemEnabled<S> (bool value) {
+      var _typeOf = typeof (S);
+      for (var _systemIndex = 0; _systemIndex < this.enabledSystemsCache.Count; _systemIndex++)
+        if (this.enabledSystemsCache[_systemIndex].GetType () == _typeOf)
+          if (value == true)
+            return;
+          else {
+            this.enabledSystemsCache[_systemIndex].OnDisabled ();
+            this.enabledSystemsCache.RemoveAt (_systemIndex);
+            return;
+          }
+      if (value == true)
         for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
-          if (this.systems[_systemIndex].GetType () == typesOf[_typeOfIndex]) {
-            this.systems[_systemIndex].SetEnabled (true);
+          if (this.systems[_systemIndex].GetType () == _typeOf) {
+            this.enabledSystemsCache.Add (this.systems[_systemIndex]);
             this.systems[_systemIndex].OnEnabled ();
+            return;
           }
     }
 
-    /// Disables systems.
-    public void DisableSystems (params System.Type[] typesOf) {
-      for (var _typeOfIndex = 0; _typeOfIndex < typesOf.Length; _typeOfIndex++)
-        for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
-          if (this.systems[_systemIndex].GetType () == typesOf[_typeOfIndex]) {
-            this.systems[_systemIndex].SetEnabled (false);
-            this.systems[_systemIndex].OnDisabled ();
-          }
+    /// Returns whether a system is enabled.
+    public bool IsSystemEnabled<S> () {
+      var _typeOf = typeof (S);
+      for (var _systemIndex = 0; _systemIndex < this.enabledSystemsCache.Count; _systemIndex++)
+        if (this.enabledSystemsCache[_systemIndex].GetType () == _typeOf)
+          return true;
+      return false;
     }
 
     /// Gets a system from this controller.
