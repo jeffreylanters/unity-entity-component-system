@@ -16,7 +16,7 @@ namespace ElRaccoone.EntityComponentSystem {
     private bool isInitialized;
 
     /// A reference to the controller.
-    public static Controller Instance;
+    public static Controller Instance { private set; get; } = null;
 
     /// The assets that can be added to entities.
     public UnityEngine.Object[] assets;

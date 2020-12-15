@@ -9,19 +9,19 @@ namespace ElRaccoone.EntityComponentSystem {
     private bool isInitialized = false;
 
     /// An instance reference to the controller.
-    public static EntitySystemType Instance;
+    public static EntitySystemType Instance { private set; get; } = null;
 
     /// A list of the system's instantiated entity components.
-    public System.Collections.Generic.List<EntityComponentType> entities = new System.Collections.Generic.List<EntityComponentType> ();
+    public System.Collections.Generic.List<EntityComponentType> entities { private set; get; } = new System.Collections.Generic.List<EntityComponentType> ();
 
     /// The first instantiated entity compoent if this system.
-    public EntityComponentType entity = null;
+    public EntityComponentType entity { private set; get; } = null;
 
     /// Defines the number of instantiated entity components this system has.
-    public int entityCount = 0;
+    public int entityCount { private set; get; } = 0;
 
     /// Defines whether the system has instantiated entity components.
-    public bool hasEntities = false;
+    public bool hasEntities { private set; get; } = false;
 
     /// Method invoked when the system will initialize.
     public virtual void OnInitialize () { }

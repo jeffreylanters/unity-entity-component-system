@@ -64,7 +64,7 @@ Use build in file generator to create new instances for any of these types.
 abstract class Controller {
 
   /// A reference to the controller.
-  static Controller Instance;
+  static Controller Instance { get; };
 
   /// Method invoked when the controller is initializing.
   virtual void OnInitialize ();
@@ -109,6 +109,7 @@ abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEng
 
   /// Defines whether this component is enabled.
   bool isEnabled { get; };
+
   /// Sets the game object of the entity active.
   void SetActive (bool value);
   /// Destroys the game object of the entity.
@@ -117,7 +118,6 @@ abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEng
   void AddAsset (UnityEngine.Object asset);
   /// Loads a asset from the controller and adds it as an asset to the entity.
   void AddAsset (string name);
-
   /// Sets the position of an entity.
   void SetPosition (float x, float y, float z = 0);
   /// Adds to the position of an entity.
@@ -149,15 +149,15 @@ abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEntitySyst
   where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new() {
 
   /// An instance reference to the controller.
-  static EntitySystemType Instance;
+  static EntitySystemType Instance { get; };
   /// A list of the system's instantiated entity components.
-  System.Collections.Generic.List<EntityComponentType> entities;
+  System.Collections.Generic.List<EntityComponentType> entities { get; };
   /// The first instantiated entity compoent if this system.
-  EntityComponentType entity;
+  EntityComponentType entity { get; };
   /// Defines the number of instantiated entity components this system has.
-  int entityCount;
+  int entityCount { get; };
   /// Defines whether the system has instantiated entity components.
-  bool hasEntities;
+  bool hasEntities { get; };
 
   /// Method invoked when the system will initialize.
   virtual void OnInitialize ();
@@ -230,7 +230,7 @@ abstract class Service<ServiceType> : IService
   where ServiceType : Service<ServiceType>, new() {
 
   /// An instance reference to the service.
-  static ServiceType Instance;
+  static ServiceType Instance { get; };
 
   /// Method invoked when the service will initialize.
   virtual void OnInitialize ();

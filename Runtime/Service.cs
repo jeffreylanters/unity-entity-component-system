@@ -8,7 +8,7 @@ namespace ElRaccoone.EntityComponentSystem {
     private bool isInitialized = false;
 
     /// An instance reference to the service.
-    public static ServiceType Instance;
+    public static ServiceType Instance { get; } = null;
 
     /// Method invoked when the service will initialize.
     public virtual void OnInitialize () { }
