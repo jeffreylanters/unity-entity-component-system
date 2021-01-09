@@ -6,7 +6,7 @@
 
 # Entity Component System
 
-[![npm](https://img.shields.io/badge/upm-3.6.0-232c37.svg?style=for-the-badge)]()
+[![npm](https://img.shields.io/badge/upm-3.7.0-232c37.svg?style=for-the-badge)]()
 [![npm](https://img.shields.io/github/stars/elraccoone/unity-entity-component-system.svg?style=for-the-badge)]()
 [![npm](https://img.shields.io/badge/build-passing-brightgreen.svg?style=for-the-badge)]()
 
@@ -61,6 +61,7 @@ Use build in file generator to create new instances for any of these types.
 ```cs
 /// Base class for every controller.
 /// NOTE: This class allows the usage of [Injected] systems, services and controller.
+/// NOTE: This class allows the usage of [Asset] properties.
 abstract class Controller {
 
   /// A reference to the controller.
@@ -95,6 +96,8 @@ abstract class Controller {
   bool HasService<S> () where S : IService, new();
   /// Gets an asset from this controller.
   AssetType GetAsset<AssetType> (string name);
+  /// Gets an asset from this controller.
+  System.Object GetAsset (string name);
   /// Check whether this controller has an asset.
   bool HasAsset (string name);
 }
@@ -102,7 +105,7 @@ abstract class Controller {
 
 ```cs
 /// Base class for every entity component.
-/// NOTE: This class allows the usage of [Referenced] and [Protected] objects and primitives.
+/// NOTE: This class allows the usage of [Referenced] and [Protected] properties.
 abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEngine.MonoBehaviour, IEntityComponent
   where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new()
   where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new() {
@@ -144,6 +147,7 @@ abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEng
 ```cs
 /// Base class for every entity system.
 /// NOTE: This class allows the usage of [Injected] systems, services and controller.
+/// NOTE: This class allows the usage of [Asset] properties.
 abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEntitySystem
   where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new()
   where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new() {
@@ -226,6 +230,7 @@ abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEntitySyst
 ```cs
 /// Base class for every service
 /// NOTE: This class allows the usage of [Injected] systems, services and controller.
+/// NOTE: This class allows the usage of [Asset] properties.
 abstract class Service<ServiceType> : IService
   where ServiceType : Service<ServiceType>, new() {
 

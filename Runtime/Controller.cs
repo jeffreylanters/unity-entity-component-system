@@ -137,6 +137,13 @@ namespace ElRaccoone.EntityComponentSystem {
         Injected.SetAttributeValues (this.systems[_systemIndex]);
       for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
         Injected.SetAttributeValues (this.services[_serviceIndex]);
+
+      // Set Values of the 'Asset' attributes
+      Asset.SetAttributeValues (this);
+      for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
+        Asset.SetAttributeValues (this.systems[_systemIndex]);
+      for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
+        Asset.SetAttributeValues (this.services[_serviceIndex]);
     }
 
     /// Enables or disabled a system, enabling the systems allows them to invoke
@@ -223,11 +230,16 @@ namespace ElRaccoone.EntityComponentSystem {
     }
 
     /// Gets an asset from this controller.
-    public AssetType GetAsset<AssetType> (string name) where AssetType : UnityEngine.Object {
+    public UnityEngine.Object GetAsset (string name)  {
       for (var _i = 0; _i < this.assets.Length; _i++)
         if (this.assets[_i].name == name)
-          return this.assets[_i] as AssetType;
-      throw new System.Exception ("Unable to get asset, it was not added to the controller");
+          return this.assets[_i];
+      throw new System.Exception ($"Unable to get asset '{name}', it was not found on the controller");
+    }
+
+    /// Gets an asset from this controller.
+    public AssetType GetAsset<AssetType> (string name) where AssetType : UnityEngine.Object {
+      return this.GetAsset(name) as AssetType;
     }
 
     /// Check whether this controller has an asset.
