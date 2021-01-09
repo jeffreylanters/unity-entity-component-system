@@ -54,6 +54,16 @@ It's recommended to build your entire project around these life cycle methods.
 
 <img src="https://raw.githubusercontent.com/elraccoone/unity-entity-component-system/master/.github/WIKI/lifecycle.png" width="100%"></br>
 
-## The Controller
+### Controllers
 
-The controller is the core of your application. Each application should only contain a single controller.
+The controller is the core of your application, it is such important that each application should only contain a single controller. The controller is where your application will start from, from here all systems and services are registered. This can only be done during the OnInitialize method using the controller's Register method.
+
+```csharp
+public class MainController : Controller {
+  public override void OnInitialize () {
+    this.Register (
+      typeof (EnemyMovementSystem),
+      typeof (AudioService)
+    );
+  }
+```
