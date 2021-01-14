@@ -6,7 +6,7 @@
 
 # Entity Component System
 
-[![npm](https://img.shields.io/badge/upm-3.7.0-232c37.svg?style=for-the-badge)]()
+[![npm](https://img.shields.io/badge/upm-3.7.1-232c37.svg?style=for-the-badge)]()
 [![npm](https://img.shields.io/github/stars/elraccoone/unity-entity-component-system.svg?style=for-the-badge)]()
 [![npm](https://img.shields.io/badge/build-passing-brightgreen.svg?style=for-the-badge)]()
 
@@ -118,6 +118,8 @@ abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEng
   /// Destroys the game object of the entity.
   void Destroy ();
   /// Adds an asset to the entity.
+  /// Sets the value a property to a Unity Component.
+  void SetComponentProperty<UnityComponentType> (ref UnityComponentType entityProperty);
   void AddAsset (UnityEngine.Object asset);
   /// Loads a asset from the controller and adds it as an asset to the entity.
   void AddAsset (string name);
