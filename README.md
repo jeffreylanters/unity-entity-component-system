@@ -117,8 +117,8 @@ abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEng
   void SetActive (bool value);
   /// Destroys the game object of the entity.
   void Destroy ();
-  /// Sets the value a property to a Unity Component.
-  void SetComponentProperty<UnityComponentType> (ref UnityComponentType entityProperty);
+  /// Gets a component on an enity and sets it's reference to a property.
+  void GetComponentToProperty<UnityComponentType> (ref UnityComponentType entityProperty, bool includeChildren = false, bool includeInactive = false)
   /// Adds an asset to the entity.
   void AddAsset (UnityEngine.Object asset);
   /// Loads a asset from the controller and adds it as an asset to the entity.
