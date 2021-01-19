@@ -58,7 +58,7 @@ It's recommended to build your entire project around these life cycle methods.
 
 ### Controllers
 
-The controller is the core of your application, it is such important that each application should only contain a single controller. The controller is where your application will start from, from here all systems and services are registered. This can only be done during the OnInitialize method using the controller's Register method. For the controller to work it should be assined to one game object in your scene.
+The controller is the core of your application, it is of such importance that each application should only contain ome of it. The controller is where your application will start from and all systems and services are registered. This can only be done during the OnInitialize method using the controller's Register method. For the controller to work it should be assined to one game object in your scene.
 
 ```csharp
 public class MainController : Controller {
