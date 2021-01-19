@@ -64,7 +64,7 @@ It's recommended to build your entire project around these life cycle methods.
 public class MainController : Controller { }
 ```
 
-**Virtual OnInitialize:** The controller consists of an OnInitialize virtual method. This method can be overwritten and will be invoked during the very start of your application. During this cycle none [injectables](#Injectables) or [assets](#Assets) are being assigned, it is important to invoke the Register method during this cycle since this is the only time in your application you can register [systems](#Systems) and [services](#Services).
+**Virtual On Initialize:** The controller consists of an OnInitialize virtual method. This method can be overwritten and will be invoked during the very start of your application. During this cycle none [injectables](#Injectables) or [assets](#Assets) are being assigned, it is important to invoke the Register method during this cycle since this is the only time in your application you can register [systems](#Systems) and [services](#Services).
 
 ```csharp
 public class MainController : Controller {
@@ -77,7 +77,7 @@ public class MainController : Controller {
 }
 ```
 
-**Virtual OnInitialized:** The controller consists of an OnInitialized virtual method. This method can be overwritten and will be invoked when all [systems](#Systems) and [services](#Services) did initialize and all [injectables](#Injectables) and [assets](#Assets) properties are assigned.
+**Virtual On Initialized:** The controller consists of an OnInitialized virtual method. This method can be overwritten and will be invoked when all [systems](#Systems) and [services](#Services) did initialize and all [injectables](#Injectables) and [assets](#Assets) properties are assigned.
 
 ```csharp
 public class MainController : Controller {
@@ -85,7 +85,7 @@ public class MainController : Controller {
 }
 ```
 
-**Virtual OnUpdate:** The controller consists of an OnUpdate virtual method. This method can be overwritten and will be invoked during the update cycle. This cycle will run once every frame, the controller's Update is invoked before the [system's](#Systems) and [service's](#Services) update cycles.
+**Virtual On Update:** The controller consists of an OnUpdate virtual method. This method can be overwritten and will be invoked during the update cycle. This cycle will run once every frame, the controller's Update is invoked before the [system's](#Systems) and [service's](#Services) update cycles.
 
 ```csharp
 public class MainController : Controller {
@@ -93,28 +93,28 @@ public class MainController : Controller {
 }
 ```
 
-**Enabling Systems:** To enable or disable [systems](#Systems), the controller contains of a method EnableSystem which allows [systems](#Systems) to stop their life cycle methods such as OnUpdate, OnPhysics, OnDrawGui and others.
+**Enabling Systems:** To enable or disable [systems](#Systems), the controller contains of a method EnableSystem which allows [systems](#Systems) to stop their life cycle methods such as OnUpdate, OnPhysics, OnDrawGui and others. You can provide the [system's](#System) type using a generic.
 
 ```csharp
 public class MainController : Controller {
-  public void DoSomething () {
-    this.SetSystemEnabled<MovementSystem>(true);
-    this.SetSystemEnabled<InteractableSystem>(false);
+  public void SomeMethod () {
+    this.SetSystemEnabled<MovementSystem> (true);
+    this.SetSystemEnabled<InteractableSystem> (false);
   }
 }
 ```
 
-**Is System Enabled:** To check wether [systems](#Systems) are enable or disabled, the controller contains of a method IsSystemEnabled. Invoking the method will return a booling informing if the [systems](#Systems) is enabled or not.
+**Checking Wether Systems Are Enabled:** To check wether [systems](#Systems) are enable or disabled, the controller contains of a method IsSystemEnabled. Invoking the method will return a booling informing if the [system](#Systems) is enabled or not. You can provide the [system's](#System) type using a generic.
 
 ```csharp
 public class MainController : Controller {
-  public void DoSomething () {
-    if (this.IsSystemEnabled<MovementSystem>()) { }
+  public void SomeMethod () {
+    if (this.IsSystemEnabled<MovementSystem> ()) { }
   }
 }
 ```
 
-**Injection:** The controller can be be used as an [injected](#Injectables) property and allows insertion of other [injected](#Injectables) [systems](#Systems) and [services](#Services) properties. When being injected, all public methods and properties are accessibly.
+**Injection:** The controller allows insertion of [injected](#Injectables) [systems](#Systems) and [services](#Services) properties. When being injected, all public methods and properties are accessibly. When adding the attribute to any of these type of fields, they will be assigned during the OnInitialze cycle. All public methods and properties within these properties are accessibly like normal.
 
 ```csharp
 public class MainController : Controller {
@@ -130,7 +130,3 @@ public class MainController : Controller {
 ### Components
 
 ### Services
-
-### Injectables
-
-### Assets
