@@ -125,11 +125,11 @@ public class MainController : Controller {
 
 **Notes:** While it is recommended to move as much logic into [Services](#services) and [Systems](#systems), it is possible to let your [Controller](#controllers) house any functionality. If you use the [Controller](#controllers) for this purpose, try to keep it down to only Application wide and core functionality.
 
-### Systems
+### Components
 
 _This secection of the documentation will be updated very soon!_
 
-### Components
+### Systems
 
 _This secection of the documentation will be updated very soon!_
 
