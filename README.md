@@ -54,13 +54,11 @@ It's recommended to build your entire project around these life cycle methods.
 
 <img src="https://raw.githubusercontent.com/elraccoone/unity-entity-component-system/master/.github/WIKI/lifecycle.png" width="100%"></br>
 
-## Definitions
+## The basics
 
 ### Controllers
 
-The controller is the core of your application, it is of such importance that each application should only contain one of it. The controller is where your application will start from and all systems and services are registered. This can only be done during the OnInitialize method using the controller's Register method.
-
-To get started with your first controller you can generate one using the generator, for the controller to work it should be assined to one game object in your scene. Your first controller should at least consist of invoking the register method.
+The controller is the core of your application, it is of such importance that each application should only contain one of it. The controller is where your application will start from and all systems and services are registered. This can only be done during the OnInitialize method using the controller's Register method. To get started with your first controller you can use the generator, for the controller to work it should be assined to a game object in your scene.
 
 ```csharp
 public class MainController : Controller {
@@ -70,4 +68,27 @@ public class MainController : Controller {
       typeof (AudioService)
     );
   }
+}
 ```
+
+The controller contains a series of overwriteable lifecyle methods. Consult the life cycles sheet for more information about when and in which order these methods will be invoked. All life cycle methods are optional and can be implemented all at once.
+
+```csharp
+public class MainController : Controller {
+  public override void OnInitialize () { }
+  public override void OnInitialized () { }
+  public override void OnUpdate () { }
+}
+```
+
+While it is recommended to move as much logic into [services](#Services) and [systems](#Systems), it is possible to let your controller house any functionality. If you use the controller for this purpose, try to keep it down to only application wide and core functionality. All public methods and properties are accessibly when having the controller [injected](#Injectables).
+
+### Systems
+
+### Components
+
+### Services
+
+### Injectables
+
+### Assets
