@@ -54,7 +54,7 @@ It's recommended to build your entire project around these life cycle methods.
 
 <img src="https://raw.githubusercontent.com/elraccoone/unity-entity-component-system/master/.github/WIKI/lifecycle.png" width="100%"></br>
 
-## The basics
+## What's in the box?
 
 ### Controllers
 
@@ -104,7 +104,7 @@ public class MainController : Controller {
 }
 ```
 
-**Checking Wether Systems Are Enabled:** To check wether [systems](#Systems) are enable or disabled, the controller contains of a method IsSystemEnabled. Invoking the method will return a booling informing if the [system](#Systems) is enabled or not. You can provide the [system's](#System) type using a generic.
+**Checking Whether Systems Are Enabled:** To check whether [systems](#Systems) are enable or disabled, the controller contains of a method IsSystemEnabled. Invoking the method will return a booling informing if the [system](#Systems) is enabled or not. You can provide the [system's](#System) type using a generic.
 
 ```csharp
 public class MainController : Controller {
