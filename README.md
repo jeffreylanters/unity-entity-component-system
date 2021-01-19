@@ -58,13 +58,13 @@ It's recommended to build your entire project around these life cycle methods.
 
 ### Controllers
 
-**Introduction:** The controller is the heart of your application, each application should consist of just one, commonly named the MainController. The Controller is the first entry point of the Entity Component System and is the place where all of your [systems](#systems) and [services](#services) are registered. Your controller should be attached to a game object in your scene.
+**Introduction:** The Controller is the heart of your Application, each Application should consist of just one, commonly named the MainController. The Controller is the first entry point of the Entity Component System and is the place where all of your [Systems](#systems) and [Services](#services) are registered. Your Controller should be attached to a Game Object in your scene and will be marked to not be destroyed when switching scenes.
 
 ```csharp
 public class MainController : Controller { }
 ```
 
-**Virtual On Initialize:** The controller consists of an OnInitialize virtual method. This method can be overwritten and will be invoked during the very start of your application. During this cycle none [injectables](#Injectables) or [assets](#Assets) are being assigned, it is important to invoke the Register method during this cycle since this is the only time in your application you can register [systems](#Systems) and [services](#Services).
+**Virtual On Initialize:** The Controller consists of an OnInitialize virtual method. This method can be overwritten and will be invoked during the very start of your Application. During this cycle properties with the Injected and Asset attribute are being assigned, it is important to invoke the Register method during this cycle since this is the only time in your Application you can register [Systems](#systems) and [Services](#services).
 
 ```csharp
 public class MainController : Controller {
@@ -77,7 +77,7 @@ public class MainController : Controller {
 }
 ```
 
-**Virtual On Initialized:** The controller consists of an OnInitialized virtual method. This method can be overwritten and will be invoked when all [systems](#Systems) and [services](#Services) did initialize and all [injectables](#Injectables) and [assets](#Assets) properties are assigned.
+**Virtual On Initialized:** The Controller consists of an OnInitialized virtual method. This method can be overwritten and will be invoked when all [Systems](#systems) and [Services](#services) did initialize, and all the properties with the Injected and Asset attributes are assigned.
 
 ```csharp
 public class MainController : Controller {
@@ -85,7 +85,7 @@ public class MainController : Controller {
 }
 ```
 
-**Virtual On Update:** The controller consists of an OnUpdate virtual method. This method can be overwritten and will be invoked during the update cycle. This cycle will run once every frame, the controller's Update is invoked before the [system's](#Systems) and [service's](#Services) update cycles.
+**Virtual On Update:** The Controller consists of an OnUpdate virtual method. This method can be overwritten and will be invoked during the Update cycle. This cycle will run once every frame, the Controller's Update is invoked before the [System's](#systems) and [Service's](#services) update cycles.
 
 ```csharp
 public class MainController : Controller {
@@ -93,7 +93,7 @@ public class MainController : Controller {
 }
 ```
 
-**Enabling Systems:** To enable or disable [systems](#Systems), the controller contains of a method EnableSystem which allows [systems](#Systems) to stop their life cycle methods such as OnUpdate, OnPhysics, OnDrawGui and others. You can provide the [system's](#System) type using a generic.
+**Enabling Systems:** To enable or disable [Systems](#systems), the Controller contains of a method EnableSystem which allows [Systems](#systems) to stop their life cycle methods such as OnUpdate, OnPhysics, OnDrawGui and others. You can provide the [System's](#system) type using a generic.
 
 ```csharp
 public class MainController : Controller {
@@ -104,7 +104,7 @@ public class MainController : Controller {
 }
 ```
 
-**Checking Whether Systems Are Enabled:** To check whether [systems](#Systems) are enable or disabled, the controller contains of a method IsSystemEnabled. Invoking the method will return a booling informing if the [system](#Systems) is enabled or not. You can provide the [system's](#System) type using a generic.
+**Checking Whether Systems Are Enabled:** To check whether [Systems](#systems) are enable or disabled, the Controller contains of a method IsSystemEnabled. Invoking the method will return a boolean informing if the [System](#systems) is enabled or not. You can provide the [System's](#system) type using a generic.
 
 ```csharp
 public class MainController : Controller {
@@ -114,7 +114,7 @@ public class MainController : Controller {
 }
 ```
 
-**Injection:** The controller allows insertion of [injected](#Injectables) [systems](#Systems) and [services](#Services) properties. When being injected, all public methods and properties are accessibly. When adding the attribute to any of these type of fields, they will be assigned during the OnInitialze cycle. All public methods and properties within these properties are accessibly like normal.
+**Injection:** The Controller allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems) and [Services](#Services), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
 
 ```csharp
 public class MainController : Controller {
@@ -123,7 +123,7 @@ public class MainController : Controller {
 }
 ```
 
-**Notes:** While it is recommended to move as much logic into [services](#Services) and [systems](#Systems), it is possible to let your controller house any functionality. If you use the controller for this purpose, try to keep it down to only application wide and core functionality.
+**Notes:** While it is recommended to move as much logic into [Services](#services) and [Systems](#systems), it is possible to let your Controller house any functionality. If you use the Controller for this purpose, try to keep it down to only Application wide and core functionality.
 
 ### Systems
 
