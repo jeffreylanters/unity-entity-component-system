@@ -48,6 +48,12 @@ namespace ElRaccoone.EntityComponentSystem {
     /// Destroys the game object of the entity.
     public void Destroy () =>
       UnityEngine.Object.Destroy (this.gameObject);
+     
+    /// Gets a component on an enity and sets it's reference to a property.
+    public void GetComponentToProperty<UnityComponentType> (ref UnityComponentType entityProperty, bool includeChildren = false, bool includeInactive = false) =>
+      entityProperty = includeChildren == true
+        ? this.GetComponentInChildren<UnityComponentType> (includeInactive)
+        : this.GetComponent<UnityComponentType> ();
 
     /// Adds an asset to the entity.
     public UnityEngine.Object AddAsset (UnityEngine.Object asset) =>
