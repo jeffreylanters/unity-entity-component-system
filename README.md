@@ -61,25 +61,69 @@ It's recommended to build your entire project around these life cycle methods.
 **Introduction:** The controller is the core of your application, it is of such importance that each application should only contain one of it. The controller is where your application will start from and all systems and services are registered. This can only be done during the OnInitialize method using the controller's Register method. To get started with your first controller you can use the generator, for the controller to work it should be assined to a game object in your scene.
 
 ```csharp
+public class MainController : Controller { }
+```
+
+**Virtual OnInitialize:** The controller consists of an OnInitialize virtual method. This method can be overwritten and will be invoked during the very start of your application. During this cycle none [injectables](#Injectables) or [assets](#Assets) are being assigned, it is important to invoke the Register method during this cycle since this is the only time in your application you can register [systems](#Systems) and [services](#Services).
+
+```csharp
 public class MainController : Controller {
   public override void OnInitialize () {
     this.Register (
-      typeof (EnemyMovementSystem),
+      typeof (MovementSystem),
       typeof (AudioService)
     );
   }
 }
 ```
 
-**Virtual OnInitialized:** The controller consists of a OnInitialized virtual method. This method can be overwritten and will be invoked during the very first start of your application. It is important to invoke the Register method during this cycle since this is the only time in your application you can register [systems](#Systems) and [services](#Services).
+**Virtual OnInitialized:** The controller consists of an OnInitialized virtual method. This method can be overwritten and will be invoked when all [systems](#Systems) and [services](#Services) did initialize and all [injectables](#Injectables) and [assets](#Assets) properties are assigned.
 
 ```csharp
 public class MainController : Controller {
-  public override void OnInitialize () { }
+  public override void OnInitialized () { }
 }
 ```
 
-**Notes:** While it is recommended to move as much logic into [services](#Services) and [systems](#Systems), it is possible to let your controller house any functionality. If you use the controller for this purpose, try to keep it down to only application wide and core functionality. All public methods and properties are accessibly when having the controller [injected](#Injectables).
+**Virtual OnUpdate:** The controller consists of an OnUpdate virtual method. This method can be overwritten and will be invoked during the update cycle. This cycle will run once every frame, the controller's Update is invoked before the [system's](#Systems) and [service's](#Services) update cycles.
+
+```csharp
+public class MainController : Controller {
+  public override void OnUpdate () { }
+}
+```
+
+**Enabling Systems:** To enable or disable [systems](#Systems), the controller contains of a method EnableSystem which allows [systems](#Systems) to stop their life cycle methods such as OnUpdate, OnPhysics, OnDrawGui and others.
+
+```csharp
+public class MainController : Controller {
+  public void DoSomething () {
+    this.SetSystemEnabled<MovementSystem>(true);
+    this.SetSystemEnabled<InteractableSystem>(false);
+  }
+}
+```
+
+**Is System Enabled:** To check wether [systems](#Systems) are enable or disabled, the controller contains of a method IsSystemEnabled. Invoking the method will return a booling informing if the [systems](#Systems) is enabled or not.
+
+```csharp
+public class MainController : Controller {
+  public void DoSomething () {
+    if (this.IsSystemEnabled<MovementSystem>()) { }
+  }
+}
+```
+
+**Injection:** The controller can be be used as an [injected](#Injectables) property and allows insertion of other [injected](#Injectables) [systems](#Systems) and [services](#Services) properties. When being injected, all public methods and properties are accessibly.
+
+```csharp
+public class MainController : Controller {
+  [Injected] private MovementSystem movementSystem;
+  [Injected] private AudioService audioService;
+}
+```
+
+**Notes:** While it is recommended to move as much logic into [services](#Services) and [systems](#Systems), it is possible to let your controller house any functionality. If you use the controller for this purpose, try to keep it down to only application wide and core functionality.
 
 ### Systems
 
