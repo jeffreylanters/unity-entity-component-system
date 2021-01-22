@@ -142,7 +142,7 @@ public class MainController : Controller {
 public class MovementComponent : System<MovementComponent, MovementSystem> { }
 ```
 
-_This secection of the documentation is in process!_
+_This section of the documentation is in process!_
 
 ### Systems
 
@@ -152,7 +152,7 @@ _This secection of the documentation is in process!_
 public class MovementSystem : System<MovementSystem, MovementComponent> { }
 ```
 
-_This secection of the documentation is in process!_
+_This section of the documentation is in process!_
 
 ### Services
 
@@ -162,4 +162,4 @@ _This secection of the documentation is in process!_
 public class AudioService : Service<AudioService> { }
 ```
 
-_This secection of the documentation is in process!_
+_This section of the documentation is in process!_
