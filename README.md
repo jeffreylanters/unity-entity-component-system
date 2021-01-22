@@ -93,7 +93,7 @@ public class MainController : Controller {
 }
 ```
 
-**Enabling Systems:** To enable or disable [Systems](#systems), the [Controller](#controllers) contains of a method EnableSystem which allows [Systems](#systems) to stop their life cycle methods such as OnUpdate, OnPhysics, OnDrawGui and others. You can provide the [System's](#system) type using a generic.
+**Enabling Systems:** To enable or disable [Systems](#systems), the [Controller](#controllers) contains of a method EnableSystem which allows [Systems](#systems) to stop their life cycle methods such as OnUpdate, OnPhysics, OnDrawGui and others. You can provide the [System's](#system) type using a generic. Systems are enabled by default.
 
 ```csharp
 public class MainController : Controller {
