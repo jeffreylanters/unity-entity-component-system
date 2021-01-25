@@ -142,6 +142,17 @@ public class MainController : Controller {
 public class MovementComponent : Component<MovementComponent, MovementSystem> { }
 ```
 
+**Component properties:** Public properties are the heart of your Components, and are here to provide data for the Systems to use. Properties can be added to components like in any other class and can consist of any kind of type.
+
+```csharp
+public class MovementComponent : Component<MovementComponent, MovementSystem> {
+  public float speed;
+  public Vector3 targetPosition;
+  public int[] ids;
+  public NpcDialog dialog;
+}
+```
+
 _This section of the documentation is in process!_
 
 ### Systems
