@@ -20,7 +20,7 @@ namespace ElRaccoone.EntityComponentSystem {
       if (this.system == null)
         if (Controller.Instance.HasSystem<EntitySystemType> () == true)
           this.system = Controller.Instance.GetSystem<EntitySystemType> ();
-        else throw new System.Exception ("Tried to access the system before it was registered");
+        else throw new System.Exception ("Tried to access the System before it was registered");
       return this.system;
     }
 

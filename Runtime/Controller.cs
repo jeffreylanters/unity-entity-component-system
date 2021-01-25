@@ -108,7 +108,7 @@ namespace ElRaccoone.EntityComponentSystem {
     // done during 'OnInitialize' cycle.
     public void Register (params System.Type[] typesOf) {
       if (this.isInitialized == true)
-        throw new System.Exception ("Unable to registered system outsize of OnInitialize cycle");
+        throw new System.Exception ("Cannot to registered System outsize of OnInitialize cycle");
 
       for (var _typeOfIndex = 0; _typeOfIndex < typesOf.Length; _typeOfIndex++) {
         var _instance = System.Activator.CreateInstance (typesOf[_typeOfIndex]);
@@ -183,7 +183,7 @@ namespace ElRaccoone.EntityComponentSystem {
       for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
         if (this.systems[_systemIndex].GetType () == _typeOfS)
           return (S)this.systems[_systemIndex];
-      throw new System.Exception ("Unable to get system, it was not registerd to the controller");
+      throw new System.Exception ($"Unable to get System of type {_typeOfS}, it was not registerd to the Controller");
     }
 
     /// Gets a system from this controller.
@@ -191,7 +191,7 @@ namespace ElRaccoone.EntityComponentSystem {
       for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
         if (this.systems[_systemIndex].GetType () == typeOf)
           return this.systems[_systemIndex];
-      throw new System.Exception ("Unable to get system, it was not registerd to the controller");
+      throw new System.Exception ($"Unable to get System of type {typeOf}, it was not registerd to the Controller");
     }
 
     /// Check whether this controller has a system.
@@ -209,7 +209,7 @@ namespace ElRaccoone.EntityComponentSystem {
       for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
         if (this.services[_serviceIndex].GetType () == _typeOfS)
           return (S)this.services[_serviceIndex];
-      throw new System.Exception ("Unable to get service, it was not registerd to the controller");
+      throw new System.Exception ($"Unable to get Service of type {_typeOfS}, it was not registerd to the Controller");
     }
 
     /// Gets a system from this controller.
@@ -217,7 +217,7 @@ namespace ElRaccoone.EntityComponentSystem {
       for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
         if (this.services[_serviceIndex].GetType () == typeOf)
           return this.services[_serviceIndex];
-      throw new System.Exception ("Unable to get service, it was not registerd to the controller");
+      throw new System.Exception ($"Unable to get Service of type {typeOf}, it was not registerd to the Controller");
     }
 
     /// Check whether this controller has a service.
@@ -234,7 +234,7 @@ namespace ElRaccoone.EntityComponentSystem {
       for (var _i = 0; _i < this.assets.Length; _i++)
         if (this.assets[_i].name == name)
           return this.assets[_i];
-      throw new System.Exception ($"Unable to get asset '{name}', it was not found on the controller");
+      throw new System.Exception ($"Unable to get Asset '{name}', it was not found on the Controller");
     }
 
     /// Gets an asset from this controller.
