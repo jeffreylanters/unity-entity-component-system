@@ -142,7 +142,7 @@ public class MainController : Controller {
 public class MovementComponent : Component<MovementComponent, MovementSystem> { }
 ```
 
-**Component properties:** Public properties are the heart of your Components, and are here to provide data for the Systems to use. Properties can be added to components like in any other class and can consist of any kind of type.
+**Public Properties:** Public properties are the heart of your [Components](#components), and are here to provide data for the [Systems](#systems) to use. Properties can be added to [Components](#components) like in any other class and can consist of any kind of type.
 
 ```csharp
 public class MovementComponent : Component<MovementComponent, MovementSystem> {
@@ -152,6 +152,22 @@ public class MovementComponent : Component<MovementComponent, MovementSystem> {
   public NpcDialog dialog;
 }
 ```
+
+**Editor Protection:** Sometimes you want to hide properties from the Unity Editor when they are, for example are managed by the [Systems](#systems). By flagging these properties with the Protected attribute, it will no longer shows up in the Unity Editor, but is still accessible by the [Systems](#systems).
+
+```csharp
+public class MovementComponent : Component<MovementComponent, MovementSystem> {
+  [Protected] public float currentSpeed;
+}
+```
+
+<!-- **Editor Reference:**
+
+```csharp
+public class MovementComponent : Component<MovementComponent, MovementSystem> {
+  [Referenced] public BoxCollider playerCollider;
+}
+``` -->
 
 _This section of the documentation is in process!_
 
@@ -163,6 +179,25 @@ _This section of the documentation is in process!_
 public class MovementSystem : System<MovementSystem, MovementComponent> { }
 ```
 
+**Injection:** The [System](#systems) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems), [Services](#Services) and [Controllers](#controllers), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
+
+```csharp
+public class MovementSystem : System<MovementSystem, MovementComponent> {
+  [Injected] private MainController mainController;
+  [Injected] private HealthSystem healthSystem;
+  [Injected] private AudioService audioService;
+}
+```
+
+**Assets:** The [System](#system) allows the use of the Asset attribute on properties to automatically assign the values of referenced Assets. Assets can be assigned on the [Controller](#controllers) instance in your Scene. When assigning using the empty contructor, the property's name will be used for searching the Asset, to find an Asset by it's name, use the string overload. All types of UnityEngine's Object can be used in these fields. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle. When an asset is not found, an error is thrown.
+
+```csharp
+public class MovementSystem : System<MovementSystem, MovementComponent> {
+  [Asset] private GameObject playerPrefab;
+  [Asset ("ShopDialog")] private NpcDialog npcDialog;
+}
+```
+
 _This section of the documentation is in process!_
 
 ### Services
@@ -171,6 +206,25 @@ _This section of the documentation is in process!_
 
 ```csharp
 public class AudioService : Service<AudioService> { }
+```
+
+**Injection:** The [Service](#services) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems), [Services](#Services) and [Controllers](#controllers), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
+
+```csharp
+public class AudioService : Service<AudioService> {
+  [Injected] private MainController mainController;
+  [Injected] private MovementSystem movementSystem;
+  [Injected] private NetworkService networkService;
+}
+```
+
+**Assets:** The [Service](#services) allows the use of the Asset attribute on properties to automatically assign the values of referenced Assets. Assets can be assigned on the [Controller](#controllers) instance in your Scene. When assigning using the empty contructor, the property's name will be used for searching the Asset, to find an Asset by it's name, use the string overload. All types of UnityEngine's Object can be used in these fields. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle. When an asset is not found, an error is thrown.
+
+```csharp
+public class AudioService : Service<AudioService> {
+  [Asset] private GameObject playerPrefab;
+  [Asset ("ShopDialog")] private NpcDialog npcDialog;
+}
 ```
 
 _This section of the documentation is in process!_
