@@ -136,17 +136,17 @@ public class MainController : Controller {
 
 ### Components
 
-**Introduction:** [Components](#components) are responsible for housing the data of your entities and should consist of nothing more than that. All properties should be public and will be accessible to all systems and controllers. [Components](#components) should be added to your entities in the Scene, an entity is not limited to one [Components](#components) and can hold as many as needed.
+**Introduction:** [Components](#components) are responsible for housing the data of your entities, and should consist of nothing more than that. All properties should be public and will be accessible to all [Systems](#systems) and [Controllers](#controllers) since there is no need for privates. [Components](#components) should be added to your Entities (GameObjects) in the Scene, an Entity is not limited to one [Components](#components) and can hold as many as needed.
 
 ```csharp
-public class MovementComponent : System<MovementComponent, MovementSystem> { }
+public class MovementComponent : Component<MovementComponent, MovementSystem> { }
 ```
 
 _This section of the documentation is in process!_
 
 ### Systems
 
-**Introduction:** The [Systems](#systems) are responsible for controlling all of your Entity [Components](#components) and are the closest you'll get of what you're used to when working with MonoBehaviours. The entire life cycles of your entities are managed in here.
+**Introduction:** The [Systems](#systems) are responsible for controlling all of your Entity's [Components](#components) and are the closest you'll get of what you're used to when working with MonoBehaviours. The entire life cycles of your Entities are managed in here.
 
 ```csharp
 public class MovementSystem : System<MovementSystem, MovementComponent> { }
