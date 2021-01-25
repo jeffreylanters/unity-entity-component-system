@@ -169,7 +169,7 @@ public class MovementComponent : Component<MovementComponent, MovementSystem> {
 }
 ``` -->
 
-_This section of the documentation is in process!_
+_The components section of the documentation is in process!_
 
 ### Systems
 
@@ -198,7 +198,7 @@ public class MovementSystem : System<MovementSystem, MovementComponent> {
 }
 ```
 
-_This section of the documentation is in process!_
+_The systems section of the documentation is in process!_
 
 ### Services
 
@@ -227,4 +227,4 @@ public class AudioService : Service<AudioService> {
 }
 ```
 
-_This section of the documentation is in process!_
+_The services section of the documentation is in process!_
