@@ -6,7 +6,7 @@
 
 # Entity Component System
 
-[![openupm](https://img.shields.io/npm/v/nl.elraccoone.unity-entity-component-system?label=UPM&registry_uri=https://package.openupm.com&style=for-the-badge&color=232c37)](https://openupm.com/packages/nl.elraccoone.unity-entity-component-system/)
+[![openupm](https://img.shields.io/npm/v/nl.elraccoone.entity-component-system?label=UPM&registry_uri=https://package.openupm.com&style=for-the-badge&color=232c37)](https://openupm.com/packages/nl.elraccoone.entity-component-system/)
 [![](https://img.shields.io/github/stars/elraccoone/unity-entity-component-system.svg?style=for-the-badge)]()
 [![](https://img.shields.io/badge/build-passing-brightgreen.svg?style=for-the-badge)]()
 
