@@ -6,9 +6,9 @@
 
 # Entity Component System
 
-[![npm](https://img.shields.io/badge/upm-3.7.2-232c37.svg?style=for-the-badge)]()
-[![npm](https://img.shields.io/github/stars/elraccoone/unity-entity-component-system.svg?style=for-the-badge)]()
-[![npm](https://img.shields.io/badge/build-passing-brightgreen.svg?style=for-the-badge)]()
+[![openupm](https://img.shields.io/npm/v/nl.elraccoone.unity-entity-component-system?label=UPM&registry_uri=https://package.openupm.com&style=for-the-badge&color=232c37)](https://openupm.com/packages/nl.elraccoone.unity-entity-component-system/)
+[![](https://img.shields.io/github/stars/elraccoone/unity-entity-component-system.svg?style=for-the-badge)]()
+[![](https://img.shields.io/badge/build-passing-brightgreen.svg?style=for-the-badge)]()
 
 A better approach to game design that allows you to concentrate on the actual problems you are solving: the data and behavior that make up your game. By moving from object-oriented to data-oriented design it will be easier for you to reuse the code and easier for others to understand and work on it.
 
