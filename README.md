@@ -36,7 +36,7 @@ Hi! My name is Jeffrey Lanters, thanks for checking out my modules! I've been a 
 
 ## Using the Unity Package Manager
 
-Install the latest stable release using the Unity Package Manager by adding the following line to your `manifest.json` file located within your project's Packages directory.
+Install the latest stable release using the Unity Package Manager by adding the following line to your `manifest.json` file located within your project's Packages directory, or by adding the Git URL to the Package Manager Window inside of Unity.
 
 ```json
 "nl.elraccoone.entity-component-system": "git+https://github.com/elraccoone/unity-entity-component-system"
