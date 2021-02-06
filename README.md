@@ -34,6 +34,16 @@ Hi! My name is Jeffrey Lanters, thanks for checking out my modules! I've been a 
 
 # Installation
 
+## Using OpenUPM
+
+The module is availble on the OpenUPM package registry, you can install the latest stable release using the OpenUPM Package manager's Command Line Tool using the following command.
+
+```sh
+openupm add nl.elraccoone.entity-component-system
+```
+
+## Using Unity Package Manager
+
 Install the latest stable release using the Unity Package Manager by adding the following line to your `manifest.json` file located within your project's Packages directory.
 
 ```json
