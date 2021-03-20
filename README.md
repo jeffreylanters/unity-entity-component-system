@@ -20,7 +20,7 @@ A better approach to game design that allows you to concentrate on the actual pr
 
 </br></br>
 
-[![npm](https://img.shields.io/badge/sponsor_the_project-donate-E12C9A.svg?style=for-the-badge)](https://paypal.me/jeffreylanters)
+[![npm](https://img.shields.io/badge/sponsor_the_project-donate-E12C9A.svg?style=for-the-badge)](https://jeffreylanters.nl/sponsor)
 
 Hi! My name is Jeffrey Lanters, thanks for checking out my modules! I've been a Unity developer for years when in 2020 I decided to start sharing my modules by open-sourcing them. So feel free to look around. If you're using this module for production, please consider donating to support the project. When using any of the packages, please make sure to **Star** this repository and give credit to **Jeffrey Lanters** somewhere in your app or game. Also keep in mind **it it prohibited to sublicense and/or sell copies of the Software in stores such as the Unity Asset Store!** Thanks for your time.
 
@@ -179,14 +179,48 @@ public class MovementComponent : Component<MovementComponent, MovementSystem> {
 }
 ``` -->
 
-_The components section of the documentation is in process!_
-
 ### Systems
 
 **Introduction:** The [Systems](#systems) are responsible for controlling all of your Entity's [Components](#components) and are the closest you'll get of what you're used to when working with MonoBehaviours. The entire life cycles of your Entities are managed in here.
 
 ```csharp
 public class MovementSystem : System<MovementSystem, MovementComponent> { }
+```
+
+**Virtual On Initialize:** The [System](#systems) consists of an OnInitialize virtual method. This method can be overwritten and will be invoked during the very start of your Application. During this cycle properties with the Injected and Asset attribute are being assigned. This cycle can be used to create instances or pre-set properties. Keep in mind references to other [System](#systems) and [Services](#services) are yet to be assigned and are not available at this point.
+
+```csharp
+public class MovementSystem : System<MovementSystem, MovementComponent> {
+  public override void OnInitialize () { }
+}
+```
+
+**Virtual On Initialized:** The [System](#systems) consists of an OnInitialized virtual method. This method can be overwritten and will be invoked when all [System](#systems) and [Services](#services) did initialize, and all the properties with the Injected and Asset attributes are assigned.
+
+```csharp
+public class MovementSystem : System<MovementSystem, MovementComponent> {
+  public override void OnInitialized () { }
+}
+```
+
+**Virtual On Enabled:** The [System](#systems) consists of an OnEnabled virtual method. This method can be overwritten and will be invoked when all [System](#systems) and [Services](#services) are initialized or when the [System](#systems) is enabled after being disabled.
+
+```csharp
+public class MovementSystem : System<MovementSystem, MovementComponent> {
+  public override void OnEnabled () { }
+}
+```
+
+<!-- TODO OnEntityInitialzed, OnEntityEnabled, OnPhysics, ShouldUpdate, OnUpdate, OnRender, OnDrawGui, OnDrawGizmos, OnDisabled, OnEntityDisabled, OnEntityWillDestory -->
+
+**Checking wether an Entity is enabled:** To check whether Entities are enable or disabled, the [Component](#components) consists of a property isEnabled. Getting the value will return a boolean informing if the Entity is enabled or not.
+
+```csharp
+public class MovementSystem : System<MovementSystem, MovementComponent> {
+  private void SomeMethod () {
+    if (this.entity.isEnabled == true) { }
+  }
+}
 ```
 
 **Injection:** The [System](#systems) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems), [Services](#Services) and [Controllers](#controllers), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
@@ -217,6 +251,8 @@ _The systems section of the documentation is in process!_
 ```csharp
 public class AudioService : Service<AudioService> { }
 ```
+
+<!-- TODO OnInitialize, OnInitialized, OnDrawGui, OnDrawGizmos -->
 
 **Injection:** The [Service](#services) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems), [Services](#Services) and [Controllers](#controllers), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
 
