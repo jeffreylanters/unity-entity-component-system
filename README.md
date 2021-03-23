@@ -1,10 +1,9 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/elraccoone/unity-entity-component-system/master/.github/WIKI/logo-transparent.png" height="100px">
+<img src="https://github.com/elraccoone/unity-entity-component-system/blob/master/.github/WIKI/repository-readme-splash.png?raw=true" width="100%">
 
 </br>
-
-# Entity Component System
+</br>
 
 [![openupm](https://img.shields.io/npm/v/nl.elraccoone.entity-component-system?label=UPM&registry_uri=https://package.openupm.com&style=for-the-badge&color=232c37)](https://openupm.com/packages/nl.elraccoone.entity-component-system/)
 [![](https://img.shields.io/github/stars/elraccoone/unity-entity-component-system.svg?style=for-the-badge)]()
