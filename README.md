@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://github.com/elraccoone/unity-entity-component-system/blob/master/.github/WIKI/repository-readme-splash.png?raw=true" width="100%">
+<img src="https://raw.githubusercontent.com/elraccoone/unity-entity-component-system/master/.github/WIKI/repository-readme-splash.png" width="100%">
 
 </br>
 </br>
