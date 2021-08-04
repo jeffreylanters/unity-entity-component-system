@@ -17,6 +17,10 @@ namespace ElRaccoone.EntityComponentSystem {
     // on gui draw call.
     void OnDrawGui ();
 
+    /// Method invoked when the service will be destroyed, this will happen when
+    /// the application is closing or the controller is being destroyed.
+    void OnWillDestroy ();
+
     /// Internal method to set the instance reference. This method will
     /// be called after the controller and service initialization.
     void Internal_OnInitialize ();
