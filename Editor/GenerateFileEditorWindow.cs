@@ -107,6 +107,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           "\t}",
           _overwriteAllVirtuals ? "\tpublic override void OnInitialized () { }" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnUpdate () { }" : null,
+          _overwriteAllVirtuals ? "\tpublic override void OnWillDestroy () { }" : null,
           "}"
         });
 
@@ -148,6 +149,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           _overwriteAllVirtuals ? "\tpublic override void OnDrawGui () { }" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnEnabled () { }" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnDisabled () { }" : null,
+          _overwriteAllVirtuals ? "\tpublic override void OnWillDestroy () { }" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnEntityInitialize (" + _fileName + "Component entity) { }" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnEntityInitialized (" + _fileName + "Component entity) { }" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnEntityEnabled (" + _fileName + "Component entity) { }" : null,
@@ -172,6 +174,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           _overwriteAllVirtuals ? "\tpublic override void OnInitialized () { }" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnDrawGizmos () { }" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnDrawGui () { }" : null,
+          _overwriteAllVirtuals ? "\tpublic override void OnWillDestroy () { }" : null,
           "}"
         });
 
