@@ -234,7 +234,7 @@ namespace ElRaccoone.EntityComponentSystem {
     }
 
     /// Gets an asset from this controller.
-    public UnityEngine.Object GetAsset (string name)  {
+    public UnityEngine.Object GetAsset (string name) {
       for (var _i = 0; _i < this.assets.Length; _i++)
         if (this.assets[_i].name == name)
           return this.assets[_i];
@@ -243,7 +243,7 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// Gets an asset from this controller.
     public AssetType GetAsset<AssetType> (string name) where AssetType : UnityEngine.Object {
-      return this.GetAsset(name) as AssetType;
+      return this.GetAsset (name) as AssetType;
     }
 
     /// Check whether this controller has an asset.
