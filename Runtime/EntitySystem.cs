@@ -56,6 +56,10 @@ namespace ElRaccoone.EntityComponentSystem {
     // Method invoked when the system becomes disabled.
     public virtual void OnDisabled () { }
 
+    /// Method invoked when the system will be destroyed, this will happen when
+    /// the application is closing or the controller is being destroyed.
+    public virtual void OnWillDestroy () { }
+
     // Method invoked when an entity of this system is initializing.
     public virtual void OnEntityInitialize (EntityComponentType entity) { }
 
