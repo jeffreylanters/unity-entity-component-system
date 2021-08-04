@@ -73,6 +73,16 @@ namespace ElRaccoone.EntityComponentSystem {
     }
 #endif
 
+    /// When the controller is destoryed, it will invoke 'OnWillDestroy' on the
+    /// controller and on each of the systems and services.
+    private void OnDestroy () {
+      this.OnWillDestroy ();
+      for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
+        this.systems[_systemIndex].OnWillDestroy ();
+      for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
+        this.services[_serviceIndex].OnWillDestroy ();
+    }
+
 #if UNITY_EDITOR
     /// During the OnDrawGizmos, 'OnDrawGizmos' will be invoked on each enabled
     /// system and all services.
