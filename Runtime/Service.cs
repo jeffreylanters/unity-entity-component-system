@@ -24,6 +24,10 @@ namespace ElRaccoone.EntityComponentSystem {
     // on gui draw call.
     public virtual void OnDrawGui () { }
 
+    /// Method invoked when the service will be destroyed, this will happen when
+    /// the application is closing or the controller is being destroyed.
+    public virtual void OnWillDestroy () { }
+
     /// Starts a coroutine on this service.
     public UnityEngine.Coroutine StartCoroutine (System.Collections.IEnumerator routine) =>
       Controller.Instance.StartCoroutine (routine);
