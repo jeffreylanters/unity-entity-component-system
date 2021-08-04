@@ -207,7 +207,7 @@ public class MovementSystem : System<MovementSystem, MovementComponent> {
 }
 ```
 
-<!-- TODO OnEntityInitialzed, OnEntityEnabled, OnPhysics, ShouldUpdate, OnUpdate, OnRender, OnDrawGui, OnDrawGizmos, OnDisabled, OnEntityDisabled, OnEntityWillDestory -->
+<!-- TODO OnEntityInitialzed, OnEntityEnabled, OnPhysics, ShouldUpdate, OnUpdate, OnRender, OnDrawGui, OnDrawGizmos, OnDisabled, OnEntityDisabled, OnEntityWillDestroy, OnWillDestroy -->
 
 **Checking wether an Entity is enabled:** To check whether Entities are enable or disabled, the [Component](#components) consists of a property isEnabled. Getting the value will return a boolean informing if the Entity is enabled or not.
 
@@ -248,7 +248,7 @@ _The systems section of the documentation is in process!_
 public class AudioService : Service<AudioService> { }
 ```
 
-<!-- TODO OnInitialize, OnInitialized, OnDrawGui, OnDrawGizmos -->
+<!-- TODO OnInitialize, OnInitialized, OnDrawGui, OnDrawGizmos, OnWillDestroy -->
 
 **Injection:** The [Service](#services) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems), [Services](#Services) and [Controllers](#controllers), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
 
