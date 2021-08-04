@@ -40,6 +40,10 @@ namespace ElRaccoone.EntityComponentSystem {
     // on gui draw call.
     void OnDrawGui ();
 
+    /// Method invoked when the system will be destroyed, this will happen when
+    /// the application is closing or the controller is being destroyed.
+    void OnWillDestroy ();
+
     /// Sets whether the system is enabled or disabled, enabling the system allows
     /// it to invoke all of the cycle calls such as OnUpdate and OnDrawGizmos.
     void SetEnabled (bool value);
