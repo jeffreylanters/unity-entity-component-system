@@ -114,7 +114,7 @@ public class MainController : Controller {
 }
 ```
 
-**Injection:** The [Controller](#controllers) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems) and [Services](#Services), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
+**Dependency Injection:** The [Controller](#controllers) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems) and [Services](#Services), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
 
 ```csharp
 public class MainController : Controller {
@@ -213,7 +213,7 @@ public class MovementSystem : System<MovementSystem, MovementComponent> {
 }
 ```
 
-**Injection:** The [System](#systems) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems), [Services](#Services) and [Controllers](#controllers), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
+**Dependency Injection:** The [System](#systems) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems), [Services](#Services) and [Controllers](#controllers), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
 
 ```csharp
 public class MovementSystem : System<MovementSystem, MovementComponent> {
@@ -244,7 +244,7 @@ public class AudioService : Service<AudioService> { }
 
 <!-- TODO OnInitialize, OnInitialized, OnDrawGui, OnDrawGizmos, OnWillDestroy -->
 
-**Injection:** The [Service](#services) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems), [Services](#Services) and [Controllers](#controllers), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
+**Dependency Injection:** The [Service](#services) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems), [Services](#Services) and [Controllers](#controllers), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
 
 ```csharp
 public class AudioService : Service<AudioService> {
