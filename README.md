@@ -54,17 +54,19 @@ It's recommended to build your entire project around these life cycle methods.
 
 <img src="https://raw.githubusercontent.com/jeffreylanters/unity-entity-component-system/master/.github/WIKI/lifecycle.png" width="100%"></br>
 
-## What's in the box?
+## Controllers
 
-### Controllers
+### Introduction
 
-**Introduction:** The [Controller](#controllers) is the heart of your Application, each Application should consist of just one, commonly named the MainController. The [Controller](#controllers) is the first entry point of the Entity Component System and is the place where all of your [Systems](#systems) and [Services](#services) are registered. Your [Controller](#controllers) should be attached to a Game Object in your scene and will be marked to not be destroyed when switching scenes.
+The [Controller](#controllers) is the heart of your Application, each Application should consist of just one, commonly named the MainController. The [Controller](#controllers) is the first entry point of the Entity Component System and is the place where all of your [Systems](#systems) and [Services](#services) are registered. Your [Controller](#controllers) should be attached to a Game Object in your scene and will be marked to not be destroyed when switching scenes.
 
 ```csharp
 public class MainController : Controller { }
 ```
 
-**Virtual On Initialize:** The [Controller](#controllers) consists of an OnInitialize virtual method. This method can be overwritten and will be invoked during the very start of your Application. During this cycle properties with the Injected and Asset attribute are being assigned, it is important to invoke the Register method during this cycle since this is the only time in your Application you can register [Systems](#systems) and [Services](#services).
+### Virtual On Initialize
+
+The [Controller](#controllers) consists of an OnInitialize virtual method. This method can be overwritten and will be invoked during the very start of your Application. During this cycle properties with the Injected and Asset attribute are being assigned, it is important to invoke the Register method during this cycle since this is the only time in your Application you can register [Systems](#systems) and [Services](#services).
 
 ```csharp
 public class MainController : Controller {
@@ -77,7 +79,9 @@ public class MainController : Controller {
 }
 ```
 
-**Virtual On Initialized:** The [Controller](#controllers) consists of an OnInitialized virtual method. This method can be overwritten and will be invoked when all [Systems](#systems) and [Services](#services) did initialize, and all the properties with the Injected and Asset attributes are assigned.
+### Virtual On Initialized
+
+The [Controller](#controllers) consists of an OnInitialized virtual method. This method can be overwritten and will be invoked when all [Systems](#systems) and [Services](#services) did initialize, and all the properties with the Injected and Asset attributes are assigned.
 
 ```csharp
 public class MainController : Controller {
@@ -85,7 +89,9 @@ public class MainController : Controller {
 }
 ```
 
-**Virtual On Update:** The [Controller](#controllers) consists of an OnUpdate virtual method. This method can be overwritten and will be invoked during the Update cycle. This cycle will run once every frame, the Controller's Update is invoked before the [System's](#systems) and [Service's](#services) update cycles.
+### Virtual On Update
+
+The [Controller](#controllers) consists of an OnUpdate virtual method. This method can be overwritten and will be invoked during the Update cycle. This cycle will run once every frame, the Controller's Update is invoked before the [System's](#systems) and [Service's](#services) update cycles.
 
 ```csharp
 public class MainController : Controller {
@@ -93,7 +99,9 @@ public class MainController : Controller {
 }
 ```
 
-**Enabling Systems:** To enable or disable [Systems](#systems), the [Controller](#controllers) contains of a method EnableSystem which allows [Systems](#systems) to stop their life cycle methods such as OnUpdate, OnPhysics, OnDrawGui and others. You can provide the [System's](#system) type using a generic. Systems are enabled by default.
+### Enabling Systems
+
+To enable or disable [Systems](#systems), the [Controller](#controllers) contains of a method EnableSystem which allows [Systems](#systems) to stop their life cycle methods such as OnUpdate, OnPhysics, OnDrawGui and others. You can provide the [System's](#system) type using a generic. Systems are enabled by default.
 
 ```csharp
 public class MainController : Controller {
@@ -104,7 +112,9 @@ public class MainController : Controller {
 }
 ```
 
-**Checking Whether Systems Are Enabled:** To check whether [Systems](#systems) are enable or disabled, the [Controller](#controllers) contains of a method IsSystemEnabled. Invoking the method will return a boolean informing if the [System](#systems) is enabled or not. You can provide the [System's](#system) type using a generic.
+### Checking Whether Systems Are Enabled
+
+To check whether [Systems](#systems) are enable or disabled, the [Controller](#controllers) contains of a method IsSystemEnabled. Invoking the method will return a boolean informing if the [System](#systems) is enabled or not. You can provide the [System's](#system) type using a generic.
 
 ```csharp
 public class MainController : Controller {
@@ -114,7 +124,9 @@ public class MainController : Controller {
 }
 ```
 
-**Dependency Injection:** The [Controller](#controllers) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems) and [Services](#Services), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
+### Injection
+
+The [Controller](#controllers) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems) and [Services](#Services), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
 
 ```csharp
 public class MainController : Controller {
@@ -123,7 +135,9 @@ public class MainController : Controller {
 }
 ```
 
-**Assets:** The [Controller](#controllers) allows the use of the Asset attribute on properties to automatically assign the values of referenced Assets. Assets can be assigned on the [Controller](#controllers) instance in your Scene. When assigning using the empty contructor, the property's name will be used for searching the Asset, to find an Asset by it's name, use the string overload. All types of UnityEngine's Object can be used in these fields. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle. When an asset is not found, an error is thrown.
+### Assets
+
+The [Controller](#controllers) allows the use of the Asset attribute on properties to automatically assign the values of referenced Assets. Assets can be assigned on the [Controller](#controllers) instance in your Scene. When assigning using the empty contructor, the property's name will be used for searching the Asset, to find an Asset by it's name, use the string overload. All types of UnityEngine's Object can be used in these fields. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle. When an asset is not found, an error is thrown.
 
 ```csharp
 public class MainController : Controller {
@@ -132,17 +146,23 @@ public class MainController : Controller {
 }
 ```
 
-**Notes:** While it is recommended to move as much logic into [Services](#services) and [Systems](#systems), it is possible to let your [Controller](#controllers) house any functionality. If you use the [Controller](#controllers) for this purpose, try to keep it down to only Application wide and core functionality.
+### Notes
 
-### Components
+While it is recommended to move as much logic into [Services](#services) and [Systems](#systems), it is possible to let your [Controller](#controllers) house any functionality. If you use the [Controller](#controllers) for this purpose, try to keep it down to only Application wide and core functionality.
 
-**Introduction:** [Components](#components) are responsible for housing the data of your entities, and should consist of nothing more than that. All properties should be public and will be accessible to all [Systems](#systems) and [Controllers](#controllers) since there is no need for privates. [Components](#components) should be added to your Entities (GameObjects) in the Scene, an Entity is not limited to one [Components](#components) and can hold as many as needed.
+## Components
+
+### Introduction
+
+[Components](#components) are responsible for housing the data of your entities, and should consist of nothing more than that. All properties should be public and will be accessible to all [Systems](#systems) and [Controllers](#controllers) since there is no need for privates. [Components](#components) should be added to your Entities (GameObjects) in the Scene, an Entity is not limited to one [Components](#components) and can hold as many as needed.
 
 ```csharp
 public class MovementComponent : Component<MovementComponent, MovementSystem> { }
 ```
 
-**Public Properties:** Public properties are the heart of your [Components](#components), and are here to provide data for the [Systems](#systems) to use. Properties can be added to [Components](#components) like in any other class and can consist of any kind of type.
+### Public Properties
+
+Public properties are the heart of your [Components](#components), and are here to provide data for the [Systems](#systems) to use. Properties can be added to [Components](#components) like in any other class and can consist of any kind of type.
 
 ```csharp
 public class MovementComponent : Component<MovementComponent, MovementSystem> {
@@ -153,7 +173,9 @@ public class MovementComponent : Component<MovementComponent, MovementSystem> {
 }
 ```
 
-**Editor Protection:** Sometimes you want to hide properties from the Unity Editor when they are, for example are managed by the [Systems](#systems). By flagging these properties with the Protected attribute, it will no longer shows up in the Unity Editor, but is still accessible by the [Systems](#systems).
+### Editor Protection
+
+Sometimes you want to hide properties from the Unity Editor when they are, for example are managed by the [Systems](#systems). By flagging these properties with the Protected attribute, it will no longer shows up in the Unity Editor, but is still accessible by the [Systems](#systems).
 
 ```csharp
 public class MovementComponent : Component<MovementComponent, MovementSystem> {
@@ -169,15 +191,19 @@ public class MovementComponent : Component<MovementComponent, MovementSystem> {
 }
 ``` -->
 
-### Systems
+## Systems
 
-**Introduction:** The [Systems](#systems) are responsible for controlling all of your Entity's [Components](#components) and are the closest you'll get of what you're used to when working with MonoBehaviours. The entire life cycles of your Entities are managed in here.
+### Introduction
+
+The [Systems](#systems) are responsible for controlling all of your Entity's [Components](#components) and are the closest you'll get of what you're used to when working with MonoBehaviours. The entire life cycles of your Entities are managed in here.
 
 ```csharp
 public class MovementSystem : System<MovementSystem, MovementComponent> { }
 ```
 
-**Virtual On Initialize:** The [System](#systems) consists of an OnInitialize virtual method. This method can be overwritten and will be invoked during the very start of your Application. During this cycle properties with the Injected and Asset attribute are being assigned. This cycle can be used to create instances or pre-set properties. Keep in mind references to other [System](#systems) and [Services](#services) are yet to be assigned and are not available at this point.
+### Virtual On Initialize
+
+The [System](#systems) consists of an OnInitialize virtual method. This method can be overwritten and will be invoked during the very start of your Application. During this cycle properties with the Injected and Asset attribute are being assigned. This cycle can be used to create instances or pre-set properties. Keep in mind references to other [System](#systems) and [Services](#services) are yet to be assigned and are not available at this point.
 
 ```csharp
 public class MovementSystem : System<MovementSystem, MovementComponent> {
@@ -185,7 +211,9 @@ public class MovementSystem : System<MovementSystem, MovementComponent> {
 }
 ```
 
-**Virtual On Initialized:** The [System](#systems) consists of an OnInitialized virtual method. This method can be overwritten and will be invoked when all [System](#systems) and [Services](#services) did initialize, and all the properties with the Injected and Asset attributes are assigned.
+### Virtual On Initialized
+
+The [System](#systems) consists of an OnInitialized virtual method. This method can be overwritten and will be invoked when all [System](#systems) and [Services](#services) did initialize, and all the properties with the Injected and Asset attributes are assigned.
 
 ```csharp
 public class MovementSystem : System<MovementSystem, MovementComponent> {
@@ -193,7 +221,9 @@ public class MovementSystem : System<MovementSystem, MovementComponent> {
 }
 ```
 
-**Virtual On Enabled:** The [System](#systems) consists of an OnEnabled virtual method. This method can be overwritten and will be invoked when all [System](#systems) and [Services](#services) are initialized or when the [System](#systems) is enabled after being disabled.
+### Virtual On Enabled
+
+The [System](#systems) consists of an OnEnabled virtual method. This method can be overwritten and will be invoked when all [System](#systems) and [Services](#services) are initialized or when the [System](#systems) is enabled after being disabled.
 
 ```csharp
 public class MovementSystem : System<MovementSystem, MovementComponent> {
@@ -203,7 +233,9 @@ public class MovementSystem : System<MovementSystem, MovementComponent> {
 
 <!-- TODO OnEntityInitialzed, OnEntityEnabled, OnPhysics, ShouldUpdate, OnUpdate, OnRender, OnDrawGui, OnDrawGizmos, OnDisabled, OnEntityDisabled, OnEntityWillDestroy, OnWillDestroy -->
 
-**Checking wether an Entity is enabled:** To check whether Entities are enable or disabled, the [Component](#components) consists of a property isEnabled. Getting the value will return a boolean informing if the Entity is enabled or not.
+### Checking wether an Entity is enabled
+
+To check whether Entities are enable or disabled, the [Component](#components) consists of a property isEnabled. Getting the value will return a boolean informing if the Entity is enabled or not.
 
 ```csharp
 public class MovementSystem : System<MovementSystem, MovementComponent> {
@@ -213,7 +245,9 @@ public class MovementSystem : System<MovementSystem, MovementComponent> {
 }
 ```
 
-**Dependency Injection:** The [System](#systems) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems), [Services](#Services) and [Controllers](#controllers), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
+### Dependency Injection
+
+The [System](#systems) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems), [Services](#Services) and [Controllers](#controllers), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
 
 ```csharp
 public class MovementSystem : System<MovementSystem, MovementComponent> {
@@ -223,7 +257,9 @@ public class MovementSystem : System<MovementSystem, MovementComponent> {
 }
 ```
 
-**Assets:** The [System](#system) allows the use of the Asset attribute on properties to automatically assign the values of referenced Assets. Assets can be assigned on the [Controller](#controllers) instance in your Scene. When assigning using the empty contructor, the property's name will be used for searching the Asset, to find an Asset by it's name, use the string overload. All types of UnityEngine's Object can be used in these fields. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle. When an asset is not found, an error is thrown.
+### Assets
+
+The [System](#system) allows the use of the Asset attribute on properties to automatically assign the values of referenced Assets. Assets can be assigned on the [Controller](#controllers) instance in your Scene. When assigning using the empty contructor, the property's name will be used for searching the Asset, to find an Asset by it's name, use the string overload. All types of UnityEngine's Object can be used in these fields. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle. When an asset is not found, an error is thrown.
 
 ```csharp
 public class MovementSystem : System<MovementSystem, MovementComponent> {
@@ -234,9 +270,9 @@ public class MovementSystem : System<MovementSystem, MovementComponent> {
 
 _The systems section of the documentation is in process!_
 
-### Services
+## Services
 
-**Introduction:**
+### Introduction
 
 ```csharp
 public class AudioService : Service<AudioService> { }
@@ -244,7 +280,9 @@ public class AudioService : Service<AudioService> { }
 
 <!-- TODO OnInitialize, OnInitialized, OnDrawGui, OnDrawGizmos, OnWillDestroy -->
 
-**Dependency Injection:** The [Service](#services) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems), [Services](#Services) and [Controllers](#controllers), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
+### Dependency Injection
+
+The [Service](#services) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems), [Services](#Services) and [Controllers](#controllers), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
 
 ```csharp
 public class AudioService : Service<AudioService> {
@@ -254,7 +292,9 @@ public class AudioService : Service<AudioService> {
 }
 ```
 
-**Assets:** The [Service](#services) allows the use of the Asset attribute on properties to automatically assign the values of referenced Assets. Assets can be assigned on the [Controller](#controllers) instance in your Scene. When assigning using the empty contructor, the property's name will be used for searching the Asset, to find an Asset by it's name, use the string overload. All types of UnityEngine's Object can be used in these fields. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle. When an asset is not found, an error is thrown.
+### Assets
+
+The [Service](#services) allows the use of the Asset attribute on properties to automatically assign the values of referenced Assets. Assets can be assigned on the [Controller](#controllers) instance in your Scene. When assigning using the empty contructor, the property's name will be used for searching the Asset, to find an Asset by it's name, use the string overload. All types of UnityEngine's Object can be used in these fields. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle. When an asset is not found, an error is thrown.
 
 ```csharp
 public class AudioService : Service<AudioService> {
