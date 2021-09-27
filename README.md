@@ -157,7 +157,7 @@ While it is recommended to move as much logic into [Services](#services) and [Sy
 [Components](#components) are responsible for housing the data of your entities, and should consist of nothing more than that. All properties should be public and will be accessible to all [Systems](#systems) and [Controllers](#controllers) since there is no need for privates. [Components](#components) should be added to your Entities (GameObjects) in the Scene, an Entity is not limited to one [Components](#components) and can hold as many as needed.
 
 ```csharp
-public class MovementComponent : Component<MovementComponent, MovementSystem> { }
+public class MovementComponent : EntityComponent<MovementComponent, MovementSystem> { }
 ```
 
 ### Public Properties
@@ -165,7 +165,7 @@ public class MovementComponent : Component<MovementComponent, MovementSystem> { 
 Public properties are the heart of your [Components](#components), and are here to provide data for the [Systems](#systems) to use. Properties can be added to [Components](#components) like in any other class and can consist of any kind of type.
 
 ```csharp
-public class MovementComponent : Component<MovementComponent, MovementSystem> {
+public class MovementComponent : EntityComponent<MovementComponent, MovementSystem> {
   public float speed;
   public Vector3 targetPosition;
   public int[] ids;
@@ -178,7 +178,7 @@ public class MovementComponent : Component<MovementComponent, MovementSystem> {
 Sometimes you want to hide properties from the Unity Editor when they are, for example are managed by the [Systems](#systems). By flagging these properties with the Protected attribute, it will no longer shows up in the Unity Editor, but is still accessible by the [Systems](#systems).
 
 ```csharp
-public class MovementComponent : Component<MovementComponent, MovementSystem> {
+public class MovementComponent : EntityComponent<MovementComponent, MovementSystem> {
   [Protected] public float currentSpeed;
 }
 ```
@@ -198,7 +198,7 @@ public class MovementComponent : Component<MovementComponent, MovementSystem> {
 The [Systems](#systems) are responsible for controlling all of your Entity's [Components](#components) and are the closest you'll get of what you're used to when working with MonoBehaviours. The entire life cycles of your Entities are managed in here.
 
 ```csharp
-public class MovementSystem : System<MovementSystem, MovementComponent> { }
+public class MovementSystem : EntitySystem<MovementSystem, MovementComponent> { }
 ```
 
 ### Virtual On Initialize
@@ -206,7 +206,7 @@ public class MovementSystem : System<MovementSystem, MovementComponent> { }
 The [System](#systems) consists of an OnInitialize virtual method. This method can be overwritten and will be invoked during the very start of your Application. During this cycle properties with the Injected and Asset attribute are being assigned. This cycle can be used to create instances or pre-set properties. Keep in mind references to other [System](#systems) and [Services](#services) are yet to be assigned and are not available at this point.
 
 ```csharp
-public class MovementSystem : System<MovementSystem, MovementComponent> {
+public class MovementSystem : EntitySystem<MovementSystem, MovementComponent> {
   public override void OnInitialize () { }
 }
 ```
@@ -216,7 +216,7 @@ public class MovementSystem : System<MovementSystem, MovementComponent> {
 The [System](#systems) consists of an OnInitialized virtual method. This method can be overwritten and will be invoked when all [System](#systems) and [Services](#services) did initialize, and all the properties with the Injected and Asset attributes are assigned.
 
 ```csharp
-public class MovementSystem : System<MovementSystem, MovementComponent> {
+public class MovementSystem : EntitySystem<MovementSystem, MovementComponent> {
   public override void OnInitialized () { }
 }
 ```
@@ -226,7 +226,7 @@ public class MovementSystem : System<MovementSystem, MovementComponent> {
 The [System](#systems) consists of an OnEnabled virtual method. This method can be overwritten and will be invoked when all [System](#systems) and [Services](#services) are initialized or when the [System](#systems) is enabled after being disabled.
 
 ```csharp
-public class MovementSystem : System<MovementSystem, MovementComponent> {
+public class MovementSystem : EntitySystem<MovementSystem, MovementComponent> {
   public override void OnEnabled () { }
 }
 ```
@@ -238,7 +238,7 @@ public class MovementSystem : System<MovementSystem, MovementComponent> {
 To check whether Entities are enable or disabled, the [Component](#components) consists of a property isEnabled. Getting the value will return a boolean informing if the Entity is enabled or not.
 
 ```csharp
-public class MovementSystem : System<MovementSystem, MovementComponent> {
+public class MovementSystem : EntitySystem<MovementSystem, MovementComponent> {
   private void SomeMethod () {
     if (this.entity.isEnabled == true) { }
   }
@@ -250,7 +250,7 @@ public class MovementSystem : System<MovementSystem, MovementComponent> {
 The [System](#systems) allows the use of the Injected attribute on properties to automatically assign the values of referenced [Systems](#Systems), [Services](#Services) and [Controllers](#controllers), making all public methods and properties accessible. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle.
 
 ```csharp
-public class MovementSystem : System<MovementSystem, MovementComponent> {
+public class MovementSystem : EntitySystem<MovementSystem, MovementComponent> {
   [Injected] private MainController mainController;
   [Injected] private HealthSystem healthSystem;
   [Injected] private AudioService audioService;
@@ -262,7 +262,7 @@ public class MovementSystem : System<MovementSystem, MovementComponent> {
 The [System](#system) allows the use of the Asset attribute on properties to automatically assign the values of referenced Assets. Assets can be assigned on the [Controller](#controllers) instance in your Scene. When assigning using the empty contructor, the property's name will be used for searching the Asset, to find an Asset by it's name, use the string overload. All types of UnityEngine's Object can be used in these fields. These properties are assigned during the OnInitialize cycle and are available for use at the OnInitialized cycle. When an asset is not found, an error is thrown.
 
 ```csharp
-public class MovementSystem : System<MovementSystem, MovementComponent> {
+public class MovementSystem : EntitySystem<MovementSystem, MovementComponent> {
   [Asset] private GameObject playerPrefab;
   [Asset ("ShopDialog")] private NpcDialog npcDialog;
 }
