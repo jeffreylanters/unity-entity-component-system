@@ -62,7 +62,7 @@ namespace ElRaccoone.EntityComponentSystem {
     /// <typeparam name="UnityComponentType">The Component type.</typeparam>
     /// <returns>A reference to the Component.</returns>
     /// <exception cref="System.Exception"></exception>
-    private UnityComponentType GetComponentOrThrow<UnityComponentType> () {
+    public UnityComponentType GetComponentOrThrow<UnityComponentType> () {
       var _component = this.GetComponent<UnityComponentType> ();
       if (_component != null)
         return _component;
