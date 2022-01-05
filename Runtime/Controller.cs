@@ -1,198 +1,290 @@
 namespace ElRaccoone.EntityComponentSystem {
 
+  /// <summary>
   /// Base class for every controller.
-  public abstract class Controller : UnityEngine.MonoBehaviour, IController {
+  /// </summary>
+  public abstract class Controller : UnityEngine.MonoBehaviour {
 
-    /// A list of the controller's instantiated entity systems.
-    private System.Collections.Generic.List<IEntitySystem> systems;
-
-    /// A list of the controller's instantiated entity systems which are enabled.
-    private System.Collections.Generic.List<IEntitySystem> enabledSystemsCache;
-
-    /// A list of the controller's instantiated services.
-    private System.Collections.Generic.List<IService> services;
-
+    /// <summary>
     /// Defines whether this controller has been intialized.
+    /// </summary>
     private bool isInitialized;
 
-    /// A reference to the controller.
-    public static Controller Instance { private set; get; } = null;
+    /// <summary>
+    /// A list of the controller's instantiated entity systems.
+    /// </summary>
+    private System.Collections.Generic.List<EntitySystem> systems;
 
+    /// <summary>
+    /// A list of the controller's instantiated entity systems which are enabled.
+    /// </summary>
+    private System.Collections.Generic.List<EntitySystem> enabledSystemsCache;
+
+    /// <summary>
+    /// A list of the controller's instantiated services.
+    /// </summary>
+    private System.Collections.Generic.List<Service> services;
+
+    /// <summary>
+    /// A reference to the controller.
+    /// TODO -- Set its protection level to internal?
+    /// </summary>
+    internal static Controller Instance { private set; get; } = null;
+
+    /// <summary>
     /// The assets that can be added to entities.
+    /// TODO -- Set this as readonly?
+    /// </summary>
     public UnityEngine.Object[] assets;
 
-    /// During the awake, this system will start the initialization.
+    /// <summary>
+    /// Event invoked by the Controller is awoken. This will
+    /// initialize the Controller.
+    /// </summary>
+    /// <exception cref="System.Exception"></exception>
     private void Awake () {
+      // If the Controller is already initialized, throw an exception.
       if (Controller.Instance != null)
         throw new System.Exception ("A project cannot exceed the limit of one controller!");
+      // Make sure the Controller wont get destroyed.
       UnityEngine.Object.DontDestroyOnLoad (this.transform.root.gameObject);
+      // Set the Controller's instance.
       Controller.Instance = this;
-      this.systems = new System.Collections.Generic.List<IEntitySystem> ();
-      this.enabledSystemsCache = new System.Collections.Generic.List<IEntitySystem> ();
-      this.services = new System.Collections.Generic.List<IService> ();
+      // Initialize the properties.
+      this.systems = new System.Collections.Generic.List<EntitySystem> ();
+      this.enabledSystemsCache = new System.Collections.Generic.List<EntitySystem> ();
+      this.services = new System.Collections.Generic.List<Service> ();
+      // Initialize the controller.
       this.OnInitialize ();
     }
 
-    /// During the Update
+    /// <summary>
+    /// Event invoked by the MonoBehaviour when itupdates.
+    /// </summary>
     private void Update () {
-      // while the controller is not initialized it will invoke 'OnInitialized'
-      // on itelf. And then 'OnEnabled' and 'OnInitialized' on the systems.
+      // If the controller is not initialized, it will invoke 'OnInitialized'
+      // on itelf.
       if (this.isInitialized == false) {
         this.OnInitialized ();
         this.isInitialized = true;
       }
-
-      // Invoking 'Internal_OnUpdate' on each system.
-      for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
-        this.systems[_systemIndex].Internal_OnUpdate ();
-      for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
-        this.services[_serviceIndex].Internal_OnUpdate ();
-      // Invoking 'OnUpdate' on the controller.
+      // Invoking an Internal Update on each System and Service.
+      for (var systemIndex = 0; systemIndex < this.systems.Count; systemIndex++) {
+        this.systems[systemIndex].InternalUpdate ();
+      }
+      for (var serviceIndex = 0; serviceIndex < this.services.Count; serviceIndex++) {
+        this.services[serviceIndex].InternalUpdate ();
+      }
+      // Invoking OnUpdate on this Controller.
       this.OnUpdate ();
-      // Invoking 'OnUpdate' on each enabled system that Should to be updated.
-      for (var _systemIndex = 0; _systemIndex < this.enabledSystemsCache.Count; _systemIndex++) {
-        var _system = this.enabledSystemsCache[_systemIndex];
-        if (_system.ShouldUpdate () == true)
-          _system.OnUpdate ();
+      // Invoking OnUpdate on each enabled System that should update.
+      for (var systemIndex = 0; systemIndex < this.enabledSystemsCache.Count; systemIndex++) {
+        var system = this.enabledSystemsCache[systemIndex];
+        // Invoke the Should Update method to determine if the system should
+        // be updated.
+        if (system.ShouldUpdate () == true) {
+          system.OnUpdate ();
+        }
       }
     }
 
 #if ECS_PHYSICS || ECS_ALL
-    /// During the FixedUpdate, 'OnPhysics' will be invoked on each enabled system.
+    /// <summary>
+    /// Event invoked by the MonoBehaviour when it updates fixed.
+    /// </summary>
     private void FixedUpdate () {
-      for (var _systemIndex = 0; _systemIndex < this.enabledSystemsCache.Count; _systemIndex++)
-        this.enabledSystemsCache[_systemIndex].OnPhysics ();
+      // If the ECS_PHYSICS compiler flag is enabled, then we'll invoke the
+      // OnFixedUpdate as the OnPhysics method on each System and Service.
+      for (var systemIndex = 0; systemIndex < this.enabledSystemsCache.Count; systemIndex++) {
+        this.enabledSystemsCache[systemIndex].OnPhysics ();
+      }
     }
 #endif
 
 #if ECS_GRAPHICS || ECS_ALL
-    /// During the LateUpdate, 'OnRender' will be invoked on each enabled system.
+    /// <summary>
+    /// Event invoked by the MonoBehaviour when it updates late.
+    /// </summary>
     private void LateUpdate () {
-      for (var _systemIndex = 0; _systemIndex < this.enabledSystemsCache.Count; _systemIndex++)
-        this.enabledSystemsCache[_systemIndex].OnRender ();
+      // If the ECS_GRAPHICS compiler flag is enabled, then we'll invoke the
+      // LateUpdate as the OnRender method on each System and Service.
+      for (var systemIndex = 0; systemIndex < this.enabledSystemsCache.Count; systemIndex++) {
+        this.enabledSystemsCache[systemIndex].OnRender ();
+      }
     }
 #endif
 
-    /// When the controller is destoryed, it will invoke 'OnWillDestroy' on the
-    /// controller and on each of the systems and services.
+    /// <summary>
+    /// Event invoked by the MonoBehaviour when it is destroyed.
+    /// </summary>
     private void OnDestroy () {
+      // Invoking OnWillDestroy evnet on this Controller and each System and
+      // Service it contains.
       this.OnWillDestroy ();
-      for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
-        this.systems[_systemIndex].OnWillDestroy ();
-      for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
-        this.services[_serviceIndex].OnWillDestroy ();
+      for (var systemIndex = 0; systemIndex < this.systems.Count; systemIndex++) {
+        this.systems[systemIndex].OnWillDestroy ();
+      }
+      for (var serviceIndex = 0; serviceIndex < this.services.Count; serviceIndex++) {
+        this.services[serviceIndex].OnWillDestroy ();
+      }
     }
 
 #if UNITY_EDITOR
-    /// During the OnDrawGizmos, 'OnDrawGizmos' will be invoked on each enabled
-    /// system and all services.
+    /// <summary>
+    /// Event invoked by the MonoBehaviour when the Gizmos are drawn.
+    /// </summary>
     private void OnDrawGizmos () {
+      // If the UNITY_EDITOR compiler flag is enabled, and the Application is
+      // playing, then we'll invoke the OnDrawGizmos as the OnDrawGizmos method
+      // on each enabled System and Service.
       if (UnityEngine.Application.isPlaying == true) {
-        for (var _systemIndex = 0; _systemIndex < this.enabledSystemsCache.Count; _systemIndex++) 
-          this.enabledSystemsCache[_systemIndex].OnDrawGizmos ();
-        for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
-          this.services[_serviceIndex].OnDrawGizmos ();
+        for (var systemIndex = 0; systemIndex < this.enabledSystemsCache.Count; systemIndex++) {
+          this.enabledSystemsCache[systemIndex].OnDrawGizmos ();
+        }
+        for (var serviceIndex = 0; serviceIndex < this.services.Count; serviceIndex++) {
+          this.services[serviceIndex].OnDrawGizmos ();
+        }
       }
     }
 #endif
 
-    /// During the OnGUI, 'OnDrawGui' will be invoked on each enabled system and
-    /// all services.
+    /// <summary>
+    /// Event invoked by the MonoBehaviour when the GUI is drawn.
+    /// </summary>
     private void OnGUI () {
-      for (var _systemIndex = 0; _systemIndex < this.enabledSystemsCache.Count; _systemIndex++)
-        this.enabledSystemsCache[_systemIndex].OnDrawGui ();
-      for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
-        this.services[_serviceIndex].OnDrawGui ();
+      // Invoking OnGUI on each enabled System and Service in this Controller.
+      for (var systemIndex = 0; systemIndex < this.enabledSystemsCache.Count; systemIndex++) {
+        this.enabledSystemsCache[systemIndex].OnDrawGui ();
+      }
+      for (var serviceIndex = 0; serviceIndex < this.services.Count; serviceIndex++) {
+        this.services[serviceIndex].OnDrawGui ();
+      }
     }
 
+    /// <summary>
     /// Method invoked when the controller is initializing.
+    /// </summary>
     public virtual void OnInitialize () { }
 
+    /// <summary>
     /// Method invoked when the controller is initialized.
+    /// </summary>
     public virtual void OnInitialized () { }
 
+    /// <summary>
     /// Method invoked when the controller updates, will be called every frame.
+    /// </summary>
     public virtual void OnUpdate () { }
 
+    /// <summary>
     /// Method invoked when the system will be destroyed, this will happen when
     /// the application is closing or the controller is being destroyed.
+    /// </summary>
     public virtual void OnWillDestroy () { }
 
-    // Register your systems and services to the controller. This can only be
-    // done during 'OnInitialize' cycle.
-    public void Register (params System.Type[] typesOf) {
+    /// <summary>
+    /// Registers Systems and Services to the controller.
+    /// </summary>
+    /// <param name="registerables">Systems and Services.</param>
+    /// <exception cref="System.Exception">Exception.</exception>
+    public void Register (params IRegisterable[] registerables) {
       if (this.isInitialized == true)
-        throw new System.Exception ("Cannot to registered System outsize of OnInitialize cycle");
-
-      for (var _typeOfIndex = 0; _typeOfIndex < typesOf.Length; _typeOfIndex++) {
-        var _instance = System.Activator.CreateInstance (typesOf[_typeOfIndex]);
-
-        // When the instance is a type of the system, add it to the systems
-        if (_instance is IEntitySystem) {
-          var _system = _instance as IEntitySystem;
-          this.systems.Add (_system);
-          this.enabledSystemsCache.Add (_system);
-          _system.OnInitialize ();
-          _system.Internal_OnInitialize ();
+        throw new System.Exception ("Registration can only performed during the OnInitialize cycle");
+      // Register each registerable.
+      for (var registerableIndex = 0; registerableIndex < registerables.Length; registerableIndex++) {
+        var registerable = registerables[registerableIndex];
+        // When the registerable is a type of the System.
+        if (registerable is EntitySystem) {
+          var system = registerable as EntitySystem;
+          // The registerable will be added to the list of systems.
+          this.systems.Add (system);
+          this.enabledSystemsCache.Add (system);
+          // The registerable will be initialized.
+          system.OnInitialize ();
+          system.InternalInitialize ();
         }
-
-        // When the instance is a type of the system, add it to the services
-        if (_instance is IService) {
-          var _service = _instance as IService;
-          this.services.Add (_service);
-          _service.OnInitialize ();
-          _service.Internal_OnInitialize ();
+        // When the registerable is a type of the Service.
+        if (registerable is Service) {
+          var service = registerable as Service;
+          // The registerable will be added to the list of services.
+          this.services.Add (service);
+          // The registerable will be initialized.
+          service.OnInitialize ();
+          service.InternalInitialize ();
         }
       }
-
-      // Set Values of the 'Injected' attributes
+      // Setting the values of properties with a Injected and Asset attribute 
+      // in this controller and all of its systems and services.
       Injected.SetAttributeValues (this);
-      for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
-        Injected.SetAttributeValues (this.systems[_systemIndex]);
-      for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
-        Injected.SetAttributeValues (this.services[_serviceIndex]);
-
-      // Set Values of the 'Asset' attributes
       Asset.SetAttributeValues (this);
-      for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
-        Asset.SetAttributeValues (this.systems[_systemIndex]);
-      for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
-        Asset.SetAttributeValues (this.services[_serviceIndex]);
+      for (var systemIndex = 0; systemIndex < this.systems.Count; systemIndex++) {
+        Injected.SetAttributeValues (this.systems[systemIndex]);
+        Asset.SetAttributeValues (this.systems[systemIndex]);
+      }
+      for (var serviceIndex = 0; serviceIndex < this.services.Count; serviceIndex++) {
+        Injected.SetAttributeValues (this.services[serviceIndex]);
+        Asset.SetAttributeValues (this.services[serviceIndex]);
+      }
     }
 
+    /// <summary>
     /// Enables or disabled a system, enabling the systems allows them to invoke
     /// their cycle methods such as OnUpdate, OnPhysics, OnDrawGui and others.
-    public void SetSystemEnabled<S> (bool value) {
-      var _typeOf = typeof (S);
-      for (var _systemIndex = 0; _systemIndex < this.enabledSystemsCache.Count; _systemIndex++)
-        if (this.enabledSystemsCache[_systemIndex].GetType () == _typeOf)
-          if (value == true)
-            return;
-          else {
-            this.enabledSystemsCache[_systemIndex].OnDisabled ();
-            this.enabledSystemsCache.RemoveAt (_systemIndex);
+    /// </summary>
+    /// <typeparam name="EntitySystemType">The Type of the Entity System.</typeparam>
+    /// <param name="enabled">Defines whether the system should be enabled.</param>
+    internal void SetSystemEnabled<EntitySystemType> (bool enabled)
+      where EntitySystemType : EntitySystem {
+      var typeOf = typeof (EntitySystemType);
+      // Looping through all the enabled Entity Systems.
+      for (var systemIndex = 0; systemIndex < this.enabledSystemsCache.Count; systemIndex++) {
+        // If the system is of the type generic system.
+        if (this.enabledSystemsCache[systemIndex].GetType () == typeOf) {
+          if (enabled == false) {
+            // If it should be disabled, then we'll remove it from the list of
+            // enabled systems, and invoke the On Disabled event on it. Then
+            this.enabledSystemsCache[systemIndex].OnDisabled ();
+            this.enabledSystemsCache.RemoveAt (systemIndex);
             return;
           }
-      if (value == true)
-        for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
-          if (this.systems[_systemIndex].GetType () == _typeOf) {
-            this.enabledSystemsCache.Add (this.systems[_systemIndex]);
-            this.systems[_systemIndex].OnEnabled ();
+          // If it should be enabled, then there is nothing we have to do since
+          // it it already in this list. then we'll stop the execution of this 
+          // method.
+          return;
+        }
+      }
+      // If we'll end up here, it was not found in the list of enabled systems,
+      // if it should be enabled, we'll find the system in the list of systems.
+      if (enabled == true) {
+        for (var systemIndex = 0; systemIndex < this.systems.Count; systemIndex++) {
+          if (this.systems[systemIndex].GetType () == typeOf) {
+            // Then we'll add this system to the list of enabled systems, and
+            // invoke the On Enabled event on it.
+            this.enabledSystemsCache.Add (this.systems[systemIndex]);
+            this.systems[systemIndex].OnEnabled ();
+            // Then we'll stop the execution of this method.
             return;
           }
+        }
+      }
     }
 
+    /// <summary>
     /// Returns whether a system is enabled.
-    public bool IsSystemEnabled<S> () {
-      var _typeOf = typeof (S);
-      for (var _systemIndex = 0; _systemIndex < this.enabledSystemsCache.Count; _systemIndex++)
-        if (this.enabledSystemsCache[_systemIndex].GetType () == _typeOf)
+    /// </summary>
+    /// <typeparam name="EntitySystemType">The Type of the Entity System.</typeparam>
+    /// <returns>Whether a system is enabled.</returns>
+    internal bool IsSystemEnabled<EntitySystemType> ()
+      where EntitySystemType : EntitySystem {
+      var typeOf = typeof (EntitySystemType);
+      for (var systemIndex = 0; systemIndex < this.enabledSystemsCache.Count; systemIndex++)
+        if (this.enabledSystemsCache[systemIndex].GetType () == typeOf)
           return true;
       return false;
     }
 
     /// Gets a system from this controller.
-    public S GetSystem<S> () where S : IEntitySystem, new() {
+    public S GetSystem<S> () where S : EntitySystem, new() {
       var _typeOfS = typeof (S);
       for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
         if (this.systems[_systemIndex].GetType () == _typeOfS)
@@ -209,7 +301,7 @@ namespace ElRaccoone.EntityComponentSystem {
     }
 
     /// Check whether this controller has a system.
-    public bool HasSystem<S> () where S : IEntitySystem, new() {
+    public bool HasSystem<S> () where S : EntitySystem, new() {
       var _typeOfS = typeof (S);
       for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
         if (this.systems[_systemIndex].GetType () == _typeOfS)
@@ -218,7 +310,7 @@ namespace ElRaccoone.EntityComponentSystem {
     }
 
     /// Gets a service from this controller.
-    public S GetService<S> () where S : IService, new() {
+    public S GetService<S> () where S : Service, new() {
       var _typeOfS = typeof (S);
       for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
         if (this.services[_serviceIndex].GetType () == _typeOfS)
@@ -235,7 +327,7 @@ namespace ElRaccoone.EntityComponentSystem {
     }
 
     /// Check whether this controller has a service.
-    public bool HasService<S> () where S : IService, new() {
+    public bool HasService<S> () where S : Service, new() {
       var _typeOfS = typeof (S);
       for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
         if (this.services[_serviceIndex].GetType () == _typeOfS)

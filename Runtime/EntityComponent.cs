@@ -1,7 +1,23 @@
 namespace ElRaccoone.EntityComponentSystem {
 
+  /// <summary>
   /// Base class for every entity component.
-  public abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEngine.MonoBehaviour, IEntityComponent
+  /// </summary>
+  public abstract class EntityComponent : UnityEngine.MonoBehaviour {
+
+    /// <summary>
+    /// Overrideable method which will be invoked when the service updates 
+    /// internally.
+    /// </summary>
+    internal abstract void InternalUpdate ();
+  }
+
+  /// <summary>
+  /// Generic base class for every entity component.
+  /// </summary>
+  /// <typeparam name="EntityComponentType">The Entity Component Type.</typeparam>
+  /// <typeparam name="EntitySystemType">The Entity System Type.</typeparam>
+  public abstract class EntityComponent<EntityComponentType, EntitySystemType> : EntityComponent
     where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new()
     where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new() {
 
@@ -27,7 +43,7 @@ namespace ElRaccoone.EntityComponentSystem {
     /// During the 'Start' the entity component will be registered 
     /// to the matching system.
     private void Start () =>
-      this.GetSystem ().Internal_AddEntity ((EntityComponentType)this);
+      this.GetSystem ().InternalAddEntity (this);
 
     /// During the 'OnDisabled' the entity component will invoke its
     /// 'OnEntityDisabled' on the system.
@@ -39,7 +55,7 @@ namespace ElRaccoone.EntityComponentSystem {
     /// During the 'OnDestroy' the entity component will unregister it self
     /// to the matching system.
     private void OnDestroy () =>
-      this.GetSystem ().Internal_RemoveEntry ((EntityComponentType)this);
+      this.GetSystem ().InternalRemoveEntry (this);
 
     /// Sets the game object of the entity active.
     public void SetActive (bool value) =>
@@ -119,7 +135,7 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// During the 'InteralOnUpdate' the entity component will invoke its 
     /// 'OnEntityEnabled' and 'OnEntityInitialized' if needed.
-    public void Internal_OnUpdate () {
+    internal override void InternalUpdate () {
       if (this.isInitialized == false) {
         this.isInitialized = true;
         this.GetSystem ().OnEntityInitialized ((EntityComponentType)this);

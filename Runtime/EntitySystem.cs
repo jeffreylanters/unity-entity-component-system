@@ -1,7 +1,102 @@
 namespace ElRaccoone.EntityComponentSystem {
 
+  /// <summary>
   /// Base class for every entity system.
-  public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEntitySystem
+  /// </summary>
+  public abstract class EntitySystem : IRegisterable {
+
+    /// <summary>
+    /// Overrideable method which will be invoked when the service updates 
+    /// internally.
+    /// </summary>
+    internal abstract void InternalInitialize ();
+
+    /// <summary>
+    /// Overrideable method which will be invoked when the service updates 
+    /// internally.
+    /// </summary>
+    internal abstract void InternalUpdate ();
+
+    /// <summary>
+    /// Overrideable method which will be invoked when the service updates 
+    /// internally.
+    /// </summary>
+    internal abstract void InternalAddEntity (/* TODO EntityComponentType */ UnityEngine.Component component);
+
+    /// <summary>
+    /// Overrideable method which will be invoked when the service updates 
+    /// internally.
+    /// </summary>
+    internal abstract void InternalRemoveEntry (/* TODO EntityComponentType */ UnityEngine.Component component);
+
+    /// <summary>
+    /// Method invoked when the system will initialize.
+    /// </summary>
+    public virtual void OnInitialize () { }
+
+    /// <summary>
+    /// Method invoked when the system is initialized.
+    /// </summary>
+    public virtual void OnInitialized () { }
+
+#if ECS_PHYSICS
+    /// <summary>
+    /// Method invoked when the physics update, will be called every fixed frame.
+    /// </summary>
+    public virtual void OnPhysics () { }
+#endif
+
+    /// <summary>
+    /// Method invoked when the system updates, will be called every frame.
+    /// </summary>
+    public virtual void OnUpdate () { }
+
+#if ECS_GRAPHICS
+    /// <summary>
+    /// Method invoked when the camera renders, will be called every late frame.
+    /// </summary>
+    public virtual void OnRender () { }
+#endif
+
+    /// <summary>
+    // Method invoked when the system is drawing the gizmos, will be called
+    // every gizmos draw call.
+    /// </summary>
+    public virtual void OnDrawGizmos () { }
+
+    /// <summary>
+    // Method invoked when the system is drawing the gui, will be called every
+    // on gui draw call.
+    /// </summary>
+    public virtual void OnDrawGui () { }
+
+    /// <summary>
+    // Method invoked when the system becomes enabled.
+    /// </summary>
+    public virtual void OnEnabled () { }
+
+    /// <summary>
+    // Method invoked when the system becomes disabled.
+    /// </summary>
+    public virtual void OnDisabled () { }
+
+    /// <summary>
+    /// Method invoked when the system will be destroyed, this will happen when
+    /// the application is closing or the controller is being destroyed.
+    /// </summary>
+    public virtual void OnWillDestroy () { }
+
+    /// <summary>
+    // Method invoked before the system will update, return whether this system
+    // should update. will be called every frame.
+    /// </summary>
+    public virtual bool ShouldUpdate () { return true; }
+  }
+
+  /// <summary>
+  /// Generic base class for every entity system.
+  /// </summary>
+  public abstract class EntitySystem<EntitySystemType, EntityComponentType> : EntitySystem
     where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new()
     where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new() {
 
@@ -9,7 +104,7 @@ namespace ElRaccoone.EntityComponentSystem {
     private bool isInitialized = false;
 
     /// An instance reference to the controller.
-    public static EntitySystemType Instance { private set; get; } = null;
+    internal static EntitySystemType Instance { private set; get; } = null;
 
     /// A list of the system's instantiated entity components.
     public System.Collections.Generic.List<EntityComponentType> entities { private set; get; } = new System.Collections.Generic.List<EntityComponentType> ();
@@ -23,61 +118,30 @@ namespace ElRaccoone.EntityComponentSystem {
     /// Defines whether the system has instantiated entity components.
     public bool hasEntities { private set; get; } = false;
 
-    /// Method invoked when the system will initialize.
-    public virtual void OnInitialize () { }
-
-    /// Method invoked when the system is initialized.
-    public virtual void OnInitialized () { }
-
-#if ECS_PHYSICS
-    /// Method invoked when the physics update, will be called every fixed frame.
-    public virtual void OnPhysics () { }
-#endif
-
-    /// Method invoked when the system updates, will be called every frame.
-    public virtual void OnUpdate () { }
-
-#if ECS_GRAPHICS
-    /// Method invoked when the camera renders, will be called every late frame.
-    public virtual void OnRender () { }
-#endif
-
-    // Method invoked when the system is drawing the gizmos, will be called
-    // every gizmos draw call.
-    public virtual void OnDrawGizmos () { }
-
-    // Method invoked when the system is drawing the gui, will be called every
-    // on gui draw call.
-    public virtual void OnDrawGui () { }
-
-    // Method invoked when the system becomes enabled.
-    public virtual void OnEnabled () { }
-
-    // Method invoked when the system becomes disabled.
-    public virtual void OnDisabled () { }
-
-    /// Method invoked when the system will be destroyed, this will happen when
-    /// the application is closing or the controller is being destroyed.
-    public virtual void OnWillDestroy () { }
-
+    /// <summary>
     // Method invoked when an entity of this system is initializing.
+    /// </summary>
     public virtual void OnEntityInitialize (EntityComponentType entity) { }
 
+    /// <summary>
     // Method invoked when an entity of this system is initialized.
+    /// </summary>
     public virtual void OnEntityInitialized (EntityComponentType entity) { }
 
+    /// <summary>
     // Method invoked when an entity of this system becomes enabled.
+    /// </summary>
     public virtual void OnEntityEnabled (EntityComponentType entity) { }
 
+    /// <summary>
     // Method invoked when an entity of this system becomes disabled.
+    /// </summary>
     public virtual void OnEntityDisabled (EntityComponentType entity) { }
 
+    /// <summary>
     // Method invoked when an entity of this system will destroy.
+    /// </summary>
     public virtual void OnEntityWillDestroy (EntityComponentType entity) { }
-
-    // Method invoked before the system will update, return whether this system
-    // should update. will be called every frame.
-    public virtual bool ShouldUpdate () { return true; }
 
     /// Returns another component on an entity.
     public void GetComponentOnEntity<C> (EntityComponentType entity, System.Action<C> then) {
@@ -134,11 +198,11 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// Internal method to set the instance reference. This method will
     /// be called after the controller and system initialization.
-    public void Internal_OnInitialize () =>
+    internal override void InternalInitialize () =>
       Instance = Controller.Instance.GetSystem<EntitySystemType> ();
 
     /// Internal method to update the children of the system.
-    public void Internal_OnUpdate () {
+    internal override void InternalUpdate () {
       if (this.isInitialized == false) {
         this.OnInitialized ();
         if (Controller.Instance.IsSystemEnabled<EntitySystemType> () == true)
@@ -146,26 +210,28 @@ namespace ElRaccoone.EntityComponentSystem {
         this.isInitialized = true;
       }
       for (var _entityIndex = 0; _entityIndex < this.entityCount; _entityIndex++)
-        this.entities[_entityIndex].Internal_OnUpdate ();
+        this.entities[_entityIndex].InternalUpdate ();
     }
 
     /// Internal method to add an entity's component to this system.
-    public void Internal_AddEntity (EntityComponentType component) {
-      if (this.hasEntities == false)
-        this.entity = component;
-      this.entityCount++;
-      this.hasEntities = true;
-      this.entities.Add (component);
-      this.OnEntityInitialize (component);
+    internal override void InternalAddEntity (UnityEngine.Component component) {
+      // TODO -- Fix this by casting component.
+      // if (this.hasEntities == false)
+      //   this.entity = component;
+      // this.entityCount++;
+      // this.hasEntities = true;
+      // this.entities.Add (component);
+      // this.OnEntityInitialize (component);
     }
 
     /// Internal method to remove an entity's component from this system.
-    public void Internal_RemoveEntry (EntityComponentType component) {
-      this.entityCount--;
-      this.hasEntities = this.entityCount > 0;
-      this.OnEntityWillDestroy (component);
-      this.entities.Remove (component);
-      this.entity = this.hasEntities == false ? null : this.entities[0];
+    internal override void InternalRemoveEntry (UnityEngine.Component component) {
+      // TODO -- Fix this by casting component.
+      // this.entityCount--;
+      // this.hasEntities = this.entityCount > 0;
+      // this.OnEntityWillDestroy (component);
+      // this.entities.Remove (component);
+      // this.entity = this.hasEntities == false ? null : this.entities[0];
     }
   }
 }

@@ -1,14 +1,21 @@
 namespace ElRaccoone.EntityComponentSystem {
 
-  /// Base class for every service.
-  public abstract class Service<ServiceType> : IService
-    where ServiceType : Service<ServiceType>, new() {
+  /// <summary>
+  /// Base interface for every service.
+  /// </summary>
+  public abstract class Service : IRegisterable {
 
-    /// Defines whether this service has been initialized.
-    private bool isInitialized = false;
+    /// <summary>
+    /// Overrideable method which will be called when the service is 
+    /// initializing internally.
+    /// </summary>
+    internal abstract void InternalInitialize ();
 
-    /// An instance reference to the service.
-    public static ServiceType Instance { private set; get; } = null;
+    /// <summary>
+    /// Overrideable method which will be invoked when the service updates 
+    /// internally.
+    /// </summary>
+    internal abstract void InternalUpdate ();
 
     /// Method invoked when the service will initialize.
     public virtual void OnInitialize () { }
@@ -27,6 +34,17 @@ namespace ElRaccoone.EntityComponentSystem {
     /// Method invoked when the service will be destroyed, this will happen when
     /// the application is closing or the controller is being destroyed.
     public virtual void OnWillDestroy () { }
+  }
+
+  /// Generic base class for every service.
+  public abstract class Service<ServiceType> : Service
+    where ServiceType : Service<ServiceType>, new() {
+
+    /// Defines whether this service has been initialized.
+    private bool isInitialized = false;
+
+    /// An instance reference to the service.
+    internal static ServiceType Instance { private set; get; } = null;
 
     /// Starts a coroutine on this service.
     public UnityEngine.Coroutine StartCoroutine (System.Collections.IEnumerator routine) =>
@@ -36,13 +54,19 @@ namespace ElRaccoone.EntityComponentSystem {
     public void StopCoroutine (System.Collections.IEnumerator routine) =>
       Controller.Instance.StopCoroutine (routine);
 
-    /// Internal method to set the instance reference. This method will
-    /// be called after the controller and system initialization.
-    public void Internal_OnInitialize () =>
+    /// <summary>
+    /// Event invoked after the controller and system initialization.
+    /// </summary>
+    internal override void InternalInitialize () {
+      // Set the instance reference.
       Instance = Controller.Instance.GetService<ServiceType> ();
+    }
 
-    /// Internal method to update the service.
-    public void Internal_OnUpdate () {
+    /// <summary>
+    /// Event invoked when the controller is updating.
+    /// </summary>
+    internal override void InternalUpdate () {
+      // If not initialized, initialize.
       if (this.isInitialized == false) {
         this.OnInitialized ();
         this.isInitialized = true;
