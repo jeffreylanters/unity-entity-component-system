@@ -119,8 +119,7 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// During the 'InteralOnUpdate' the entity component will invoke its 
     /// 'OnEntityEnabled' and 'OnEntityInitialized' if needed.
-    [Internal]
-    public void Internal_OnUpdate () {
+    internal void Internal_OnUpdate () {
       if (this.isInitialized == false) {
         this.isInitialized = true;
         this.GetSystem ().OnEntityInitialized ((EntityComponentType)this);

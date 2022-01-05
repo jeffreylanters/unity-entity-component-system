@@ -38,13 +38,11 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// Internal method to set the instance reference. This method will
     /// be called after the controller and system initialization.
-    [Internal]
-    public void Internal_OnInitialize () =>
+    internal void Internal_OnInitialize () =>
       Instance = Controller.Instance.GetService<ServiceType> ();
 
     /// Internal method to update the service.
-    [Internal]
-    public void Internal_OnUpdate () {
+    internal void Internal_OnUpdate () {
       if (this.isInitialized == false) {
         this.OnInitialized ();
         this.isInitialized = true;
