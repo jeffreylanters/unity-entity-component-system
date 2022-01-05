@@ -251,7 +251,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           _addFileHeaderComments ? "/// Created: " + _dateTimeStamp : null,
           _addFileHeaderComments ? "/// " + _fileName + "." : null,
           _addFileHeaderComments ? "/// </summary>" : null,
-          "public class " + _fileName + " {"
+          "public class " + _fileName + " {",
           "}"
         });
 
