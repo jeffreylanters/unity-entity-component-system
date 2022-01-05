@@ -134,11 +134,11 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// Internal method to set the instance reference. This method will
     /// be called after the controller and system initialization.
-    internal void Internal_OnInitialize () =>
+    public void Internal_OnInitialize () =>
       Instance = Controller.Instance.GetSystem<EntitySystemType> ();
 
     /// Internal method to update the children of the system.
-    internal void Internal_OnUpdate () {
+    public void Internal_OnUpdate () {
       if (this.isInitialized == false) {
         this.OnInitialized ();
         if (Controller.Instance.IsSystemEnabled<EntitySystemType> () == true)
@@ -150,7 +150,7 @@ namespace ElRaccoone.EntityComponentSystem {
     }
 
     /// Internal method to add an entity's component to this system.
-    internal void Internal_AddEntity (EntityComponentType component) {
+    public void Internal_AddEntity (EntityComponentType component) {
       if (this.hasEntities == false)
         this.entity = component;
       this.entityCount++;
@@ -160,7 +160,7 @@ namespace ElRaccoone.EntityComponentSystem {
     }
 
     /// Internal method to remove an entity's component from this system.
-    internal void Internal_RemoveEntry (EntityComponentType component) {
+    public void Internal_RemoveEntry (EntityComponentType component) {
       this.entityCount--;
       this.hasEntities = this.entityCount > 0;
       this.OnEntityWillDestroy (component);
