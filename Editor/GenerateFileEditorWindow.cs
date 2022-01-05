@@ -108,7 +108,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           "\tpublic override void OnInitialize () {",
           "\t\tthis.Register();",
           "\t}",
-          "",
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when the Controller is initialized.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnInitialized () { }" : null,
           _overwriteAllVirtuals ? "" : null,
@@ -117,7 +117,6 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when the Controller will destroy.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnWillDestroy () { }" : null,
-          _overwriteAllVirtuals ? "" : null,
           "}"
         });
 
