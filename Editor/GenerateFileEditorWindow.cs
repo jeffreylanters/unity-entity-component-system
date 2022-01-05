@@ -204,7 +204,9 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method incidates whether the System should Update.</summary>" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <returns>Whether the Controller should update this system.</returns>" : null,
-          _overwriteAllVirtuals ? "\tpublic override bool ShouldUpdate () { return true; }" : null,
+          _overwriteAllVirtuals ? "\tpublic override bool ShouldUpdate () {" : null,
+          _overwriteAllVirtuals ? "\t\treturn true;" : null,
+          _overwriteAllVirtuals ? "\t}" : null,
           "}"
         });
 
@@ -249,7 +251,8 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           _addFileHeaderComments ? "/// Created: " + _dateTimeStamp : null,
           _addFileHeaderComments ? "/// " + _fileName + "." : null,
           _addFileHeaderComments ? "/// </summary>" : null,
-          "public class " + _fileName + " { }"
+          "public class " + _fileName + " {"
+          "}"
         });
 
       this.Close ();
