@@ -108,12 +108,16 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           "\tpublic override void OnInitialize () {",
           "\t\tthis.Register();",
           "\t}",
+          "",
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when the Controller is initialized.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnInitialized () { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked during the Controller's Update cycle.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnUpdate () { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when the Controller will destroy.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnWillDestroy () { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           "}"
         });
 
@@ -129,8 +133,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           _addFileHeaderComments ? "/// Created: " + _dateTimeStamp : null,
           _addFileHeaderComments ? "/// Entity Component for " + _fileName + "." : null,
           _addFileHeaderComments ? "/// </summary>" : null,
-          "public class " + _fileName + "Component : EntityComponent<" + _fileName + "Component, " + _fileName + "System> {",
-          "}"
+          "public class " + _fileName + "Component : EntityComponent<" + _fileName + "Component, " + _fileName + "System> { }"
         });
 
       if (GenerateFileEditorWindow.generateFileType == GenerateFileType.ComponentAndSystem)
@@ -148,43 +151,58 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           "public class " + _fileName + "System : EntitySystem<" + _fileName + "System, " + _fileName + "Component> {",
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when the System is initializing.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnInitialize () { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when the System is initialized.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnInitialized () { }" : null,
+          _overwriteAllVirtuals ? "" : null,
 #if ECS_PHYSICS
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked during the Controller's Fixed Update cycle.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnPhysics () { }" : null,
+          _overwriteAllVirtuals ? "" : null,
 #endif
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked during the Controller's Update cycle.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnUpdate () { }" : null,
+          _overwriteAllVirtuals ? "" : null,
 #if ECS_GRAPHICS
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked during the Controller's Late Update cycle.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnRender () { }" : null,
+          _overwriteAllVirtuals ? "" : null,
 #endif
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked during the Controller's Gizmos Render cycle.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnDrawGizmos () { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked during the Controller's GUI Render cycle.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnDrawGui () { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when the System is enabled.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnEnabled () { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when the System is disabled.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnDisabled () { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when the System will be destroyed.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnWillDestroy () { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when an Entity is initializing.</summary>" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <param name=\"entity\">The initializing Entity.</param>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnEntityInitialize (" + _fileName + "Component entity) { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when an Entity is initialized.</summary>" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <param name=\"entity\">The initialized Entity.</param>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnEntityInitialized (" + _fileName + "Component entity) { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when an Entity is enabled.</summary>" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <param name=\"entity\">The enabled Entity.</param>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnEntityEnabled (" + _fileName + "Component entity) { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when an Entity is disabled.</summary>" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <param name=\"entity\">The disabled Entity.</param>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnEntityDisabled (" + _fileName + "Component entity) { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when an Entity will be destroyed.</summary>" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <param name=\"entity\">The to be destroyed Entity.</param>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnEntityWillDestroy (" + _fileName + "Component entity) { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method incidates whether the System should Update.</summary>" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <returns>Whether the Controller should update this system.</returns>" : null,
           _overwriteAllVirtuals ? "\tpublic override bool ShouldUpdate () { return true; }" : null,
@@ -206,12 +224,16 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           "public class " + _fileName + "Service : Service<" + _fileName + "Service> {",
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when the Service is initializing.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnInitialize () { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when the Service is initialized.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnInitialized () { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked during the Controller's Gizmos Render cycle.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnDrawGizmos () { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked during the Controller's GUI Render cycle.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnDrawGui () { }" : null,
+          _overwriteAllVirtuals ? "" : null,
           _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when the Service will be destoryed.</summary>" : null,
           _overwriteAllVirtuals ? "\tpublic override void OnWillDestroy () { }" : null,
           "}"
@@ -228,8 +250,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
           _addFileHeaderComments ? "/// Created: " + _dateTimeStamp : null,
           _addFileHeaderComments ? "/// " + _fileName + "." : null,
           _addFileHeaderComments ? "/// </summary>" : null,
-          "public class " + _fileName + " {",
-          "}"
+          "public class " + _fileName + " { }"
         });
 
       this.Close ();
