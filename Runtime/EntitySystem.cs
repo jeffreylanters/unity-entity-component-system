@@ -5,7 +5,7 @@ namespace ElRaccoone.EntityComponentSystem {
     where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new()
     where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new() {
 
-    /// Defines whether this component has been initialized.
+    /// Defines whether this system has been initialized.
     private bool isInitialized = false;
 
     /// An instance reference to the controller.
@@ -14,10 +14,10 @@ namespace ElRaccoone.EntityComponentSystem {
     /// A list of the system's instantiated entity components.
     public System.Collections.Generic.List<EntityComponentType> entities { private set; get; } = new System.Collections.Generic.List<EntityComponentType> ();
 
-    /// The first instantiated entity compoent if this system.
+    /// The first instantiated entity compoent if this system has any.
     public EntityComponentType entity { private set; get; } = null;
 
-    /// Defines the number of instantiated entity components this system has.
+    /// Defines the number of instantiated entity components this system has any.
     public int entityCount { private set; get; } = 0;
 
     /// Defines whether the system has instantiated entity components.
@@ -96,7 +96,7 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// Creates a new entity.
     public EntityComponentType CreateEntity () =>
-      new UnityEngine.GameObject ("entity " + typeof (EntityComponentType).Name)
+      new UnityEngine.GameObject ("Entity " + typeof (EntityComponentType).Name)
         .AddComponent<EntityComponentType> ();
 
     /// Clones an entity.
