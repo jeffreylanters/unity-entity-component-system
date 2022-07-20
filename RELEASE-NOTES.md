@@ -1,1 +1,2 @@
-Added support for generating Scriptable Objects right from the editor menu
+- Improved the Protected attribute's compatibility
+- Removed deprecated Referenced attribute
