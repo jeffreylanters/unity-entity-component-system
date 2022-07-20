@@ -7,11 +7,11 @@ namespace ElRaccoone.EntityComponentSystem {
 #if UNITY_EDITOR
   [UnityEditor.CustomPropertyDrawer (typeof (Protected))]
   public class ProtectedDrawer : UnityEditor.PropertyDrawer {
-    public override void OnGUI (UnityEngine.Rect position, UnityEditor.SerializedProperty serializedProperty, UnityEngine.GUIContent label) { }
-
-    public override float GetPropertyHeight (UnityEditor.SerializedProperty property, UnityEngine.GUIContent label) {
-      // https://forum.unity.com/threads/getpropertyheight-and-arrays.443235/
-      return -1;
+    public override void OnGUI (UnityEngine.Rect position, UnityEditor.SerializedProperty serializedProperty, UnityEngine.GUIContent label) {
+      var wasEnabled = UnityEngine.GUI.enabled;
+      UnityEngine.GUI.enabled = false;
+      UnityEditor.EditorGUI.PropertyField (position, serializedProperty, label);
+      UnityEngine.GUI.enabled = wasEnabled;
     }
   }
 #endif
