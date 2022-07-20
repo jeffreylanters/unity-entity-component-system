@@ -183,13 +183,7 @@ public class MovementComponent : EntityComponent<MovementComponent, MovementSyst
 }
 ```
 
-<!-- **Editor Reference:**
-
-```csharp
-public class MovementComponent : Component<MovementComponent, MovementSystem> {
-  [Referenced] public BoxCollider playerCollider;
-}
-``` -->
+````-->
 
 ## Systems
 
@@ -199,7 +193,7 @@ The [Systems](#systems) are responsible for controlling all of your Entity's [Co
 
 ```csharp
 public class MovementSystem : EntitySystem<MovementSystem, MovementComponent> { }
-```
+````
 
 ### Virtual On Initialize
 
