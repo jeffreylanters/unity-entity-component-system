@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+#if UNITY_EDITOR && ECS_DEFINED_COM_UNITY_UGUI
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
