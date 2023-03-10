@@ -1,7 +1,7 @@
 {
     "name": "nl.elraccoone.entity-component-system",
+    "rootNamespace": "",
     "references": [],
-    "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
@@ -9,5 +9,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": []
+    "versionDefines": [
+        {
+            "name": "com.unity.ugui",
+            "expression": "0.0.0",
+            "define": "ECS_DEFINED_COM_UNITY_UGUI"
+        }
+    ],
+    "noEngineReferences": false
 }
