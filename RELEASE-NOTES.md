@@ -1,2 +1,2 @@
-- Improved the Protected attribute's compatibility
-- Removed deprecated Referenced attribute
+- Isolated internal systems and services
+- Removed deprecated Protected attribute
