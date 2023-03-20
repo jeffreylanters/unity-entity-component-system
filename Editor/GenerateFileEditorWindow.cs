@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 
 namespace ElRaccoone.EntityComponentSystem.Editor {
-  public class GenerateFileEditorWindow : EditorWindow {
+  internal class GenerateFileEditorWindow : EditorWindow {
     private static GenerateFileType generateFileType;
     private string fileName;
     private bool shouldOverwriteAllVirtuals;
