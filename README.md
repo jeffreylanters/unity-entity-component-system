@@ -173,18 +173,6 @@ public class MovementComponent : EntityComponent<MovementComponent, MovementSyst
 }
 ```
 
-### Editor Protection
-
-Sometimes you want to hide properties from the Unity Editor when they are, for example are managed by the [Systems](#systems). By flagging these properties with the Protected attribute, it will no longer shows up in the Unity Editor, but is still accessible by the [Systems](#systems).
-
-```csharp
-public class MovementComponent : EntityComponent<MovementComponent, MovementSystem> {
-  [Protected] public float currentSpeed;
-}
-```
-
-````-->
-
 ## Systems
 
 ### Introduction
@@ -193,7 +181,7 @@ The [Systems](#systems) are responsible for controlling all of your Entity's [Co
 
 ```csharp
 public class MovementSystem : EntitySystem<MovementSystem, MovementComponent> { }
-````
+```
 
 ### Virtual On Initialize
 
