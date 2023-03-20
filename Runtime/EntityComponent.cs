@@ -1,7 +1,7 @@
 namespace ElRaccoone.EntityComponentSystem {
 
   /// Base class for every entity component.
-  public abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEngine.MonoBehaviour, IEntityComponent
+  public abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEngine.MonoBehaviour, IEntityComponent, IEntityComponentInternals
     where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new()
     where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new() {
 
@@ -27,7 +27,7 @@ namespace ElRaccoone.EntityComponentSystem {
     /// During the 'Start' the entity component will be registered 
     /// to the matching system.
     private void Start () =>
-      this.GetSystem ().Internal_AddEntity ((EntityComponentType)this);
+      this.GetSystem ().AddEntity ((EntityComponentType)this);
 
     /// During the 'OnDisabled' the entity component will invoke its
     /// 'OnEntityDisabled' on the system.
@@ -39,7 +39,7 @@ namespace ElRaccoone.EntityComponentSystem {
     /// During the 'OnDestroy' the entity component will unregister it self
     /// to the matching system.
     private void OnDestroy () =>
-      this.GetSystem ().Internal_RemoveEntry ((EntityComponentType)this);
+      this.GetSystem ().RemoveEntry ((EntityComponentType)this);
 
     /// Sets the game object of the entity active.
     public void SetActive (bool value) =>
@@ -119,7 +119,7 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// During the 'InteralOnUpdate' the entity component will invoke its 
     /// 'OnEntityEnabled' and 'OnEntityInitialized' if needed.
-    public void Internal_OnUpdate () {
+    void IEntityComponentInternals.OnUpdateInternal () {
       if (this.isInitialized == false) {
         this.isInitialized = true;
         this.GetSystem ().OnEntityInitialized ((EntityComponentType)this);

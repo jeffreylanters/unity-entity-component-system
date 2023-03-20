@@ -47,12 +47,5 @@ namespace ElRaccoone.EntityComponentSystem {
     /// Sets whether the system is enabled or disabled, enabling the system allows
     /// it to invoke all of the cycle calls such as OnUpdate and OnDrawGizmos.
     void SetEnabled (bool value);
-
-    /// Internal method to set the instance reference. This method will
-    /// be called after the controller and system initialization.
-    void Internal_OnInitialize ();
-
-    /// Internal method to update the children of the system.
-    void Internal_OnUpdate ();
   }
 }

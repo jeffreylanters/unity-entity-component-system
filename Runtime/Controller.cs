@@ -44,9 +44,9 @@ namespace ElRaccoone.EntityComponentSystem {
 
       // Invoking 'Internal_OnUpdate' on each system.
       for (var _systemIndex = 0; _systemIndex < this.systems.Count; _systemIndex++)
-        this.systems[_systemIndex].Internal_OnUpdate ();
+        (this.systems[_systemIndex] as IEntitySystemInternals).OnUpdateInternal ();
       for (var _serviceIndex = 0; _serviceIndex < this.services.Count; _serviceIndex++)
-        this.services[_serviceIndex].Internal_OnUpdate ();
+        (this.services[_serviceIndex] as IServiceInternals).OnUpdateInternal ();
       // Invoking 'OnUpdate' on the controller.
       this.OnUpdate ();
       // Invoking 'OnUpdate' on each enabled system that Should to be updated.
@@ -133,7 +133,7 @@ namespace ElRaccoone.EntityComponentSystem {
           this.systems.Add (_system);
           this.enabledSystemsCache.Add (_system);
           _system.OnInitialize ();
-          _system.Internal_OnInitialize ();
+          (_system as IEntitySystemInternals).OnInitializeInternal ();
         }
 
         // When the instance is a type of the system, add it to the services
@@ -141,7 +141,7 @@ namespace ElRaccoone.EntityComponentSystem {
           var _service = _instance as IService;
           this.services.Add (_service);
           _service.OnInitialize ();
-          _service.Internal_OnInitialize ();
+          (_service as IServiceInternals).OnInitializeInternal ();
         }
       }
 

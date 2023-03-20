@@ -1,7 +1,7 @@
 namespace ElRaccoone.EntityComponentSystem {
 
   /// Base class for every entity system.
-  public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEntitySystem
+  public abstract class EntitySystem<EntitySystemType, EntityComponentType> : IEntitySystem, IEntitySystemInternals
     where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new()
     where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new() {
 
@@ -132,25 +132,8 @@ namespace ElRaccoone.EntityComponentSystem {
     public void SetEnabled (bool value) =>
       Controller.Instance.SetSystemEnabled<EntitySystemType> (value);
 
-    /// Internal method to set the instance reference. This method will
-    /// be called after the controller and system initialization.
-    public void Internal_OnInitialize () =>
-      Instance = Controller.Instance.GetSystem<EntitySystemType> ();
-
-    /// Internal method to update the children of the system.
-    public void Internal_OnUpdate () {
-      if (this.isInitialized == false) {
-        this.OnInitialized ();
-        if (Controller.Instance.IsSystemEnabled<EntitySystemType> () == true)
-          this.OnEnabled ();
-        this.isInitialized = true;
-      }
-      for (var _entityIndex = 0; _entityIndex < this.entityCount; _entityIndex++)
-        this.entities[_entityIndex].Internal_OnUpdate ();
-    }
-
     /// Internal method to add an entity's component to this system.
-    public void Internal_AddEntity (EntityComponentType component) {
+    internal void AddEntity (EntityComponentType component) {
       if (this.hasEntities == false)
         this.entity = component;
       this.entityCount++;
@@ -160,12 +143,29 @@ namespace ElRaccoone.EntityComponentSystem {
     }
 
     /// Internal method to remove an entity's component from this system.
-    public void Internal_RemoveEntry (EntityComponentType component) {
+    internal void RemoveEntry (EntityComponentType component) {
       this.entityCount--;
       this.hasEntities = this.entityCount > 0;
       this.OnEntityWillDestroy (component);
       this.entities.Remove (component);
       this.entity = this.hasEntities == false ? null : this.entities[0];
+    }
+
+    /// Internal method to set the instance reference. This method will
+    /// be called after the controller and system initialization.
+    void IEntitySystemInternals.OnInitializeInternal () =>
+      Instance = Controller.Instance.GetSystem<EntitySystemType> ();
+
+    /// Internal method to update the children of the system.
+    void IEntitySystemInternals.OnUpdateInternal () {
+      if (this.isInitialized == false) {
+        this.OnInitialized ();
+        if (Controller.Instance.IsSystemEnabled<EntitySystemType> () == true)
+          this.OnEnabled ();
+        this.isInitialized = true;
+      }
+      for (var _entityIndex = 0; _entityIndex < this.entityCount; _entityIndex++)
+        (this.entities[_entityIndex] as IEntityComponentInternals).OnUpdateInternal ();
     }
   }
 }

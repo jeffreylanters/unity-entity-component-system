@@ -1,7 +1,7 @@
 namespace ElRaccoone.EntityComponentSystem {
 
   /// Base class for every service.
-  public abstract class Service<ServiceType> : IService
+  public abstract class Service<ServiceType> : IService, IServiceInternals
     where ServiceType : Service<ServiceType>, new() {
 
     /// Defines whether this service has been initialized.
@@ -38,11 +38,11 @@ namespace ElRaccoone.EntityComponentSystem {
 
     /// Internal method to set the instance reference. This method will
     /// be called after the controller and system initialization.
-    public void Internal_OnInitialize () =>
+    void IServiceInternals.OnInitializeInternal () =>
       Instance = Controller.Instance.GetService<ServiceType> ();
 
     /// Internal method to update the service.
-    public void Internal_OnUpdate () {
+    void IServiceInternals.OnUpdateInternal () {
       if (this.isInitialized == false) {
         this.OnInitialized ();
         this.isInitialized = true;
