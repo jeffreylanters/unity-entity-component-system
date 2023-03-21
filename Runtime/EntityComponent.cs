@@ -1,133 +1,106 @@
-namespace ElRaccoone.EntityComponentSystem {
+using UnityEngine;
 
-  /// Base class for every entity component.
+namespace ElRaccoone.EntityComponentSystem {
+  /// <summary>
+  /// Base class for Entity Components.
+  /// </summary>
+  /// <typeparam name="EntityComponentType">The Entity Component type.</typeparam>
+  /// <typeparam name="EntitySystemType">The Entity System type.</typeparam>
   public abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEngine.MonoBehaviour, IEntityComponent, IEntityComponentInternals
     where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new()
     where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new() {
-
+    /// <summary>
     /// Defines whether this component has been initialized.
-    private bool isInitialized = false;
-
-    /// The system matched with this entity's component.
-    private EntitySystemType system = null;
-
-    /// Defines whether this component is enabled.
-    public bool isEnabled { get; private set; } = false;
-
-    /// Gets the system matched with this entity's component. If it's not
-    /// defined, it will be fetched from the controller.
-    private EntitySystemType GetSystem () {
-      if (this.system == null)
-        if (Controller.Instance.HasSystem<EntitySystemType> () == true)
-          this.system = Controller.Instance.GetSystem<EntitySystemType> ();
-        else throw new System.Exception ("Tried to access the System before it was registered");
-      return this.system;
-    }
-
-    /// During the 'Start' the entity component will be registered 
-    /// to the matching system.
-    private void Start () =>
-      this.GetSystem ().AddEntity ((EntityComponentType)this);
-
-    /// During the 'OnDisabled' the entity component will invoke its
-    /// 'OnEntityDisabled' on the system.
-    private void OnDisable () {
-      this.isEnabled = false;
-      this.GetSystem ().OnEntityDisabled ((EntityComponentType)this);
-    }
-
-    /// During the 'OnDestroy' the entity component will unregister it self
-    /// to the matching system.
-    private void OnDestroy () =>
-      this.GetSystem ().RemoveEntry ((EntityComponentType)this);
-
-    /// Sets the game object of the entity active.
-    public void SetActive (bool value) =>
-      this.gameObject.SetActive (value);
-
-    /// Destroys the game object of the entity.
-    public void Destroy () =>
-      UnityEngine.Object.Destroy (this.gameObject);
-
-    /// Gets a component on an enity and sets it's reference to a property.
-    public void GetComponentToProperty<UnityComponentType> (ref UnityComponentType entityProperty, bool includeChildren = false, bool includeInactive = false) =>
-      entityProperty = includeChildren == true
-        ? this.GetComponentInChildren<UnityComponentType> (includeInactive)
-        : this.GetComponent<UnityComponentType> ();
+    /// </summary>
+    bool isInitialized = false;
 
     /// <summary>
-    /// Tries to get a component on the entity and throws an exception if it's 
-    /// not found.
+    /// The system matched with this entity's component.
     /// </summary>
-    /// <typeparam name="UnityComponentType">The Component type.</typeparam>
-    /// <returns>A reference to the Component.</returns>
+    EntitySystemType system = null;
+
+    /// <summary>
+    /// Defines whether this component is enabled.
+    /// </summary>
+    public bool isEnabled { get; private set; } = false;
+
+    /// <summary>
+    /// Gets the system matched with this entity's component. If it's not
+    /// defined, it will be fetched from the controller.
+    /// </summary>
+    /// <returns>The system.</returns>
     /// <exception cref="System.Exception"></exception>
-    public UnityComponentType GetComponentOrThrow<UnityComponentType> () {
-      var _component = this.GetComponent<UnityComponentType> ();
-      if (_component != null)
-        return _component;
-      throw new System.Exception ($"Unable to get Component of type {typeof (UnityComponentType)} on entity");
+    EntitySystemType GetSystem () {
+      if (system != null)
+        return system;
+      if (Controller.Instance.HasSystem<EntitySystemType> ()) {
+        system = Controller.Instance.GetSystem<EntitySystemType> ();
+        return system;
+      }
+      throw new System.Exception ("Tried to access the System before it was registered");
     }
 
-    /// Adds an asset to the entity.
-    public UnityEngine.Object AddAsset (UnityEngine.Object asset) =>
-      UnityEngine.Object.Instantiate (asset, UnityEngine.Vector3.zero, UnityEngine.Quaternion.identity, this.transform);
+    /// <summary>
+    /// Event invoked by the Unity Engine when the component is started.
+    /// </summary>
+    void Start () {
+      var system = GetSystem ();
+      // Add the entity to the system.
+      system.AddEntity ((EntityComponentType)this);
+    }
 
-    /// Loads a asset from the controller and adds it as an asset to the entity.
-    public UnityEngine.Object AddAsset (string name) =>
-      this.AddAsset (Controller.Instance.GetAsset<UnityEngine.Object> (name));
+    /// <summary>
+    /// Event invoked by the Unity Engine when the component is disabled.
+    /// </summary> 
+    void OnDisable () {
+      isEnabled = false;
+      var system = GetSystem ();
+      // Remove the entity from the system.
+      system.OnEntityDisabled ((EntityComponentType)this);
+    }
 
-    /// Sets the position of an entity.
-    public void SetPosition (float x, float y, float z = 0) =>
-      this.transform.position = new UnityEngine.Vector3 (x, y, z);
+    /// <summary>
+    /// Event invoked by the Unity Engine when the component is destroyed.
+    /// </summary>
+    void OnDestroy () {
+      var system = GetSystem ();
+      // Remove the entity from the system.
+      system.RemoveEntry ((EntityComponentType)this);
+    }
 
-    /// Adds to the position of an entity.
-    public void AddPosition (float x, float y, float z = 0) =>
-      this.transform.position += new UnityEngine.Vector3 (x, y, z);
 
-    /// Sets the local position of an entity.
-    public void SetLocalPosition (float x, float y, float z = 0) =>
-      this.transform.localPosition = new UnityEngine.Vector3 (x, y, z);
-
-    /// Adds to the local position of an entity.
-    public void AddLocalPosition (float x, float y, float z = 0) =>
-      this.transform.localPosition += new UnityEngine.Vector3 (x, y, z);
-
-    /// Sets the EulerAngles of an entity.
-    public void SetEulerAngles (float x, float y, float z) =>
-      this.transform.eulerAngles = new UnityEngine.Vector3 (x, y, z);
-
-    /// Adds to the EulerAngles of an entity.
-    public void AddEulerAngles (float x, float y, float z) =>
-      this.transform.eulerAngles += new UnityEngine.Vector3 (x, y, z);
-
-    /// Sets the local EulerAngles of an entity.
-    public void SetLocalEulerAngles (float x, float y, float z) =>
-      this.transform.localEulerAngles = new UnityEngine.Vector3 (x, y, z);
-
-    /// Adds to the local EulerAngles of an entity.
-    public void AddLocalEulerAngles (float x, float y, float z) =>
-      this.transform.localEulerAngles += new UnityEngine.Vector3 (x, y, z);
-
-    /// Sets the local scale of an entity.
-    public void SetLocalScale (float x, float y, float z) =>
-      this.transform.localScale = new UnityEngine.Vector3 (x, y, z);
-
-    /// Adds to the local Scale of an entity.
-    public void AddLocalScale (float x, float y, float z) =>
-      this.transform.localScale += new UnityEngine.Vector3 (x, y, z);
-
-    /// During the 'InteralOnUpdate' the entity component will invoke its 
-    /// 'OnEntityEnabled' and 'OnEntityInitialized' if needed.
+    /// <summary>
+    /// Method invoked when an entity will update internally.
+    /// </summary>
     void IEntityComponentInternals.OnUpdateInternal () {
-      if (this.isInitialized == false) {
-        this.isInitialized = true;
-        this.GetSystem ().OnEntityInitialized ((EntityComponentType)this);
+      var system = GetSystem ();
+      if (isInitialized == false) {
+        // When the entity was not initialized, initialize it.
+        isInitialized = true;
+        system.OnEntityInitialized ((EntityComponentType)this);
       }
-      if (this.isEnabled == false && this.gameObject.activeInHierarchy == true) {
-        this.isEnabled = true;
-        this.GetSystem ().OnEntityEnabled ((EntityComponentType)this);
+      if (!isEnabled && gameObject.activeInHierarchy) {
+        // When the entity was not enabled, but it is active in the hierarchy,
+        // enable it and invoke the event.
+        isEnabled = true;
+        system.OnEntityEnabled ((EntityComponentType)this);
       }
+    }
+
+    /// <summary>
+    /// Sets the game object of the entity active.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    public void SetActive (bool value) {
+      gameObject.SetActive (value);
+    }
+
+    /// <summary>
+    /// Destroys the entity's game object.
+    /// </summary>
+    public void Destroy () {
+      // Destroy the game object.
+      Object.Destroy (gameObject);
     }
   }
 }

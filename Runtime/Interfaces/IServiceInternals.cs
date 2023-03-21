@@ -1,12 +1,17 @@
 namespace ElRaccoone.EntityComponentSystem {
-
-  /// Base interface for service internals.
+  /// <summary>
+  /// Base interface for Services with internal methods.
+  /// </summary>
   public interface IServiceInternals {
-    /// Internal method to set the instance reference. This method will
-    /// be called after the controller and service initialization.
+    /// <summary>
+    /// Method invoked when the service will initialize internally.
+    /// </summary> 
     void OnInitializeInternal ();
 
-    /// Internal method to update the service.
+    /// <summary>
+    /// Method invoked when the service updates internally, will be called every 
+    /// frame.
+    /// </summary>
     void OnUpdateInternal ();
   }
 }

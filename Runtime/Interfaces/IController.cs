@@ -1,5 +1,6 @@
 namespace ElRaccoone.EntityComponentSystem {
-
-  /// Base interface for the controller
+  /// <summary>
+  /// Base interface for Controllers.
+  /// </summary>
   public interface IController { }
 }

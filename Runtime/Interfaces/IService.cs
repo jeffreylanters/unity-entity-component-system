@@ -1,24 +1,34 @@
 namespace ElRaccoone.EntityComponentSystem {
-
-  /// Base interface for every service
+  /// <summary>
+  /// Base interface for Services.
+  /// </summary>
   public interface IService {
-
+    /// <summary>
     /// Method invoked when the service will initialize.
+    /// </summary>
     void OnInitialize ();
 
+    /// <summary>
     /// Method invoked when the system is initialized.
+    /// </summary>
     void OnInitialized ();
 
+    /// <summary>
     // Method invoked when the service is drawing the gizmos, will be called
     // every gizmos draw call.
+    /// </summary>
     void OnDrawGizmos ();
 
+    /// <summary>
     // Method invoked when the service is drawing the gui, will be called every
     // on gui draw call.
+    /// </summary>
     void OnDrawGui ();
 
+    /// <summary>
     /// Method invoked when the service will be destroyed, this will happen when
     /// the application is closing or the controller is being destroyed.
+    /// </summary>
     void OnWillDestroy ();
   }
 }

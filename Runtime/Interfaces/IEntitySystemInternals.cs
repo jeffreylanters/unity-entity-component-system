@@ -1,12 +1,17 @@
 namespace ElRaccoone.EntityComponentSystem {
-
-  /// Base interface for system internals.
+  /// <summary>
+  /// Base interface for Entity Systems with internal methods.
+  /// </summary>
   internal interface IEntitySystemInternals {
-    /// Internal method to set the instance reference. This method will
-    /// be called after the controller and system initialization.
+    /// <summary>
+    /// Method invoked when the system will initialize internally.
+    /// </summary>
     void OnInitializeInternal ();
 
-    /// Internal method to update the children of the system.
+    /// <summary>
+    /// Method invoked when the system updates internally, will be called every 
+    /// frame.
+    /// </summary>
     void OnUpdateInternal ();
   }
 }

@@ -1,10 +1,11 @@
 namespace ElRaccoone.EntityComponentSystem {
-
-  /// Base interface for component internals.
+  /// <summary>
+  /// Base interface for Entity Components with internal methods.
+  /// </summary>
   internal interface IEntityComponentInternals {
-
-    /// During the 'InteralOnUpdate' the entity component will invoke its 
-    /// 'OnEntityEnabled' and 'OnEntityInitialized' if needed.
+    /// <summary>
+    /// Method invoked when an entity will update internally.
+    /// </summary>
     void OnUpdateInternal ();
   }
 }
