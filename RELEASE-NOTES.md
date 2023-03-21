@@ -1,2 +1,4 @@
-- Isolated internal systems and services
-- Removed deprecated Protected attribute
+- Major improvements and optimizations
+- Isolated internal Systems and Services
+- Removed deprecated Protected Sttribute
+- Removed deprecated helper methods on Components and Systems
