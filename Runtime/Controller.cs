@@ -300,10 +300,11 @@ namespace ElRaccoone.EntityComponentSystem {
     public SystemType GetSystem<SystemType> () where SystemType : IEntitySystem, new() {
       var typeOf = typeof (SystemType);
       for (var systemIndex = 0; systemIndex < systems.Count; systemIndex++) {
-        var system = systems[systemIndex].GetType ();
-        if (system == typeOf) {
+        var systemType = systems[systemIndex].GetType ();
+        if (systemType == typeOf) {
           // If the system is present in the systems list, return it.
-          return systems[systemIndex] as SystemType;
+          var system = systems[systemIndex];
+          return (SystemType)system;
         }
       }
       throw new System.Exception ($"Unable to get System of type {typeOf}, it was not registerd to the Controller");
@@ -346,16 +347,17 @@ namespace ElRaccoone.EntityComponentSystem {
     /// <summary>
     /// Gets a service from this controller.
     /// </summary>
-    /// <typeparam name="SystemType">The type of the service to get.</typeparam>
+    /// <typeparam name="ServiceType">The type of the service to get.</typeparam>
     /// <returns>The service of the given type.</returns>
     /// <exception cref="System.Exception">Thrown when the service is not registered to the controller.</exception>
-    public SystemType GetService<SystemType> () where SystemType : IService, new() {
-      var typeOf = typeof (SystemType);
+    public ServiceType GetService<ServiceType> () where ServiceType : IService, new() {
+      var typeOf = typeof (ServiceType);
       for (var serviceIndex = 0; serviceIndex < services.Count; serviceIndex++) {
         var serviceType = services[serviceIndex].GetType ();
         if (serviceType == typeOf) {
           // If the service is present in the services list, return it.
-          return services[serviceIndex] as SystemType;
+          var service = services[serviceIndex];
+          return (ServiceType)service;
         }
       }
       throw new System.Exception ($"Unable to get Service of type {typeOf}, it was not registerd to the Controller");
@@ -381,10 +383,10 @@ namespace ElRaccoone.EntityComponentSystem {
     /// <summary>
     /// Check whether this controller has a service.
     /// </summary>
-    /// <typeparam name="SystemType">The type of the service to check.</typeparam>
+    /// <typeparam name="ServiceType">The type of the service to check.</typeparam>
     /// <returns>Whether this controller has a service of the given type.</returns>
-    public bool HasService<SystemType> () where SystemType : IService, new() {
-      var typeOf = typeof (SystemType);
+    public bool HasService<ServiceType> () where ServiceType : IService, new() {
+      var typeOf = typeof (ServiceType);
       for (var serviceIndex = 0; serviceIndex < services.Count; serviceIndex++) {
         var serviceType = services[serviceIndex].GetType ();
         if (serviceType == typeOf) {
