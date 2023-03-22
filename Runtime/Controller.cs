@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ElRaccoone.EntityComponentSystem {
@@ -126,8 +127,14 @@ namespace ElRaccoone.EntityComponentSystem {
     /// </summary>
     void OnDrawGizmos () {
       if (!Application.isPlaying) {
-        // When the application is not playing, the GUI will not be drawn since
-        // the controller is not initialized at this stage.
+        // When the application is not playing, the Gizmos will not be drawn 
+        // since the controller is not initialized at this stage, so no systems
+        // or services are available. Instead, the Gizmos will be drawn on all
+        // MonoBehaviour components that implement the IEntityComponent 
+        // interface.
+        var monoBehaviours = FindObjectsOfType<MonoBehaviour> ();
+        var entities = monoBehaviours.OfType<IEntityComponent> ();
+        OnDrawEditorGizmos (entities.ToArray ());
         return;
       }
       // Invoking draw gizmos method on each system and service.
@@ -177,6 +184,11 @@ namespace ElRaccoone.EntityComponentSystem {
     /// the application is closing or the controller is being destroyed.
     /// </summary>
     public virtual void OnWillDestroy () { }
+
+    /// <summary>
+    /// Method invoked during editor time when the controller is drawing gizmos.
+    /// </summary>
+    public virtual void OnDrawEditorGizmos (IEntityComponent[] entities) { }
 
     /// <summary>
     /// Register your systems and services to the controller. This can only be
