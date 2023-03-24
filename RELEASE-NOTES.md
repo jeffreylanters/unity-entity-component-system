@@ -2,3 +2,4 @@
 - Isolated internal Systems and Services
 - Removed deprecated Protected Sttribute
 - Removed deprecated helper methods on Components and Systems
+- Added transform shorthands to entities
