@@ -25,6 +25,53 @@ namespace ElRaccoone.EntityComponentSystem {
     public bool isEnabled { get; private set; } = false;
 
     /// <summary>
+    /// Shorthand for the entity's transform position.
+    /// </summary>
+    public Vector3 position {
+      get => transform.position;
+      set => transform.position = value;
+    }
+
+    /// <summary>
+    /// Shorthand for the entity's transform local position.
+    /// </summary>
+    public Vector3 localPosition {
+      get => transform.localPosition;
+      set => transform.localPosition = value;
+    }
+
+    /// <summary>
+    /// Shorthand for the entity's transform rotation.
+    /// </summary>
+    public Quaternion rotation {
+      get => transform.rotation;
+      set => transform.rotation = value;
+    }
+
+    /// <summary>
+    /// Shorthand for the entity's transform local rotation.
+    /// </summary>
+    public Quaternion localRotation {
+      get => transform.localRotation;
+      set => transform.localRotation = value;
+    }
+
+    /// <summary>
+    /// Shorthand for the entity's transform lossy scale.
+    /// </summary>
+    public Vector3 lossyScale {
+      get => transform.lossyScale;
+    }
+
+    /// <summary>
+    /// Shorthand for the entity's transform local scale.
+    /// </summary>
+    public Vector3 localScale {
+      get => transform.localScale;
+      set => transform.localScale = value;
+    }
+
+    /// <summary>
     /// Gets the system matched with this entity's component. If it's not
     /// defined, it will be fetched from the controller.
     /// </summary>
