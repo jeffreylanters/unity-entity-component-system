@@ -6,7 +6,7 @@ namespace ElRaccoone.EntityComponentSystem {
   /// </summary>
   /// <typeparam name="EntityComponentType">The Entity Component type.</typeparam>
   /// <typeparam name="EntitySystemType">The Entity System type.</typeparam>
-  public abstract class EntityComponent<EntityComponentType, EntitySystemType> : UnityEngine.MonoBehaviour, IEntityComponent, IEntityComponentInternals
+  public abstract class EntityComponent<EntityComponentType, EntitySystemType> : MonoBehaviour, IEntityComponent, IEntityComponentInternals
     where EntityComponentType : EntityComponent<EntityComponentType, EntitySystemType>, new()
     where EntitySystemType : EntitySystem<EntitySystemType, EntityComponentType>, new() {
     /// <summary>
@@ -78,6 +78,9 @@ namespace ElRaccoone.EntityComponentSystem {
     /// <returns>The system.</returns>
     /// <exception cref="System.Exception"></exception>
     EntitySystemType GetSystem () {
+      if (Controller.Instance == null) {
+        throw new System.Exception ("Tried to access the Controller while non is instantiated");
+      }
       if (system != null)
         return system;
       if (Controller.Instance.HasSystem<EntitySystemType> ()) {
