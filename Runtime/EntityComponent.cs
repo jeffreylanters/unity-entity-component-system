@@ -78,11 +78,12 @@ namespace ElRaccoone.EntityComponentSystem {
     /// <returns>The system.</returns>
     /// <exception cref="System.Exception"></exception>
     EntitySystemType GetSystem () {
+      if (system != null) {
+        return system;
+      }
       if (Controller.Instance == null) {
         throw new System.Exception ("Tried to access the Controller while non is instantiated");
       }
-      if (system != null)
-        return system;
       if (Controller.Instance.HasSystem<EntitySystemType> ()) {
         system = Controller.Instance.GetSystem<EntitySystemType> ();
         return system;
