@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace ElRaccoone.EntityComponentSystem {
   /// <summary>
@@ -134,7 +137,13 @@ namespace ElRaccoone.EntityComponentSystem {
         // interface.
         var monoBehaviours = FindObjectsOfType<MonoBehaviour> ();
         var entities = monoBehaviours.OfType<IEntityComponent> ();
-        OnDrawEditorGizmos (entities.ToArray ());
+        var visibleEntities = entities.Where (entity => {
+          var monoBehaviour = entity as MonoBehaviour;
+          return monoBehaviour.enabled
+            && monoBehaviour.gameObject.activeInHierarchy
+            && !SceneVisibilityManager.instance.IsHidden (monoBehaviour.gameObject);
+        });
+        OnDrawEditorGizmos (visibleEntities.ToArray ());
         return;
       }
       // Invoking draw gizmos method on each system and service.
