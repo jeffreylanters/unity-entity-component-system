@@ -131,6 +131,9 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
             _overwriteAllVirtuals ? "" : null,
             _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when the Controller will destroy.</summary>" : null,
             _overwriteAllVirtuals ? "\tpublic override void OnWillDestroy () { }" : null,
+            _overwriteAllVirtuals ? "" : null,
+            _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked during the Controller's Gizmos Render cycle in Editor Time.</summary>" : null,
+            _overwriteAllVirtuals ? "\tpublic override void OnDrawEditorGizmos (IEntityComponent[] entities) { }" : null,
             "}"
           });
           break;
