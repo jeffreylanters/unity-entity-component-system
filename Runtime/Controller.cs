@@ -16,6 +16,11 @@ namespace ElRaccoone.EntityComponentSystem {
     public static Controller Instance { private set; get; } = null;
 
     /// <summary>
+    /// The assets that can be added to entities.
+    /// </summary>
+    [SerializeField] Object[] assets;
+
+    /// <summary>
     /// A list of the controller's instantiated entity systems.
     /// </summary>
     List<IEntitySystem> systems = new List<IEntitySystem> ();
@@ -34,11 +39,6 @@ namespace ElRaccoone.EntityComponentSystem {
     /// Defines whether this controller has been intialized.
     /// </summary>
     bool isInitialized;
-
-    /// <summary>
-    /// The assets that can be added to entities.
-    /// </summary>
-    public Object[] assets;
 
     /// <summary>
     /// Invoked by the Unity Engine when the controller is started.
