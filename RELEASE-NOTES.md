@@ -1,1 +1,3 @@
-- Disabled DrawGizmosEditor when objects are hidden in het SceneVisibilityManager
+- Added support for typeless coroutine handles.
+- Implemented new methods in the file generator.
+- Implemented various performance improvements.
