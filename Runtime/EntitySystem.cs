@@ -252,6 +252,17 @@ namespace ElRaccoone.EntityComponentSystem {
     /// </summary>
     /// <param name="routine">The coroutine to start.</param>
     /// <returns>The coroutine.</returns>
+    public Coroutine StartCoroutine (IEnumerator routine) {
+      // Start the coroutine on the controller.
+      return Controller.Instance.StartCoroutine (routine);
+    }
+
+    /// <summary>
+    /// Starts a coroutine on this system.
+    /// </summary>
+    /// <typeparam name="IEnumeratorType">The type of the coroutine.</typeparam>
+    /// <param name="routine">The coroutine to start.</param>
+    /// <returns>The coroutine.</returns>
     public Coroutine StartCoroutine<IEnumeratorType> (IEnumerator<IEnumeratorType> routine) {
       // Start the coroutine on the controller.
       return Controller.Instance.StartCoroutine (routine);
