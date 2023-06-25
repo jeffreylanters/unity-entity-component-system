@@ -299,7 +299,7 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
     private string FindDirectoryWithName (string directory, string name) {
       var _directories = this.WalkDirectory (directory);
       foreach (var _directory in _directories)
-        if (_directory.Split ('/').Last ().ToLower () == name.ToLower ())
+        if (Path.GetFileName(_directory)?.ToLower() == name.ToLower())
           return _directory;
       Debug.LogWarning ("There is no directory named '" + name + "', creating in project root.");
       return directory;
