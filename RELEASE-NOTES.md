@@ -1,3 +1,1 @@
-- Added support for typeless coroutine handles.
-- Implemented new methods in the file generator.
-- Implemented various performance improvements.
+- Resolved an issue where the file generator would not be able to find directories on Windows based systems. [#31]
