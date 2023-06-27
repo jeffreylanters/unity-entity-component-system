@@ -1,1 +1,1 @@
-- Resolved an issue where the file generator would not be able to find directories on Windows based systems. [#31]
+- Added support for non-generic coroutines
