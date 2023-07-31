@@ -246,6 +246,9 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
             _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when the Service is initialized.</summary>" : null,
             _overwriteAllVirtuals ? "\tpublic override void OnInitialized () { }" : null,
             _overwriteAllVirtuals ? "" : null,
+            _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked during the Controller's Update cycle.</summary>" : null,
+            _overwriteAllVirtuals ? "\tpublic override void OnUpdate () { }" : null,
+            _overwriteAllVirtuals ? "" : null,
             _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked during the Controller's Gizmos Render cycle.</summary>" : null,
             _overwriteAllVirtuals ? "\tpublic override void OnDrawGizmos () { }" : null,
             _overwriteAllVirtuals ? "" : null,
@@ -254,6 +257,12 @@ namespace ElRaccoone.EntityComponentSystem.Editor {
             _overwriteAllVirtuals ? "" : null,
             _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method invoked when the Service will be destoryed.</summary>" : null,
             _overwriteAllVirtuals ? "\tpublic override void OnWillDestroy () { }" : null,
+            _overwriteAllVirtuals ? "" : null,
+            _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <summary>Method incidates whether the Service should Update.</summary>" : null,
+            _overwriteAllVirtuals && _addFileHeaderComments ? "\t/// <returns>Whether the Controller should update this Service.</returns>" : null,
+            _overwriteAllVirtuals ? "\tpublic override bool ShouldUpdate () {" : null,
+            _overwriteAllVirtuals ? "\t\treturn true;" : null,
+            _overwriteAllVirtuals ? "\t}" : null,
             "}"
           });
           break;
