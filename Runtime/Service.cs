@@ -50,6 +50,11 @@ namespace ElRaccoone.EntityComponentSystem {
     public virtual void OnInitialized () { }
 
     /// <summary>
+    /// Method invoked when the service updates, will be called every frame.
+    /// </summary>
+    public virtual void OnUpdate () { }
+
+    /// <summary>
     /// Method invoked when the service is drawing the gizmos, will be called
     /// every gizmos draw call.
     /// </summary>
@@ -66,6 +71,12 @@ namespace ElRaccoone.EntityComponentSystem {
     /// the application is closing or the controller is being destroyed.
     /// </summary>
     public virtual void OnWillDestroy () { }
+
+    /// <summary>
+    /// Method invoked before the system will update, return whether this system
+    /// should update. will be called every frame.
+    /// </summary>
+    public virtual bool ShouldUpdate () { return true; }
 
     /// <summary>
     /// Starts a coroutine on this service.

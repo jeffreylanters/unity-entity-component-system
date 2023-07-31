@@ -82,6 +82,14 @@ namespace ElRaccoone.EntityComponentSystem {
         }
         system.OnUpdate ();
       }
+      // Invoking update method on each service.
+      for (var serviceIndex = 0; serviceIndex < services.Count; serviceIndex++) {
+        var service = services[serviceIndex];
+        if (!service.ShouldUpdate ()) {
+          continue;
+        }
+        service.OnUpdate ();
+      }
     }
 
 #if ECS_PHYSICS || ECS_ALL

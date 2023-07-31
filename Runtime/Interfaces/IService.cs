@@ -14,6 +14,17 @@ namespace ElRaccoone.EntityComponentSystem {
     void OnInitialized ();
 
     /// <summary>
+    /// Method invoked when the service updates, will be called every frame.
+    /// </summary>
+    void OnUpdate () { }
+
+    /// <summary>
+    // Method invoked before the system will update, return whether this system
+    // should update. will be called every frame.
+    /// </summary>
+    bool ShouldUpdate ();
+
+    /// <summary>
     // Method invoked when the service is drawing the gizmos, will be called
     // every gizmos draw call.
     /// </summary>
