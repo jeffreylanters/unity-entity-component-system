@@ -7,5 +7,11 @@
   "hideInEditor": false,
   "documentationUrl": "https://github.com/jeffreylanters/unity-entity-component-system/blob/master/README.md",
   "changelogUrl": "https://github.com/jeffreylanters/unity-entity-component-system/releases",
-  "licensesUrl": "https://github.com/jeffreylanters/unity-entity-component-system/blob/master/LICENSE.md"
+  "licensesUrl": "https://github.com/jeffreylanters/unity-entity-component-system/blob/master/LICENSE.md",
+  "repository": "https://github.com/jeffreylanters/unity-entity-component-system.git",
+  "author": {
+    "name": "Jeffrey Lanters",
+    "email": "hallo@jeffreylanters.nl",
+    "url": "https://github.com/jeffreylanters"
+  }
 }
