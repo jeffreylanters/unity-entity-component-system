@@ -7,10 +7,11 @@
 [![build](https://img.shields.io/badge/build-passing-brightgreen.svg?style=for-the-badge)](https://github.com/jeffreylanters/unity-entity-component-system/actions)
 [![deployment](https://img.shields.io/badge/state-success-brightgreen.svg?style=for-the-badge)](https://github.com/jeffreylanters/unity-entity-component-system/deployments)
 [![stars](https://img.shields.io/github/stars/jeffreylanters/unity-entity-component-system.svg?style=for-the-badge&color=fe8523&label=stargazers)](https://github.com/jeffreylanters/unity-entity-component-system/stargazers)
-[![awesome](https://img.shields.io/badge/listed-awesome-fc60a8.svg?style=for-the-badge)](https://github.com/jeffreylanters/awesome-unity-packages)
+[![downloads](https://img.shields.io/badge/dynamic/json?color=40AA72&style=for-the-badge&label=downloads&query=%24.downloads&url=https%3A%2F%2Fpackage.openupm.com%2Fdownloads%2Fpoint%2Fall-time%2Fnl.elraccoone.entity-component-system)](https://openupm.com/packages/nl.elraccoone.entity-component-system/)
 [![size](https://img.shields.io/github/languages/code-size/jeffreylanters/unity-entity-component-system?style=for-the-badge)](https://github.com/jeffreylanters/unity-entity-component-system/blob/master/Runtime)
 [![sponsors](https://img.shields.io/github/sponsors/jeffreylanters?color=E12C9A&style=for-the-badge)](https://github.com/sponsors/jeffreylanters)
 [![donate](https://img.shields.io/badge/donate-paypal-F23150?style=for-the-badge)](https://paypal.me/jeffreylanters)
+[![awesome](https://img.shields.io/badge/listed-awesome-fc60a8.svg?style=for-the-badge)](https://github.com/jeffreylanters/awesome-unity-packages)
 
 A better approach to game design that allows you to concentrate on the actual problems you are solving: the data and behavior that make up your game. By moving from object-oriented to data-oriented design it will be easier for you to reuse the code and easier for others to understand and work on it.
 
