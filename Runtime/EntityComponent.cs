@@ -114,6 +114,8 @@ namespace ElRaccoone.EntityComponentSystem {
     /// Event invoked by the Unity Engine when the component is destroyed.
     /// </summary>
     void OnDestroy () {
+      if (!isInitialized)
+        return;
       var system = GetSystem ();
       // Remove the entity from the system.
       system.RemoveEntry ((EntityComponentType)this);
